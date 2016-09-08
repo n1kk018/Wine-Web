@@ -5,7 +5,7 @@
          version="3.0">
     <display-name>Vin-Web</display-name>
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>temp.xhtml</welcome-file>
     </welcome-file-list>
 
     <context-param>
@@ -39,6 +39,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 </web-app>
