@@ -17,22 +17,18 @@
         <spring.version>4.0.1.RELEASE</spring.version>
         <org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>     
     </properties>
-
     <dependencies>
-        
         <dependency>
             <groupId>fr.afcepf.atod</groupId>
             <artifactId>Wine-Business-Product</artifactId>
             <version>${project.version}</version>            
         </dependency>
-        
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope> <!-- deja fourni par tomcat mais pas encore dans projet maven/eclipse -->
         </dependency>
-        
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -60,20 +56,11 @@
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency> 
-        
-
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.1.0.Final</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
-        </dependency>
-
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -93,5 +80,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
