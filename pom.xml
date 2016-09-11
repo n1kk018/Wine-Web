@@ -25,7 +25,11 @@
             <artifactId>Wine-Business-Product</artifactId>
             <version>${project.version}</version>            
         </dependency>
-        
+        <dependency>
+            <groupId>fr.afcepf.atod</groupId>
+            <artifactId>Wine-Business-Customer</artifactId>
+            <version>${project.version}</version>            
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

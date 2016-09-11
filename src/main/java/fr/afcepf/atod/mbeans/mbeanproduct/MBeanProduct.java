@@ -33,6 +33,8 @@ public class MBeanProduct {
         }
         return str;
     }
+    
+     // ----------- Getters && Setters ----------------//
 
     public String getNameProd() {
         return nameProd;
