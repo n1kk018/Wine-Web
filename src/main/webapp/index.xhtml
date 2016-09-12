@@ -17,7 +17,7 @@
         <meta name="googlebot" content="index,follow,snippet,archive"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="description" content="Obaju e-commerce template"/>
-        <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz"/>
+        <meta name="author" content="Ondrej Svestka | Improved By Team WineProject"/>
         <meta name="keywords" content=""/>
 
         <title>
@@ -61,25 +61,29 @@
                     <a href="#">Get flat 35% off on orders over $50!</a>
                 </div>
                 <div class="col-md-6" data-animate="fadeInDown">
-                    <ul class="menu">
-                        <h:panelGroup rendered="#{mBConnexion.userConnected.lastname == null}" >
-                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                    <form jsf:id="maform" jsf:prependId="false">
+                        <ul class="menu">
+                            <h:panelGroup rendered="#{mBConnexion.userConnected.lastname == null}" >
+                                <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                                </li>
+                                <li><a href="register.html">Register</a>
+                                </li>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{mBConnexion.userConnected.lastname != null}" >
+                                <li><a href="#" >Bonjour Mr #{mBConnexion.userConnected.firstname}</a>
+                                </li>
+                                <!--<li><button jsf:action="#{mBConnexion.disconnect()}">Log out </button>
+                                </li>-->
+                                <li>
+                                    <a href="#" jsf:action="#{mBConnexion.disconnect()}" >Log out</a>
+                                </li>
+                            </h:panelGroup>
+                            <li><a href="contact.html">Contact</a>
                             </li>
-                            <li><a href="register.html">Register</a>
+                            <li><a href="#">Recently viewed</a>
                             </li>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{mBConnexion.userConnected.lastname != null}" >
-                            <li><a href="#" >Bonjour Mr #{mBConnexion.userConnected.firstname}</a>
-                            </li>
-                            <li><h:commandLink value="Se Deconnecter" 
-                                               action="#{mBConnexion.disconnect()}"/>
-                            </li>
-                        </h:panelGroup>
-                        <li><a href="contact.html">Contact</a>
-                        </li>
-                        <li><a href="#">Recently viewed</a>
-                        </li>
-                    </ul>
+                        </ul>
+                    </form>
                 </div>
             </div>
             <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
