@@ -12,12 +12,18 @@
         <jsf.version>2.2.10</jsf.version>
         <spring.version>4.0.1.RELEASE</spring.version>
         <org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>
+        <project.version>1.0</project.version>
     </properties>
     <dependencies>
     	<dependency>
             <groupId>fr.afcepf.atod</groupId>
             <artifactId>Wine-Business-Product</artifactId>
-            <version>1.0</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.afcepf.atod</groupId>
+            <artifactId>Wine-Business-Customer</artifactId>
+            <version>${project.version}</version>            
         </dependency>
         <dependency>
 			<groupId>javax.servlet</groupId>
