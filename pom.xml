@@ -15,29 +15,40 @@
         <plugin.compiler.maven>3.1</plugin.compiler.maven>
         <jsf.version>2.2.10</jsf.version>
         <spring.version>4.0.1.RELEASE</spring.version>
-        <org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>
+        <org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>     
     </properties>
 
     <dependencies>
+        
         <dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope> <!-- deja fourni par tomcat mais pas encore dans projet maven/eclipse -->
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.1.1</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<scope>runtime</scope>
-			<version>1.1.1</version>
-		</dependency>
+            <groupId>fr.afcepf.atod</groupId>
+            <artifactId>Wine-Business-Product</artifactId>
+            <version>${project.version}</version>            
+        </dependency>
+        <dependency>
+            <groupId>fr.afcepf.atod</groupId>
+            <artifactId>Wine-Business-Customer</artifactId>
+            <version>${project.version}</version>            
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope> <!-- deja fourni par tomcat mais pas encore dans projet maven/eclipse -->
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <scope>runtime</scope>
+            <version>1.1.1</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
