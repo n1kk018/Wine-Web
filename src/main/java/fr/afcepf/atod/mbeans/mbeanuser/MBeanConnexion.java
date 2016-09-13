@@ -166,7 +166,12 @@ public class MBeanConnexion {
      * to perform the preRenderView action on initial request only.
      */
     public void initSession() {
-        FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+       if (FacesContext.getCurrentInstance()
+               .getExternalContext().getSessionId(true) != null) {
+           
+       } else {
+           FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+       }        
     }
     
 }
