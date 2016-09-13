@@ -6,9 +6,11 @@
 package fr.afcepf.atod.mbeans.mbeanorder;
 
 import fr.afcepf.atod.wine.entity.Product;
+import fr.afcepf.atod.wine.entity.ProductAccessories;
 import fr.afcepf.atod.wine.entity.ProductWine;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -19,31 +21,75 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 @ManagedBean
 public class MBeanCartManagement {
-    
- //  ############################################################# //
- 
- /**********************************************************
-  * Methode pour initialiser le panier pour faire le parcours
-  * panier/validation paiement/.
-  **********************************************************/
-    private List<Product> listProducts = null;
-    
+
+    public MBeanCartManagement() {
+        super();
+
+    }
+
+    //  ######################################################## //
+    /**
+     * ********************************************************
+     * Methode pour initialiser le panier pour faire le parcours
+     * panier/validation paiement/.
+  *********************************************************
+     */
+    private List<ProductWine> listWines = null;
+    private List<ProductAccessories> listAccessories = null;
+    private int quantity = 1;
+    private double total = 0;
+
     public void initCart() {
-        listProducts = new ArrayList<>();
-        Product redWine = new ProductWine(1, "bourgogne", 200.0,
-                "bourgogne", "bourgogne", null, null, null, 1);
-        Product whiteWine = new ProductWine(1, "provence", 100.0,
-                "provence", "provence", null, null, null, 1);
-        listProducts.add(redWine);
-        listProducts.add(whiteWine);
+        listWines = new ArrayList<>();
+        ProductWine redWine = new ProductWine(1, "bourgogne", 200.0,
+                "bourgogne", "bourgogne", null, null, null, 512);
+        ProductWine whiteWine = new ProductWine(1, "provence", 100.0,
+                "provence", "provence", null, null, null, 512);
+
+        listWines.add(redWine);
+        listWines.add(whiteWine);
+
     }
 
-    public List<Product> getListProducts() {
-        return listProducts;
+    /**
+     * remove item shopping cart
+     *
+     */
+    public void removeItem(Product item) {
+        listWines.remove(item);
     }
 
-    public void setListProducts(List<Product> listProducts) {
-        this.listProducts = listProducts;
+    // ---------------- Getters && Setters ------------ //
+    public List<ProductWine> getListWines() {
+        return listWines;
     }
-    
+
+    public void setListWines(List<ProductWine> listWines) {
+        this.listWines = listWines;
+    }
+
+    public List<ProductAccessories> getListAccessories() {
+        return listAccessories;
+    }
+
+    public void setListAccessories(List<ProductAccessories> listAccessories) {
+        this.listAccessories = listAccessories;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
 }
