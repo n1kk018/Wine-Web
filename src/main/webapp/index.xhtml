@@ -4,9 +4,11 @@
 	xmlns:jsf="http://java.sun.com/jsf"
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/commons.xhtml">
+	
 	<f:metadata>
 		<f:event listener="#{mBeanProduct.initIndex()}" type="preRenderView"></f:event>
 	</f:metadata>
+	
 	<ui:define name="body">
 		<div class="container">
 			<div class="col-md-12">
