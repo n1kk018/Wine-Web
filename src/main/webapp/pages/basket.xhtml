@@ -28,9 +28,10 @@
                                     <form method="post" action="checkout1.html">
 
                                         <h1>Mon panier</h1>
-                                        <p class="text-muted">
+                                        <p class="text-muted" >
                                             Votre panier contient 
-                                            #{mBeanCartManagement.listWines.size() + mBeanCartManagement.listAccessories.size()} produits.
+                                            <h:outputText value=" #{mBeanCartManagement.totalQuantity}" id="quantityArticle" />
+                                            produits.
                                         </p>
                                         <div class="table-responsive">
                                             <!-- <table class="table">
@@ -77,8 +78,8 @@
 
                                             <!-- data table-->
                                             <f:view>                                            
-                                                <h:dataTable class="table" value="#{mBeanCartManagement.listWines}" 
-                                                             var="item">
+                                                <h:dataTable class="table" id="datatableOrder" value="#{mBeanCartManagement.shoppingCart}" 
+                                                             var="orderLine">
                                                     <h:column id="column1">
                                                         <f:facet name="header">
                                                             <h:outputText value="Nom Article"></h:outputText>
@@ -90,20 +91,23 @@
                                                         <f:facet name="header">
                                                             <h:outputText value="Description"></h:outputText>
                                                         </f:facet>
-                                                        <a href="#">#{item.description}</a>
+                                                        <a href="#">#{orderLine.productOrdered.description}</a>
                                                     </h:column>
                                                     <h:column id="column3">
                                                         <f:facet name="header">
                                                             <h:outputText value="Quantite"></h:outputText>
                                                         </f:facet>
-                                                        <input type="number" value="#{mBeanCartManagement.quantity}"
-                                                               class="form-control"/>                                         
+                                                        <h:inputText  type="number" value="#{mBeanCartManagement.quantity}" 
+                                                        valueChangeListener="#{mBeanCartManagement.onChangeNombreProduit()}"
+                                                               class="form-control"/>     
+                                                               <f:ajax event="change" render="datatableOrder" /> 
+                                                                                                
                                                     </h:column>
                                                     <h:column id="column4">
                                                         <f:facet name="header">
                                                             <h:outputText value="Prix Unitaire"></h:outputText>
                                                         </f:facet>
-                                                        <h:outputText value="#{item.price}"></h:outputText>
+                                                        <h:outputText value="#{orderLine.productOrdered.price}"></h:outputText>
                                                     </h:column>
                                                     <h:column id="column5">
                                                         <f:facet name="header">
@@ -111,17 +115,17 @@
                                                         </f:facet>
                                                         <h:outputText value="0.0$"></h:outputText>
                                                     </h:column>
-                                                    <h:column id="column6">
+                                                    <h:column id="orderLinePrice">
                                                         <f:facet name="header">
                                                             <h:outputText value="Total article"></h:outputText>
                                                         </f:facet>
-                                                        <h:outputText value="#{mBeanCartManagement.quantity*item.price}"></h:outputText>
+                                                        <h:outputText value="#{mBeanCartManagement.totalLine}"></h:outputText>
                                                     </h:column>
                                                     <h:column id="column7">
                                                         <f:facet name="">
                                                             <h:outputText value=""></h:outputText>
                                                         </f:facet>
-                                                        <h:commandLink action="#{mBeanCartManagement.removeItem(item)}">
+                                                        <h:commandLink action="#{mBeanCartManagement.removeOrderTetail(ororderLine)}">
                                                             <i class="fa fa-trash-o"></i></h:commandLink>                                                    
                                                     </h:column>
                                                 </h:dataTable>                                           
@@ -246,7 +250,7 @@
                                         calculated based on the values you have entered.</p>
 
                                     <div class="table-responsive">
-                                        <table class="table">
+                                        <table class="table" id="recapOrder">
                                             <tbody>
                                                 <tr>
                                                     <td>Order subtotal</td>
