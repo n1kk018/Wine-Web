@@ -78,3 +78,8 @@ Servers/
  
 # PDT-specific
 .buildpath
+
+######################
+# Specific
+######################
+/src/main/webapp/img/wine_pictures/*.jpg
