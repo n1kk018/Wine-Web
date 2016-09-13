@@ -5,6 +5,16 @@
     <welcome-file>index.jsf</welcome-file>
   </welcome-file-list>
   <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:springWeb.xml</param-value>
+    </context-param>
+    <listener>
+        <!-- permet de demarrer spring lorsque l'appli demarre -->
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+  <context-param>
     <param-name>facelets.REFRESH_PERIOD</param-name>
     <param-value>2</param-value>
   </context-param>
