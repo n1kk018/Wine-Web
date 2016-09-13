@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <f:metadata>
-        <f:event listener="#{mBConnexion.initSession()}" type="preRenderView"></f:event>
+        <f:event listener="#{mBeanConnexion.initSession()}" type="preRenderView"></f:event>
     </f:metadata>
 
     <head jsf:id="head">
@@ -16,7 +16,7 @@
         <meta name="googlebot" content="index,follow,snippet,archive"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="description" content="Obaju e-commerce template"/>
-        <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz"/>
+        <meta name="author" content="Ondrej Svestka | Improved By Team WineProject"/>
         <meta name="keywords" content=""/>
 
         <title>
@@ -60,25 +60,29 @@
                     <a href="#">Get flat 35% off on orders over $50!</a>
                 </div>
                 <div class="col-md-6" data-animate="fadeInDown">
-                    <ul class="menu">
-                        <h:panelGroup rendered="#{mBConnexion.userConnected.lastname == null}" >
-                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                    <form jsf:id="maform" jsf:prependId="false">
+                        <ul class="menu">
+                            <h:panelGroup rendered="#{mBeanConnexion.userConnected.lastname == null}" >
+                                <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                                </li>
+                                <li><a href="register.html">Register</a>
+                                </li>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{mBeanConnexion.userConnected.lastname != null}" >
+                                <li><a href="#" >Bonjour Mr #{mBeanConnexion.userConnected.firstname}</a>
+                                </li>
+                                <!--<li><button jsf:action="#{mBeanConnexion.disconnect()}">Log out </button>
+                                </li>-->
+                                <li>
+                                    <a href="#" jsf:action="#{mBeanConnexion.disconnect()}" >Log out</a>
+                                </li>
+                            </h:panelGroup>
+                            <li><a href="contact.html">Contact</a>
                             </li>
-                            <li><a href="register.html">Register</a>
+                            <li><a href="#">Recently viewed</a>
                             </li>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{mBConnexion.userConnected.lastname != null}" >
-                            <li><a href="#" >Bonjour Mr #{mBConnexion.userConnected.firstname}</a>
-                            </li>
-                            <li><h:commandLink value="Se Deconnecter" 
-                                               action="#{mBConnexion.disconnect()}"/>
-                            </li>
-                        </h:panelGroup>
-                        <li><a href="contact.html">Contact</a>
-                        </li>
-                        <li><a href="#">Recently viewed</a>
-                        </li>
-                    </ul>
+                        </ul>
+                    </form>
                 </div>
             </div>
             <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
@@ -93,24 +97,24 @@
                             <!--A Supprimer p.e -->
                             <form jsf:id="form" jsf:prependId="false">
                                 <h:panelGroup id="messages">
-                                    <h:outputFormat rendered="#{mbConnexion.resultConnection  != null}" value="">
+                                    <h:outputFormat rendered="#{mBeanConnexion.resultConnection  != null}" value="">
                                         <div class="resultatConnection"> 
-                                            #{mbConnexion.INVALID_CO }
+                                            #{mBeanConnexion.INVALID_CO }
                                         </div>
                                     </h:outputFormat>
-                                    <h:outputFormat rendered="#{mbConnexion.resultConnection  == null}" value=""/>
+                                    <h:outputFormat rendered="#{mBeanConnexion.resultConnection  == null}" value=""/>
                                 </h:panelGroup> 
                                 <div class="form-group">
                                     <input type="text" class="form-control" jsf:id="email-modal" placeholder="email"
-                                           jsf:value="#{mBConnexion.userConnected.mail}"/>
+                                           jsf:value="#{mBeanConnexion.userConnected.mail}"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" jsf:id="password-modal" placeholder="password"
-                                           jsf:value="#{mBConnexion.userConnected.password}"/>
+                                           jsf:value="#{mBeanConnexion.userConnected.password}"/>
                                 </div>
 
                                 <p class="text-center">
-                                    <button jsf:action="#{mBConnexion.connect()}" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
+                                    <button jsf:action="#{mBeanConnexion.connect()}" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
                                 </p>
 
                             </form>
@@ -146,7 +150,7 @@
                             <span class="sr-only">Toggle search</span>
                             <i class="fa fa-search"></i>
                         </button>
-                        <a class="btn btn-default navbar-toggle" href="basket.html">
+                        <a class="btn btn-default navbar-toggle" href="pages/basket.jsf">
                             <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
                         </a>
                     </div>
