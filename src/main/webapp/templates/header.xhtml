@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<!-- *** TOPBAR ***
+ _________________________________________________________ -->
+<div id="top">
+	<div class="container">
+		<div class="col-md-6 offer" data-animate="fadeInDown">
+			<a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offre
+				spéciale aujourd'hui ! </a> <a href="#">10€ d'économies dès 200€
+				commandés</a>
+		</div>
+		<div class="col-md-6" data-animate="fadeInDown">
+			<ul class="menu">
+				<li><a href="#" data-toggle="modal" data-target="#login-modal">Se
+						connecter</a></li>
+				<li><a href="register.html">Inscription</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="#">Vus récemment</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog"
+		aria-labelledby="Login" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">Fermer</button>
+					<h4 class="modal-title" id="Login">Identification client</h4>
+				</div>
+				<div class="modal-body">
+					<form action="customer-orders.html" method="post">
+						<div class="form-group">
+							<input type="text" class="form-control" id="email-modal"
+								placeholder="email" />
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="password-modal"
+								placeholder="password" />
+						</div>
+
+						<p class="text-center">
+							<button class="btn btn-primary">
+								<i class="fa fa-sign-in"></i> Se connecter
+							</button>
+						</p>
+
+					</form>
+					<p class="text-center text-muted">
+						<a href="">Mot de passe oublié</a>
+					</p>
+					<p class="text-center text-muted">Pas encore inscrit ?</p>
+					<p class="text-center text-muted">
+						<a href="register.html"><strong>Créez votre compte</strong></a> !
+						pour commander plus vite et accéder aux services personnalisés,
+						aux cadeaux, aux avantages sur-mesure ...!
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- *** TOP BAR END *** -->
+
+<!-- *** NAVBAR ***
+ _________________________________________________________ -->
+
+<div class="navbar navbar-default yamm" role="navigation" id="navbar">
+	<div class="container">
+		<div class="navbar-header">
+			<!-- <a href='http://www.freepik.com/free-vector/pouring-red-wine_786221.htm'>Designed by Freepik</a> -->
+
+			<a class="navbar-brand home" href="index.html" data-animate-hover="">
+				<img src="../img/wine.png" />
+			</a>
+			<div class="navbar-buttons">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#navigation">
+					<span class="sr-only">Toggle navigation</span> <i
+						class="fa fa-align-justify"></i>
+				</button>
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#search">
+					<span class="sr-only">Toggle search</span> <i class="fa fa-search"></i>
+				</button>
+				<a class="btn btn-default navbar-toggle" href="basket.html"> <i
+					class="fa fa-shopping-cart"></i> <span class="hidden-xs">3
+						items in cart</span>
+				</a>
+			</div>
+		</div>
+		<!--/.navbar-header -->
+
+		<div class="navbar-collapse collapse" id="navigation">
+
+			<ul class="nav navbar-nav navbar-left">
+				<li class="active"><a href="index.xhtml">Accueil</a></li>
+				<li class="dropdown yamm-fw"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"
+					data-hover="dropdown"> Vin Rouge <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<div class="yamm-content">
+								<div class="row">
+									<div class="col-sm-3">
+										<h5>Bordeaux</h5>
+										<ul>
+											<li><a href="category.html">T-shirts</a></li>
+											<li><a href="category.html">Shirts</a></li>
+											<li><a href="category.html">Pants</a></li>
+											<li><a href="category.html">Accessories</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Bourgogne</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Rhône</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Autres régions</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+										</ul>
+										<h5>Looks and trends</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+										</ul>
+									</div>
+								</div>
+							</div> <!-- /.yamm-content -->
+						</li>
+					</ul></li>
+
+				<li class="dropdown yamm-fw"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"
+					data-hover="dropdown" data-delay="200">Vin blanc <b
+						class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<div class="yamm-content">
+								<div class="row">
+									<div class="col-sm-3">
+										<h5>Clothing</h5>
+										<ul>
+											<li><a href="category.html">T-shirts</a></li>
+											<li><a href="category.html">Shirts</a></li>
+											<li><a href="category.html">Pants</a></li>
+											<li><a href="category.html">Accessories</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Shoes</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Accessories</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+										</ul>
+										<h5>Looks and trends</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<div class="banner">
+											<a href="#"> <img src="img/banner.jpg"
+												class="img img-responsive" alt="" />
+											</a>
+										</div>
+										<div class="banner">
+											<a href="#"> <img src="img/banner2.jpg"
+												class="img img-responsive" alt="" />
+											</a>
+										</div>
+									</div>
+								</div>
+							</div> <!-- /.yamm-content -->
+						</li>
+					</ul></li>
+
+				<li class="dropdown yamm-fw"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"
+					data-hover="dropdown" data-delay="200">Rosé<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<div class="yamm-content">
+								<div class="row">
+									<div class="col-sm-3">
+										<h5>Shop</h5>
+										<ul>
+											<li><a href="index.html">Homepage</a></li>
+											<li><a href="category.html">Category - sidebar left</a>
+											</li>
+											<li><a href="category-right.html">Category - sidebar
+													right</a></li>
+											<li><a href="category-full.html">Category - full
+													width</a></li>
+											<li><a href="detail.html">Product detail</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>User</h5>
+										<ul>
+											<li><a href="register.html">Register / login</a></li>
+											<li><a href="customer-orders.html">Orders history</a></li>
+											<li><a href="customer-order.html">Order history
+													detail</a></li>
+											<li><a href="customer-wishlist.html">Wishlist</a></li>
+											<li><a href="customer-account.html">Customer account
+													/ change password</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Order process</h5>
+										<ul>
+											<li><a href="basket.html">Shopping cart</a></li>
+											<li><a href="checkout1.html">Checkout - step 1</a></li>
+											<li><a href="checkout2.html">Checkout - step 2</a></li>
+											<li><a href="checkout3.html">Checkout - step 3</a></li>
+											<li><a href="checkout4.html">Checkout - step 4</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Pages and blog</h5>
+										<ul>
+											<li><a href="blog.html">Blog listing</a></li>
+											<li><a href="post.html">Blog Post</a></li>
+											<li><a href="faq.html">FAQ</a></li>
+											<li><a href="text.html">Text page</a></li>
+											<li><a href="text-right.html">Text page - right
+													sidebar</a></li>
+											<li><a href="404.html">404 page</a></li>
+											<li><a href="contact.html">Contact</a></li>
+										</ul>
+									</div>
+								</div>
+							</div> <!-- /.yamm-content -->
+						</li>
+					</ul></li>
+				<li class="dropdown yamm-fw"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"
+					data-hover="dropdown" data-delay="200">Champagne <b
+						class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<div class="yamm-content">
+								<div class="row">
+									<div class="col-sm-3">
+										<h5>Clothing</h5>
+										<ul>
+											<li><a href="category.html">T-shirts</a></li>
+											<li><a href="category.html">Shirts</a></li>
+											<li><a href="category.html">Pants</a></li>
+											<li><a href="category.html">Accessories</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Shoes</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<h5>Accessories</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+											<li><a href="category.html">Casual</a></li>
+										</ul>
+										<h5>Looks and trends</h5>
+										<ul>
+											<li><a href="category.html">Trainers</a></li>
+											<li><a href="category.html">Sandals</a></li>
+											<li><a href="category.html">Hiking shoes</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<div class="banner">
+											<a href="#"> <img src="img/banner.jpg"
+												class="img img-responsive" alt="" />
+											</a>
+										</div>
+										<div class="banner">
+											<a href="#"> <img src="img/banner2.jpg"
+												class="img img-responsive" alt="" />
+											</a>
+										</div>
+									</div>
+								</div>
+							</div> <!-- /.yamm-content -->
+						</li>
+					</ul></li>
+			</ul>
+
+		</div>
+		<!--/.nav-collapse -->
+
+		<div class="navbar-buttons">
+
+			<div class="navbar-collapse collapse right" id="basket-overview">
+				<a href="basket.html" class="btn btn-primary navbar-btn"><i
+					class="fa fa-shopping-cart"></i><span class="hidden-sm"><h:outputLabel
+							value="3" /> articles</span></a>
+			</div>
+			<!--/.nav-collapse -->
+
+			<div class="navbar-collapse collapse right" id="search-not-mobile">
+				<form class="navbar-form" role="search">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Rechercher" />
+						<span class="input-group-btn">
+
+							<button type="submit" class="btn btn-primary">
+								<i class="fa fa-search"></i>
+							</button>
+
+						</span>
+					</div>
+				</form>
+			</div>
+
+		</div>
+		<!--/.nav-collapse -->
+
+	</div>
+	<!-- /.container -->
+</div>
+<!-- /#navbar -->
+
+<!-- *** NAVBAR END *** -->
+
+</html>
