@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsf="http://java.sun.com/jsf"
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/commons.xhtml">
 	<f:metadata>
@@ -25,7 +26,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- *** HOT PRODUCT SLIDESHOW *** -->
 		<div id="hot">
 			<div class="box">
@@ -135,8 +135,8 @@
 
 
 		<!-- *** ADVANTAGES HOMEPAGE ***-->
+		<!--
 		<div id="advantages">
-
 			<div class="container">
 				<div class="same-height-row">
 					<div class="col-sm-4">
@@ -151,13 +151,31 @@
 							<p>We are known to provide best possible service ever</p>
 						</div>
 					</div>
-
-					<div class="col-sm-4">
-						<div class="box same-height clickable">
-							<div class="icon">
-								<i class="fa fa-tags"></i>
-							</div>
-
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title" id="Login">Customer login</h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <form jsf:id="form" jsf:prependId="false">
+                                <h:panelGroup id="messages">
+                                    <h:outputFormat rendered="#{mBeanConnexion.resultConnection  != null}" value="">
+                                        <div class="resultatConnection"> 
+                                            #{mBeanConnexion.INVALID_CO }
+                                        </div>
+                                    </h:outputFormat>
+                                    <h:outputFormat rendered="#{mBeanConnexion.resultConnection  == null}" value=""/>
+                                </h:panelGroup> 
+                                <div class="form-group">
+                                    <input type="text" class="form-control" jsf:id="email-modal" placeholder="email"
+                                           jsf:value="#{mBeanConnexion.userConnected.mail}"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" jsf:id="password-modal" placeholder="password"
+                                           jsf:value="#{mBeanConnexion.userConnected.password}"/>
+                                </div>
+                            </form>
 							<h3>
 								<a href="#">Best prices</a>
 							</h3>
@@ -165,26 +183,19 @@
 								longer text like this one is used in one of them.</p>
 						</div>
 					</div>
-
-					<div class="col-sm-4">
-						<div class="box same-height clickable">
-							<div class="icon">
-								<i class="fa fa-thumbs-up"></i>
-							</div>
+					
+                            <p class="text-center text-muted">Not registered yet?</p>
+                            <p class="text-center text-muted"><a href="register.html"><strong>Register now</strong></a>! It is easy and done in 1 minute and gives you access to special discounts and much more!</p>
 
 							<h3>
 								<a href="#">100% satisfaction guaranteed</a>
 							</h3>
 							<p>Free returns on everything for 3 months.</p>
-						</div>
-					</div>
 				</div>
-				<!-- /.row -->
-
 			</div>
-			<!-- /.container -->
+		</div>-->
 
-		</div>
+		<!-- /.row -->
 		<!-- /#advantages -->
 
 		<!-- *** ADVANTAGES END *** -->
@@ -247,9 +258,7 @@
 								<a href="post.html" class="btn btn-primary">Continue reading</a>
 							</p>
 						</div>
-
 					</div>
-
 				</div>
 				<!-- /#blog-homepage -->
 			</div>
@@ -257,3 +266,4 @@
 		<!-- /.container -->
 	</ui:define>
 </ui:composition>
+
