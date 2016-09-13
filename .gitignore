@@ -82,4 +82,4 @@ Servers/
 ######################
 # Specific
 ######################
-/src/main/webapp/img/wine_pictures/*.jpg
+/src/main/webapp/img/wine_pictures/*/*.jpg
