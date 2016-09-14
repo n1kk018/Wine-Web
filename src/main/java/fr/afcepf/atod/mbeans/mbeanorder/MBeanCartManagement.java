@@ -46,15 +46,16 @@ public class MBeanCartManagement {
      * @return
      */
     public String addProductCart(Product product) {
-        String page = null; // or basket.jsf ??
+        String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
-            //try {
-               // order = buOrder.addItemCart(order, product);
-            /*} catch (WineException ex) {
+            try {
+                order = buOrder.addItemCart(order, product);
+                //page = "pages/basket";
+            } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
-            }*/
+            }
             if (order.getOrdersDetail().isEmpty()) {
                 errorAddProduct = "Product not available, stock empty";
             }
