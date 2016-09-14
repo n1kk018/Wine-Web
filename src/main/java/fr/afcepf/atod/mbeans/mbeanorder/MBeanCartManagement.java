@@ -10,40 +10,40 @@ import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
-import fr.afcepf.atod.wine.entity.ProductWine;
-import fr.afcepf.atod.wine.entity.ShippingMethod;
-
-import java.util.ArrayList;
-import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
-
-import org.apache.log4j.Logger;
-
 /**
  *
  * @author ronan
  */
 @SessionScoped
-@ManagedBean(name="mBeanCartManagement")
+@ManagedBean(name = "mBeanCartManagement")
 public class MBeanCartManagement {
 
 
     // create a new command if necessary or 
-    private Order order;
+    private Order order = new Order();
     // global error adding product
+    
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
 
-
+ 
     public MBeanCartManagement() {
         super();
         errorAddProduct = "";
     }
-
+    
+//    
+//    ProductWine redWine = new ProductWine(null, "bourgogne", 200.0, "bourgogne", "bourgogne", null, null, null, 512);
+//	ProductWine whiteWine = new ProductWine(null, "provence", 100.0, "provence", "provence", null, null, null, 512);
+//	
+//	
+//	
+//	OrderDetail orderDetail = new OrderDetail(null, 2, order, redWine);
+//	
 
     /**
      *
@@ -57,7 +57,7 @@ public class MBeanCartManagement {
                 && !product.getProductSuppliers().isEmpty()) {
             try {
                 order = buOrder.addItemCart(order, product);
-                //page = "pages/basket";
+                page = "pages/basket";
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
             }
@@ -69,13 +69,62 @@ public class MBeanCartManagement {
         }
         return page;
     }
-
+    /**
+     * 
+     * @param orderDetail 
+     */
     public void removeProductCart(OrderDetail orderDetail) {
         if (!order.getOrdersDetail().isEmpty()) {
             order.getOrdersDetail().remove(orderDetail);
         }
     }
-
+    /**
+     * 
+     * @param orderDetail
+     * @return 
+     */
+    public double calculDiscount(OrderDetail orderDetail) {
+        return orderDetail.getProductOrdered().getPrice()
+                * (orderDetail.getProductOrdered()
+                  .getSpeEvent().getPourcentage()/100);
+    }
+    /**
+     * 
+     * @param orderDetail
+     * @return 
+     */
+    public double calculTotalLine(OrderDetail orderDetail) {
+        return orderDetail.getQuantite()*
+                (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+    }
+    
+    public double calculSubTotal() {
+        double subTotal = 0.0;
+        if(!order.getOrdersDetail().isEmpty()){
+        for(OrderDetail o : order.getOrdersDetail()){
+            subTotal = subTotal + calculTotalLine(o);
+            }
+        }
+        
+        return subTotal;
+    }
+    
+    public int numTotalQantity(){
+        int numTotalQuantity = 0;
+        if(!order.getOrdersDetail().isEmpty()){
+            for(OrderDetail o : this.order.getOrdersDetail()){
+                numTotalQuantity = numTotalQuantity + o.getQuantite();
+            }
+        }  
+        return numTotalQuantity;
+    }
+    
+    public double caclulShippingFree(OrderDetail orderDetail) {
+        double shipping=0.0;
+        
+        return shipping;
+    }
+    
     //  ######################################################## //
     /**
      * ********************************************************
@@ -83,6 +132,7 @@ public class MBeanCartManagement {
      * panier/validation paiement/.
      * ********************************************************
      */
+    /*
     private List<Product> listProducts = null;
 
     public void initCart() {
@@ -93,13 +143,13 @@ public class MBeanCartManagement {
                 "provence", "provence", null, null, null, 1);
         listProducts.add(redWine);
         listProducts.add(whiteWine);
+        
     }
 
 
     public void setListProducts(List<Product> listProducts) {
         this.listProducts = listProducts;
-    }
-
+    } */
     public Order getOrder() {
         return order;
     }

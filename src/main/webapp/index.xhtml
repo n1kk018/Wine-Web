@@ -77,9 +77,9 @@
 									</h3>
 									<p class="price">#{product.price} €</p>
 									<h:form id="formCart#{product.apiId}" prependId="false">
-										<h:commandLink class="btn btn-primary hotlist-btn" action="#{mBeanCartManagement.addProductCart(product)}">
-											<i class="fa fa-shopping-cart"></i><span class="hidden-sm">Ajouter au panier</span>
-										</h:commandLink>
+										<h:commandButton action="#{mBeanCartManagement.addProductCart(product)}">
+											<span class="hidden-sm">Ajouter au panier</span>
+										</h:commandButton>
                                     </h:form>
 								</div>
 								<!-- /.text -->
