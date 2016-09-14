@@ -24,8 +24,10 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "mBeanProduct")
 @RequestScoped
 public class MBeanProduct {
+    
     @ManagedProperty(value="#{buProduct}")
     private IBuProduct buProduct;
+    
     private String nameProd;
     private List<Product> expensiveProducts;
     private String errorSearch;
@@ -47,7 +49,6 @@ public class MBeanProduct {
     		promotedWinesList = buProduct.getPromotedProductsSelection();
     	}
     }
-
     public String findByNameProduct() throws WineException {
         String str = null;
         if(!nameProd.equalsIgnoreCase("")) {
