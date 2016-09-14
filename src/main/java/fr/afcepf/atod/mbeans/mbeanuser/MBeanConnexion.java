@@ -19,9 +19,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author ronan
  */
-@ManagedBean(name = "mBConnexion")
+@ManagedBean(name = "mBeanConnexion")
 @SessionScoped
-public class MBConnexion {
+public class MBeanConnexion {
     @ManagedProperty(value = "#{buCustomer}")
     private IBuCustomer buCustomer;
     /**
@@ -40,9 +40,9 @@ public class MBConnexion {
     /**
      * result connection
      */
-    private String resultCo;
+    private String resultConnection;
     
-    public MBConnexion() {
+    public MBeanConnexion() {
         super();
         userConnected = new User();
     }
@@ -77,9 +77,9 @@ public class MBConnexion {
     
     public void validateConnection() {
         if (errors.isEmpty()) {
-            resultCo = null;
+            resultConnection = null;
         } else {
-            resultCo = errors.get(INVALID_CO);
+            resultConnection = errors.get(INVALID_CO);
         }
     }
     
@@ -104,12 +104,12 @@ public class MBConnexion {
         this.userConnected = userConnected;
     }
 
-    public String getResultCo() {
-        return resultCo;
+    public String getResultConnection() {
+        return resultConnection;
     }
 
-    public void setResultCo(String resultCo) {
-        this.resultCo = resultCo;
+    public void setResultConnection(String resultCo) {
+        this.resultConnection = resultCo;
     }    
 
     public IBuCustomer getBuCustomer() {
