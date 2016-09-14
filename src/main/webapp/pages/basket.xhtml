@@ -21,6 +21,7 @@
                     <div class="col-md-9" id="basket">
                         <div class="box">
                             <h1>Mon panier</h1>
+                            <h:panelGroup rendered="#{mBeanCartManagement.order.ordersDetail != null}">
                             <p class="text-muted">Votre panier contient
                                 <h:outputText id="txtTotalQuantity" value="#{mBeanCartManagement.numTotalQantity()}"/>
                                  produits.</p>
@@ -30,7 +31,7 @@
                                         <tr>
                                             <th colspan="2">Produit</th>
                                             <th>Quantite</th>
-                                            <th>Prix Unitaire</th>
+                                            <th>Prix Unitaire </th>
                                             <th>Reduction</th>
                                             <th colspan="2">Totale</th>
                                             <th></th>
@@ -43,9 +44,9 @@
                                                 <tr>
                                                     <td>#{orderDetail.productOrdered.name}</td>
                                                     <td>#{orderDetail.quantite}</td>
-                                                    <td>#{orderDetail.productOrdered.price}</td>
-                                                    <td>#{mBeanCartManagement.calculDiscount(orderDetail)}</td>
-                                                    <td>#{mBeanCartManagement.calculTotalLine(orderDetail)}</td>
+                                                    <td>#{orderDetail.productOrdered.price} €</td>
+                                                    <td>#{mBeanCartManagement.calculDiscount(orderDetail)} €</td>
+                                                    <td>#{mBeanCartManagement.calculTotalLine(orderDetail)} €</td>
                                                     <td><h:commandLink
                                                             action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
                                                             <i class="fa fa-trash-o"></i>
@@ -72,6 +73,7 @@
                                     </button>
                                 </div>
                             </div>
+                            </h:panelGroup>
                         </div>
                         <!-- /.box -->
 
