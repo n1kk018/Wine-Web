@@ -41,7 +41,7 @@
                                             <ui:repeat value="#{mBeanCartManagement.order.ordersDetail}"
                                                        var="orderDetail">
                                                 <tr>
-                                                    <td>#{orderDetail.productOrdered.name}</td>
+                                                    <!-- <td>#{orderDetail.productOrdered.name}</td>-->
                                                     <td>#{orderDetail.quantite}</td>
                                                     <td>#{orderDetail.productOrdered.price}</td>
                                                     <td>#{mBeanCartManagement.calculDiscount(orderDetail)}</td>

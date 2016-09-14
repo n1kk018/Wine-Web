@@ -38,6 +38,7 @@ public class MBeanCartManagement implements Serializable {
     private Order order;
     // global error adding product
     private String errorAddProduct;
+    
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
     
@@ -54,13 +55,15 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public String addProductCart(Product product) {
-    	log.info("===================================================================>");
         String page = null;
+        log.info("=================================================>");
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-            	log.info("Ajout panier");
+            	if(order == null){
+            		order = new Order();
+            	}
                order = buOrder.addItemCart(order, product);
                 //page = "pages/basket";
             } catch (WineException ex) {

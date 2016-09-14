@@ -12,19 +12,18 @@ import fr.afcepf.atod.wine.entity.Product;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author ronan
  */
-@ManagedBean(name = "mBeanProduct")
-@RequestScoped
+@ManagedBean
+@SessionScoped
 public class MBeanProduct implements Serializable{
     
     /**
@@ -46,16 +45,18 @@ public class MBeanProduct implements Serializable{
         errorSearch = "";
     }
     
-    /**
-     * 
-     * @return
-     * @throws WineException 
-     */
-    public void initIndex() throws WineException{
+    @PostConstruct
+    public void initIndex(){
     	if(promotedWinesList==null){
-    		promotedWinesList = buProduct.getPromotedProductsSelection();
+    		try {
+				promotedWinesList = buProduct.getPromotedProductsSelection();
+			} catch (WineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     }
+    
     public String findByNameProduct() throws WineException {
         String str = null;
         if(!nameProd.equalsIgnoreCase("")) {
@@ -63,9 +64,7 @@ public class MBeanProduct implements Serializable{
         }
         return str;
     }
-    
-    
-    
+        
     /**
      * 
      * @param min
