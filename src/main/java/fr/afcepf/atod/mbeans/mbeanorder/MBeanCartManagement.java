@@ -24,11 +24,11 @@ import javax.faces.bean.SessionScoped;
  * @author ronan
  */
 @SessionScoped
-@ManagedBean
+@ManagedBean(name = "mBeanCartManagement")
 public class MBeanCartManagement {
 
     // create a new command if necessary or 
-    private Order order;
+    private Order order = new Order();
     // global error adding product
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
@@ -49,11 +49,11 @@ public class MBeanCartManagement {
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
-            //try {
-               // order = buOrder.addItemCart(order, product);
-            /*} catch (WineException ex) {
+            try {
+               order = buOrder.addItemCart(order, product);
+            } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
-            }*/
+            }
             if (order.getOrdersDetail().isEmpty()) {
                 errorAddProduct = "Product not available, stock empty";
             }

@@ -4,10 +4,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="/WEB-INF/templates/commons.xhtml">
     <ui:define name="body">
-        <f:metadata>
+        <!-- <f:metadata>
             <f:event listener="#{mBeanCartManagement.initCart()}"
                      type="preRenderView"></f:event>
-        </f:metadata>
+        </f:metadata> -->
         <form jsfc="h:form" id="Form">
             <div id="content">
                 <div class="container">
@@ -54,7 +54,8 @@
                                             </ui:repeat>
                                         </h:panelGroup>
                                     </tbody>
-                                   
+                                </table>
+                            </div>
                             <!-- /.table-responsive -->
 
                             <div class="box-footer">
