@@ -11,11 +11,14 @@ import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductWine;
+import fr.afcepf.atod.wine.entity.ShippingMethod;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -84,10 +87,6 @@ public class MBeanCartManagement {
                 "provence", "provence", null, null, null, 1);
         listProducts.add(redWine);
         listProducts.add(whiteWine);
-    }
-
-    public List<Product> getListProducts() {
-        return listProducts;
     }
 
     public void setListProducts(List<Product> listProducts) {

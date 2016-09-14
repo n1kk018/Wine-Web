@@ -29,6 +29,7 @@ public class MBeanProduct {
     private String nameProd;
     private List<Product> expensiveProducts;
     private String errorSearch;
+    private List<Product> promotedWinesList;
     
     public MBeanProduct() {
         super();
@@ -41,6 +42,10 @@ public class MBeanProduct {
      * @return
      * @throws WineException 
      */
+    public void initIndex() throws WineException{
+    	promotedWinesList = buProduct.getPromotedProductsSelection();
+    }
+
     public String findByNameProduct() throws WineException {
         String str = null;
         if(!nameProd.equalsIgnoreCase("")) {
@@ -48,6 +53,9 @@ public class MBeanProduct {
         }
         return str;
     }
+    
+    
+    
     /**
      * 
      * @param min
@@ -72,6 +80,7 @@ public class MBeanProduct {
         }
         return str;
     }
+    
      // ----------- Getters && Setters ----------------//
 
     public String getNameProd() {
@@ -89,6 +98,13 @@ public class MBeanProduct {
     public void setBuProduct(IBuProduct buProduct) {
         this.buProduct = buProduct;
     }
-    
-    
+
+	public List<Product> getPromotedWinesList() {
+		return promotedWinesList;
+	}
+
+	public void setPromotedWinesList(List<Product> promotedWinesList) {
+		this.promotedWinesList = promotedWinesList;
+	}
+   
 }
