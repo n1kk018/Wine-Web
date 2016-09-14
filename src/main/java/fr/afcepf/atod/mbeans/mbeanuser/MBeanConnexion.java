@@ -9,6 +9,8 @@ import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.mbeans.mbeanorder.MBeanCartManagement;
 import fr.afcepf.atod.wine.data.product.test.daoTester;
 import fr.afcepf.atod.wine.entity.User;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -25,8 +27,13 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @SessionScoped
-public class MBeanConnexion {
-    @ManagedProperty(value = "#{buCustomer}")
+public class MBeanConnexion implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3560234336879075955L;
+
+	@ManagedProperty(value = "#{buCustomer}")
     private IBuCustomer buCustomer;
     
     /**

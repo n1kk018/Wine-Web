@@ -30,8 +30,12 @@ import org.apache.log4j.Logger;
 @ManagedBean
 @SessionScoped
 public class MBeanCartManagement implements Serializable {
-    // create a new command if necessary or 
-    private Order order = new Order();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2317461571703883416L;
+	// create a new command if necessary or 
+    private Order order;
     // global error adding product
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
@@ -50,6 +54,7 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public String addProductCart(Product product) {
+    	log.info("===================================================================>");
         String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0

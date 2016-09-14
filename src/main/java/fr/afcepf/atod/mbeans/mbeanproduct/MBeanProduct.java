@@ -8,6 +8,8 @@ package fr.afcepf.atod.mbeans.mbeanproduct;
 import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Product;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,9 +25,14 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "mBeanProduct")
 @RequestScoped
-public class MBeanProduct {
+public class MBeanProduct implements Serializable{
     
-    @ManagedProperty(value="#{buProduct}")
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8118205383226441401L;
+
+	@ManagedProperty(value="#{buProduct}")
     private IBuProduct buProduct;
     
     private String nameProd;

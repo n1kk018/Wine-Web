@@ -38,6 +38,7 @@
 			</div>
 		</div>
 		<!-- *** HOT PRODUCT SLIDESHOW *** -->
+		<h:form>
 		<div id="hot">
 			<div class="box">
 				<div class="container">
@@ -48,6 +49,7 @@
 			</div>
 			<div class="container">
 				<div class="product-slider">
+					
 					<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
 						<div class="item">
 							<div class="product">
@@ -76,11 +78,9 @@
 										<a href="article.jsf">#{product.name}</a>
 									</h3>
 									<p class="price">#{product.price} €</p>
-									<h:form id="formCart#{product.apiId}" prependId="false">
 										<h:commandLink class="btn btn-primary hotlist-btn" action="#{mBeanCartManagement.addProductCart(product)}">
 											<i class="fa fa-shopping-cart"></i><span class="hidden-sm">Ajouter au panier</span>
 										</h:commandLink>
-                                    </h:form>
 								</div>
 								<!-- /.text -->
 
@@ -92,10 +92,11 @@
 							<!-- /.product -->
 						</div>
 					</ui:repeat>
+					
 				</div>
 			</div>
 		</div>
-		
+		</h:form>
 		       <!-- *** BLOG HOMEPAGE ***-->
 
         <div class="box text-center" data-animate="fadeInUp">
