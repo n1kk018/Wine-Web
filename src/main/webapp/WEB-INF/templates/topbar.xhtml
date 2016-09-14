@@ -12,17 +12,17 @@
 			<form jsf:id="maform" jsf:prependId="false">
 				<ul class="menu">
 					<h:panelGroup
-						rendered="#{mBConnexion.userConnected.lastname == null}">
+						rendered="#{mBeanConnexion.userConnected.lastname == null}">
 						<li><a href="#" data-toggle="modal"
 							data-target="#login-modal">Login</a></li>
 						<li><a href="register.html">Register</a></li>
 					</h:panelGroup>
 					<h:panelGroup
-						rendered="#{mBConnexion.userConnected.lastname != null}">
+						rendered="#{mBeanConnexion.userConnected.lastname != null}">
 						<li><a href="#">Bonjour Mr
-								#{mBConnexion.userConnected.firstname}</a></li>
+								#{mBeanConnexion.userConnected.firstname}</a></li>
 						<li><h:commandLink value="Se Deconnecter"
-								action="#{mBConnexion.disconnect()}" /></li>
+								action="#{mBeanConnexion.disconnect()}" /></li>
 					</h:panelGroup>
 					<li><a href="contact.html">Contact</a></li>
 					<li><a href="#">Recently viewed</a></li>
@@ -45,26 +45,26 @@
 					<form jsf:id="form" jsf:prependId="false">
 						<h:panelGroup id="messages">
 							<h:outputFormat
-								rendered="#{mbConnexion.resultConnection  != null}" value="">
+								rendered="#{mBeanConnexion.resultConnection  != null}" value="">
 								<div class="resultatConnection">#{mbConnexion.INVALID_CO }
 								</div>
 							</h:outputFormat>
 							<h:outputFormat
-								rendered="#{mbConnexion.resultConnection  == null}" value="" />
+								rendered="#{mBeanConnexion.resultConnection  == null}" value="" />
 						</h:panelGroup>
 						<div class="form-group">
 							<input type="text" class="form-control" jsf:id="email-modal"
 								placeholder="email"
-								jsf:value="#{mBConnexion.userConnected.mail}" />
+								jsf:value="#{mBeanConnexion.userConnected.mail}" />
 						</div>
 						<div class="form-group">
 							<input type="password" class="form-control"
 								jsf:id="password-modal" placeholder="password"
-								jsf:value="#{mBConnexion.userConnected.password}" />
+								jsf:value="#{mBeanConnexion.userConnected.password}" />
 						</div>
 
 						<p class="text-center">
-							<button jsf:action="#{mBConnexion.connect()}"
+							<button jsf:action="#{mBeanConnexion.connect()}"
 								class="btn btn-primary">
 								<i class="fa fa-sign-in"></i> Log in
 							</button>
