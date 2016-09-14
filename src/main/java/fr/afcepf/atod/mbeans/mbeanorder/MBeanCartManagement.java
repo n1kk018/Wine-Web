@@ -10,14 +10,10 @@ import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
-import fr.afcepf.atod.wine.entity.ProductWine;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,7 +22,9 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 @ManagedBean(name = "mBeanCartManagement")
 public class MBeanCartManagement {
-
+    // temporary
+    private static Logger log = 
+            Logger.getLogger(MBeanCartManagement.class);
     // create a new command if necessary or 
     private Order order = new Order();
     // global error adding product
@@ -45,17 +43,14 @@ public class MBeanCartManagement {
      * @return
      */
     public String addProductCart(Product product) {
+        log.info("\t ##### Passe par la methode add au panier ####");
         String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-<<<<<<< HEAD
                order = buOrder.addItemCart(order, product);
-=======
-                order = buOrder.addItemCart(order, product);
                 //page = "pages/basket";
->>>>>>> d9b750a8882c9188733e75235e61d009863fde6e
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
             }
