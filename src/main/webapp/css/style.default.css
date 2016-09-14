@@ -19,7 +19,7 @@ h1 {
   font-size: 40px;
 }
 #top {
-  background: #6c6c6c;
+  background: #555555;
   padding: 10px 0;
 }
 #top .offer {
@@ -40,7 +40,7 @@ h1 {
   }
 }
 #top a {
-  color:  #000000;
+  color: #000;
 }
 #top ul.menu {
   padding-top: 5px;
@@ -935,7 +935,7 @@ h1 {
   background-color: #4a7f45;
 }
 #copyright {
-  background: #6c6c6c;
+  background: #333;
   color: #ccc;
   padding: 20px 0;
   font-size: 12px;

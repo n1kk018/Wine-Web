@@ -5,11 +5,10 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
-import fr.afcepf.atod.business.customer.api.IBuCustomer;
-import fr.afcepf.atod.wine.entity.Customer;
+import fr.afcepf.atod.vin.data.exception.WineException;
+import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
-import fr.afcepf.atod.wine.entity.PaymentInfo;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductWine;
 import fr.afcepf.atod.wine.entity.ShippingMethod;
@@ -30,199 +29,101 @@ import org.apache.log4j.Logger;
 @SessionScoped
 @ManagedBean(name="mBeanCartManagement")
 public class MBeanCartManagement {
-	public static Logger log = Logger.getLogger(MBeanCartManagement.class);
-	
-	@ManagedProperty(value = "#{buCustomer}")
-    private IBuCustomer buCustomer;
-	
-	
-	public MBeanCartManagement() {
-		super();
-
-	}
-
-	// ######################################################## //
-	/**
-	 * ******************************************************** Methode pour
-	 * initialiser le panier pour faire le parcours panier/validation paiement/.
-	 *********************************************************
-	 */
-	private List<OrderDetail> shoppingCart = new ArrayList<>();
-	private OrderDetail orderDetail1;
-	private OrderDetail orderDetail2;
-	private Double totalLine = 0.0;
-	private Double totalCart = 0.0;
-	private Product prodcut ;
-	private Double totalTransportFree;
-	private int totalQuantity=0;
-	private int quantity = 1;
-	
-
-	public void initCart() {
-		
-		if(shoppingCart.size()==0){
-			ProductWine redWine = new ProductWine(null, "bourgogne", 200.0, "bourgogne", "bourgogne", null, null, null, 512);
-			ProductWine whiteWine = new ProductWine(null, "provence", 100.0, "provence", "provence", null, null, null, 512);
-//			orderDetail2 = new OrderDetail(null,3, null, redWine);
-			orderDetail1 = new OrderDetail(null, 2, null, whiteWine);
-		
-		shoppingCart.add(orderDetail1);
-//		shoppingCart.add(orderDetail2);
-		}
-		
-//		quantity = orderDetail1.getQuantite();
-		log.info("*******************************init cart**************************************");
-	}
-
-	/**
-	 * remove item shopping cart
-	 *
-	 */
-	public void removeOrderTetail(OrderDetail o) {
-	shoppingCart.remove(o);
-	}
-
-	/**
-	 * Ajax : nombre de produit change listener
-	 *
-	 */
-
-	public void updateBasket() {
-		log.info("*****************************************"+ quantity);
-		orderDetail1.setQuantite(quantity);
-		
-		calculerOrderLine();
-	
-	}
-
-	/**
-	 * calculer prix d'une ligne de commande
-	 */
-	public Double calculerOrderLine() {
-		totalLine = (orderDetail1.getProductOrdered().getPrice())*(orderDetail1.getQuantite());
-		log.info("*******************************orderline**************************************");
-		return totalLine;
-		
-	}
-
-	/**
-	 * calculer prix d'une ligne de commande
-	 */
-	public Double calculerTotalOrder(int quantity) {
-
-		for (OrderDetail o : shoppingCart) {
-			totalCart = totalCart + o.getQuantite() * (o.getProductOrdered().getPrice() )+ totalTransportFree;
-		}
-
-		return totalCart;
-	}
-
-	/**
-	 * calculer prix du frais transport
-	 */
-	public Double calculerTransportFree() {
-		totalTransportFree = (double) (totalQuantity * 2);
-		return totalTransportFree;
-	}
-	
-	/**
-	 * calculer nombre d'article
-	 */
-	public int calculerTotalQuantity(int quantity) {
-		for(OrderDetail o : shoppingCart){
-			
-			totalQuantity = o.getQuantite() + totalQuantity;
-		}
-		
-		
-		return totalQuantity;
-	}
-
-	// ---------------- Getters && Setters ------------ //
-	
-	
-	public List<OrderDetail> getShoppingCart() {
-		return shoppingCart;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public IBuCustomer getBuCustomer() {
-		return buCustomer;
-	}
-
-	public void setBuCustomer(IBuCustomer buCustomer) {
-		this.buCustomer = buCustomer;
-	}
-
-	public int getTotalQuantity() {
-		return totalQuantity;
-	}
-
-	public void setTotalQuantity(int totalQuantity) {
-		this.totalQuantity = totalQuantity;
-	}
-
-	public void setShoppingCart(List<OrderDetail> shoppingCart) {
-		this.shoppingCart = shoppingCart;
-	}
 
 
+    // create a new command if necessary or 
+    private Order order;
+    // global error adding product
+    private String errorAddProduct;
+    @ManagedProperty(value = "#{buOrder}")
+    private IBuOrder buOrder;
 
-	public OrderDetail getOrderDetail1() {
-		return orderDetail1;
-	}
 
-	public void setOrderDetail1(OrderDetail orderDetail1) {
-		this.orderDetail1 = orderDetail1;
-	}
+    public MBeanCartManagement() {
+        super();
+        errorAddProduct = "";
+    }
 
-	public OrderDetail getOrderDetail2() {
-		return orderDetail2;
-	}
 
-	public void setOrderDetail2(OrderDetail orderDetail2) {
-		this.orderDetail2 = orderDetail2;
-	}
+    /**
+     *
+     * @param product
+     * @return
+     */
+    public String addProductCart(Product product) {
+        String page = null;
+        if (!product.getName().equalsIgnoreCase("")
+                && product.getPrice() >= 0
+                && !product.getProductSuppliers().isEmpty()) {
+            try {
+                order = buOrder.addItemCart(order, product);
+                //page = "pages/basket";
+            } catch (WineException ex) {
+                errorAddProduct = "Product not available, stock empty";
+            }
+            if (order.getOrdersDetail().isEmpty()) {
+                errorAddProduct = "Product not available, stock empty";
+            }
+        } else {
+            errorAddProduct = "Product not available, stock empty";
+        }
+        return page;
+    }
 
-	public Double getTotalLine() {
-		return totalLine;
-	}
+    public void removeProductCart(OrderDetail orderDetail) {
+        if (!order.getOrdersDetail().isEmpty()) {
+            order.getOrdersDetail().remove(orderDetail);
+        }
+    }
 
-	public void setTotalLine(Double totalLine) {
-		this.totalLine = totalLine;
-	}
+    //  ######################################################## //
+    /**
+     * ********************************************************
+     * Methode pour initialiser le panier pour faire le parcours
+     * panier/validation paiement/.
+     * ********************************************************
+     */
+    private List<Product> listProducts = null;
 
-	public Double getTotalCart() {
-		return totalCart;
-	}
+    public void initCart() {
+        listProducts = new ArrayList<>();
+        Product redWine = new ProductWine(1, "bourgogne", 200.0,
+                "bourgogne", "bourgogne", null, null, null, 1);
+        Product whiteWine = new ProductWine(1, "provence", 100.0,
+                "provence", "provence", null, null, null, 1);
+        listProducts.add(redWine);
+        listProducts.add(whiteWine);
+    }
 
-	public void setTotalCart(Double totalCart) {
-		this.totalCart = totalCart;
-	}
 
-	public Product getProdcut() {
-		return prodcut;
-	}
+    public void setListProducts(List<Product> listProducts) {
+        this.listProducts = listProducts;
+    }
 
-	public void setProdcut(Product prodcut) {
-		this.prodcut = prodcut;
-	}
+    public Order getOrder() {
+        return order;
+    }
 
-	public Double getTotalTransportFree() {
-		return totalTransportFree;
-	}
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
-	public void setTotalTransportFree(Double totalTransportFree) {
-		this.totalTransportFree = totalTransportFree;
-	}
+    public String getErrorAddProduct() {
+        return errorAddProduct;
+    }
 
+    public void setErrorAddProduct(String errorAddProduct) {
+        this.errorAddProduct = errorAddProduct;
+    }
+
+    public IBuOrder getBuOrder() {
+        return buOrder;
+    }
+
+
+    public void setBuOrder(IBuOrder buOrder) {
+        this.buOrder = buOrder;
+    }
 
 
 }
