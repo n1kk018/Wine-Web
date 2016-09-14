@@ -5,6 +5,7 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
@@ -13,6 +14,7 @@ import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductWine;
 import fr.afcepf.atod.wine.entity.ShippingMethod;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -20,13 +22,15 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author ronan
  */
-@SessionScoped
 @ManagedBean
-public class MBeanCartManagement {
+@SessionScoped
+public class MBeanCartManagement implements Serializable {
 
     // create a new command if necessary or 
     private Order order;
@@ -34,6 +38,8 @@ public class MBeanCartManagement {
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
+    
+    private Logger log = Logger.getLogger(MBeanConnexion.class);
 
     public MBeanCartManagement() {
         super();
@@ -51,6 +57,7 @@ public class MBeanCartManagement {
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
+            	log.info("Ajout panier");
                 order = buOrder.addItemCart(order, product);
                 //page = "pages/basket";
             } catch (WineException ex) {

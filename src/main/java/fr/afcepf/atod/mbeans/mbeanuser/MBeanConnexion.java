@@ -6,6 +6,8 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
+import fr.afcepf.atod.mbeans.mbeanorder.MBeanCartManagement;
+import fr.afcepf.atod.wine.data.product.test.daoTester;
 import fr.afcepf.atod.wine.entity.User;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,15 +17,18 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author ronan
  */
-@ManagedBean(name = "mBeanConnexion")
+@ManagedBean
 @SessionScoped
 public class MBeanConnexion {
     @ManagedProperty(value = "#{buCustomer}")
     private IBuCustomer buCustomer;
+    
     /**
      * user / customer 
      */
@@ -42,6 +47,7 @@ public class MBeanConnexion {
      */
     private String resultConnection;
     
+    
     public MBeanConnexion() {
         super();
         userConnected = new User();
@@ -52,6 +58,7 @@ public class MBeanConnexion {
      */
     public String connect() {
         String page = null;
+        
         errors      = new HashMap<String, String>();
         if (!userConnected.getMail().equalsIgnoreCase("") 
                 && !userConnected.getPassword().equalsIgnoreCase("")) {
