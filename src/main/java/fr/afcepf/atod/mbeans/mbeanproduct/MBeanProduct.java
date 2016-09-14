@@ -32,7 +32,9 @@ public class MBeanProduct {
     }
     
     public void initIndex() throws WineException{
-    	promotedWinesList = buProduct.getPromotedProductsSelection();
+    	if(promotedWinesList==null){
+    		promotedWinesList = buProduct.getPromotedProductsSelection();
+    	}
     }
 
     public String findByNameProduct() throws WineException {
