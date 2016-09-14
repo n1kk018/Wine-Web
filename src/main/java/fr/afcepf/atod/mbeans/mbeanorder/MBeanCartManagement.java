@@ -50,11 +50,11 @@ public class MBeanCartManagement {
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
-            try {
-                order = buOrder.addItemCart(order, product);
-            } catch (WineException ex) {
+            //try {
+               // order = buOrder.addItemCart(order, product);
+            /*} catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
-            }
+            }*/
             if (order.getOrdersDetail().isEmpty()) {
                 errorAddProduct = "Product not available, stock empty";
             }

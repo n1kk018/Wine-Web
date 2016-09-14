@@ -67,6 +67,9 @@
 										<a href="article.jsf">#{product.name}</a>
 									</h3>
 									<p class="price">#{product.price} €</p>
+									<h:form id="formCart#{product.apiId}" prependId="false">
+										<h:commandLink action="#{mBeanCartManagement.addProductCart(product)}" value="Ajouter au panier" />
+                                    </h:form>
 								</div>
 								<!-- /.text -->
 
@@ -81,6 +84,7 @@
 				</div>
 			</div>
 		</div>
+		
 		       <!-- *** BLOG HOMEPAGE ***-->
 
         <div class="box text-center" data-animate="fadeInUp">
