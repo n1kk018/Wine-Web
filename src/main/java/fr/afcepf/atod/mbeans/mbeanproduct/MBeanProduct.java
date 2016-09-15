@@ -10,6 +10,7 @@ import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductType;
+import fr.afcepf.atod.wine.entity.ProductVarietal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class MBeanProduct implements Serializable {
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
     private Map<ProductType,List<String>> appellations;
+    private Map<ProductType,List<ProductVarietal>> varietals;
     
     public MBeanProduct() {
         super();
@@ -69,6 +71,7 @@ public class MBeanProduct implements Serializable {
     		try {
 				wineTypes = buProduct.getWineTypes();
 				appellations = buProduct.getAppellationsByType(wineTypes);
+				varietals = buProduct.getVarietalsByType(wineTypes);
 				log.info(appellations);
 			} catch (WineException e) {
 				// TODO Auto-generated catch block
@@ -150,7 +153,16 @@ public class MBeanProduct implements Serializable {
 	public void setAppellations(Map<ProductType, List<String>> appellations) {
 		this.appellations = appellations;
 	}
+
+	public Map<ProductType, List<ProductVarietal>> getVarietals() {
+		return varietals;
+	}
+
+	public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
+		this.varietals = varietals;
+	}
     
+	
     
 
 }
