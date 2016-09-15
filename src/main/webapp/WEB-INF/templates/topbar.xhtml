@@ -14,18 +14,20 @@
 					<h:panelGroup
 						rendered="#{mBeanConnexion.userConnected.lastname == null}">
 						<li><a href="#" data-toggle="modal"
-							data-target="#login-modal">Login</a></li>
-						<li><a href="register.html">Register</a></li>
+							data-target="#login-modal">Se connecter</a></li>
+						<li><a href="register.html">Inscription</a></li>
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{mBeanConnexion.userConnected.lastname != null}">
 						<li><a href="#">Bonjour Mr
 								#{mBeanConnexion.userConnected.firstname}</a></li>
-						<li><h:commandLink value="Se Deconnecter"
-								action="#{mBeanConnexion.disconnect()}" /></li>
+						<!--<li><button jsf:action="#{mBeanConnexion.disconnect()}">Log out </button>
+                            </li>-->
+						<li><a href="#" jsf:action="#{mBeanConnexion.disconnect()}">Se
+								deconnecter</a></li>
 					</h:panelGroup>
 					<li><a href="contact.html">Contact</a></li>
-					<li><a href="#">Recently viewed</a></li>
+					<li><a href="#">Vus récemment</a></li>
 				</ul>
 			</form>
 		</div>
@@ -37,17 +39,16 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true"></button>
-					<h4 class="modal-title" id="Login">Customer login</h4>
+						aria-hidden="true">Fermer</button>
+					<h4 class="modal-title" id="Login">Identification client</h4>
 				</div>
 				<div class="modal-body">
-					<!--A Supprimer p.e -->
 					<form jsf:id="form" jsf:prependId="false">
 						<h:panelGroup id="messages">
 							<h:outputFormat
 								rendered="#{mBeanConnexion.resultConnection  != null}" value="">
-								<div class="resultatConnection">#{mBeanConnexion.INVALID_CO }
-								</div>
+								<div class="resultatConnection">
+									#{mBeanConnexion.INVALID_CO }</div>
 							</h:outputFormat>
 							<h:outputFormat
 								rendered="#{mBeanConnexion.resultConnection  == null}" value="" />
@@ -71,13 +72,16 @@
 						</p>
 
 					</form>
-					<!-- Fin suppression -->
-					<p class="text-center text-muted">Not registered yet?</p>
 					<p class="text-center text-muted">
-						<a href="register.html"><strong>Register now</strong></a>! It is
-						easy and done in 1 minute and gives you access to special
-						discounts and much more!
+						<a href="">Mot de passe oublié</a>
 					</p>
+					<p class="text-center text-muted">Pas encore inscrit ?</p>
+					<p class="text-center text-muted">
+						<a href="register.html"><strong>Créez votre compte</strong></a> !
+						pour commander plus vite et accéder aux services personnalisés,
+						aux cadeaux, aux avantages sur-mesure ...!
+					</p>
+
 				</div>
 			</div>
 		</div>
