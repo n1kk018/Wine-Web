@@ -11,42 +11,53 @@ import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
-import fr.afcepf.atod.wine.entity.ProductWine;
+import fr.afcepf.atod.wine.entity.User;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import org.apache.log4j.Logger;
-
+import org.hibernate.Session;
 /**
  *
  * @author ronan
  */
-@ManagedBean
 @SessionScoped
-public class MBeanCartManagement implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2317461571703883416L;
-	// create a new command if necessary or 
-    private Order order;
+@ManagedBean(name = "mBeanCartManagement")
+public class MBeanCartManagement {
+
+
+    // create a new command if necessary or 
+    private Order order = new Order();
     // global error adding product
+    
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
     
-    private Logger log = Logger.getLogger(MBeanConnexion.class);
+    @ManagedProperty(value = "mBeanConnexion")
+    private MBeanConnexion mBeanConnexion;
 
+ 
     public MBeanCartManagement() {
         super();
         errorAddProduct = "";
     }
+    
+    // ajouter une commande dans la base, verifier la session avant methode
+    private Session session;
+    private User user = new User();
+    
+    
+   
+//    
+//    ProductWine redWine = new ProductWine(null, "bourgogne", 200.0, "bourgogne", "bourgogne", null, null, null, 512);
+//	ProductWine whiteWine = new ProductWine(null, "provence", 100.0, "provence", "provence", null, null, null, 512);
+//	
+//	
+//	
+//	OrderDetail orderDetail = new OrderDetail(null, 2, order, redWine);
+//	
 
     /**
      *
@@ -54,13 +65,13 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public String addProductCart(Product product) {
-    	log.info("===================================================================>");
         String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-            	log.info("Ajout panier");
+                order = buOrder.addItemCart(order, product);
+            	//log.info("Ajout panier");
                order = buOrder.addItemCart(order, product);
                 //page = "pages/basket";
             } catch (WineException ex) {
@@ -105,9 +116,8 @@ public class MBeanCartManagement implements Serializable {
     
     public double calculSubTotal() {
         double subTotal = 0.0;
-        
+        if(!order.getOrdersDetail().isEmpty()){
         for(OrderDetail o : order.getOrdersDetail()){
-            if(!order.getOrdersDetail().isEmpty()){
             subTotal = subTotal + calculTotalLine(o);
             }
         }
@@ -131,6 +141,30 @@ public class MBeanCartManagement implements Serializable {
         return shipping;
     }
     
+    
+    /**
+     * 
+     * @param orderDetail
+     * @return 
+     */
+    public String addNewOrder(Order o){
+    	String suite =null;
+    	if(mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname()!=null) {
+    		try {
+				buOrder.addNewOrder(o);
+				suite = "checkout1adress.xhtml";
+			} catch (WineException e) {
+				e.printStackTrace();
+			}
+    	}else{
+    		suite = "register.xhtml";
+		return suite;
+		}
+    	return suite;
+    }
+    
+    
+    
     //  ######################################################## //
     /**
      * ********************************************************
@@ -151,6 +185,7 @@ public class MBeanCartManagement implements Serializable {
         listProducts.add(whiteWine);
         
     }
+
 
     public void setListProducts(List<Product> listProducts) {
         this.listProducts = listProducts;
@@ -175,8 +210,10 @@ public class MBeanCartManagement implements Serializable {
         return buOrder;
     }
 
+
     public void setBuOrder(IBuOrder buOrder) {
         this.buOrder = buOrder;
     }
+
 
 }
