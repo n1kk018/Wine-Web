@@ -52,8 +52,7 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public String addProductCart(Product product) {
-        String page = null;
-        log.info("=================================================>");
+        String page = null;        
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
