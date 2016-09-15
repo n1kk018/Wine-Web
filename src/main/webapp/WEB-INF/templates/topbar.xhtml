@@ -47,9 +47,9 @@
 					<form jsf:id="form" jsf:prependId="false">
 						<h:panelGroup id="messages">
 							<h:outputFormat
-								rendered="#{mBeanConnexion.resultConnection  != null}" value="">
+								rendered="#{mBeanConnexion.resultConnection  != null}" value="#{mBeanConnexion.invalidConnexion}">
 								<div>
-                                                                    <p>#{mBeanConnexion.invalidConnexion}</p>
+                                                                    <p></p>
 								</div>
 							</h:outputFormat>
 							<h:outputFormat

@@ -15,9 +15,10 @@ import java.util.Set;
  *
  * @author ronan
  */
-public final class Util {
 
-    private Util() {
+public final class UtilConverter {
+
+    private UtilConverter() {
         super();
     }
     /**
@@ -25,10 +26,12 @@ public final class Util {
      * @param set
      * @return 
      */
-    public static List<Object> retrieveListAsSet(Set<Object> set) {
-        return new ArrayList<Object>(set);
+    public static List retrieveListAsSet(Set set) {
+        return new ArrayList(set);
     }
-    public static Set<Object> retrieveSetAsList(List<Object> list) {
-        return new HashSet<Object>(list);
+    public static Set retrieveSetAsList(List list) {
+        return new HashSet(list);
     }
+    
+    
 }
