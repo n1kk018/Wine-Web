@@ -6,32 +6,35 @@
 package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Product;
+import fr.afcepf.atod.wine.entity.ProductType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.log4j.Logger;
 /**
  *
  * @author ronan
  */
-@ManagedBean(name = "mBeanProduct")
-@RequestScoped
+@ManagedBean
+@SessionScoped
 public class MBeanProduct implements Serializable{
     
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = -8118205383226441401L;
-
+	private Logger log = Logger.getLogger(MBeanConnexion.class);
+	
 	@ManagedProperty(value="#{buProduct}")
     private IBuProduct buProduct;
     
@@ -39,6 +42,7 @@ public class MBeanProduct implements Serializable{
     private List<Product> expensiveProducts;
     private String errorSearch;
     private List<Product> promotedWinesList;
+    private List<ProductType> wineTypes;
     
     public MBeanProduct() {
         super();
@@ -46,16 +50,28 @@ public class MBeanProduct implements Serializable{
         errorSearch = "";
     }
     
-    /**
-     * 
-     * @return
-     * @throws WineException 
-     */
-    public void initIndex() throws WineException{
+    @PostConstruct
+    public void initIndex(){
     	if(promotedWinesList==null){
-    		promotedWinesList = buProduct.getPromotedProductsSelection();
+    		try {
+				promotedWinesList = buProduct.getPromotedProductsSelection();
+				
+			} catch (WineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	if(wineTypes==null){
+    		try {
+				wineTypes = buProduct.getWineTypes();
+				log.info(wineTypes);
+			} catch (WineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     }
+    
     public String findByNameProduct() throws WineException {
         String str = null;
         if(!nameProd.equalsIgnoreCase("")) {
@@ -63,9 +79,7 @@ public class MBeanProduct implements Serializable{
         }
         return str;
     }
-    
-    
-    
+        
     /**
      * 
      * @param min
@@ -116,5 +130,14 @@ public class MBeanProduct implements Serializable{
 	public void setPromotedWinesList(List<Product> promotedWinesList) {
 		this.promotedWinesList = promotedWinesList;
 	}
+
+	public List<ProductType> getWineTypes() {
+		return wineTypes;
+	}
+
+	public void setWineTypes(List<ProductType> wineTypes) {
+		this.wineTypes = wineTypes;
+	}
+	
    
 }

@@ -32,6 +32,7 @@ public class MBeanCartManagement {
     // global error adding product
     
     private String errorAddProduct;
+    
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
     
@@ -70,8 +71,9 @@ public class MBeanCartManagement {
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-                order = buOrder.addItemCart(order, product);
-            	//log.info("Ajout panier");
+            	if(order == null){
+            		order = new Order();
+            	}
                order = buOrder.addItemCart(order, product);
                 //page = "pages/basket";
             } catch (WineException ex) {

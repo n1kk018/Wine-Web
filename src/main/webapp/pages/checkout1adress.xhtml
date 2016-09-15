@@ -1,217 +1,211 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                template="/WEB-INF/templates/commons.xhtml">
-    <ui:define name="body">
-			<form jsfc="h:form" id="Form">
-				<div id="content">
-					<div class="container">
-
-						<div class="col-md-12">
-							<ul class="breadcrumb">
-								<li><a href="#">Home</a></li>
-								<li>Livraison - vérification d'adresse</li>
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	template="/WEB-INF/templates/commons.xhtml">
+	<ui:define name="body">
+		<div id="content">
+			<div class="container">
+				<div class="col-md-12">
+					<ul class="breadcrumb">
+						<li><a href="#">Home</a></li>
+						<li>Livraison - vérification d'adresse</li>
+					</ul>
+				</div>
+				<div class="col-md-9" id="checkout">
+					<div class="box">
+						<form jsf="h:form" id="Form" action="checkout2.jsf">
+							<h3>Adresse de livraison :</h3>
+							<ul class="nav nav-pills nav-justified">
+								<li class="active"><a href="#"><i
+										class="fa fa-map-marker"></i><br />Address</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-truck"></i><br />Delivery
+										Method</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-money"></i><br />Payment
+										Method</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />Order
+										Review</a></li>
 							</ul>
-						</div>
-
-						<div class="col-md-9" id="checkout">
-
-							<div class="box">
-								<form method="post" action="checkout2.html">
-									<h3>Adresse de livraison :</h3>
-									<ul class="nav nav-pills nav-justified">
-										<li class="active"><a href="#"><i
-												class="fa fa-map-marker"></i><br />Address</a></li>
-										<li class="disabled"><a href="#"><i
-												class="fa fa-truck"></i><br />Delivery Method</a></li>
-										<li class="disabled"><a href="#"><i
-												class="fa fa-money"></i><br />Payment Method</a></li>
-										<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />Order
-												Review</a></li>
-									</ul>
-
-									<div class="content">
-										<div class="row">
-											<div class="col-sm-12">
-												<h5>
-													<h:outputText value="Titinom" />
-												</h5>
-												<h5>
-													<h:outputText value="prenom" />
-												</h5>
-												<h5>
-													<h:outputText value="1 Rue du Paris" />
-												</h5>
-												<h5>
-													<h:outputText value="78500" />
-												</h5>
-												<h5>
-													<h:outputText value="Sartrouville" />
-												</h5>
-												<h5>
-													<h:outputText value="France" />
-												</h5>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-sm-6">
-												<div class="form-group">
-													<button type="submit" class="btn btn-primary">
-														Valider et payer ma commande<i class="fa fa-chevron-right"></i>
-													</button>
-												</div>
-											</div>
-											<div class="col-sm-6">
-												<div class="form-group">
-													<button type="submit" class="btn btn-primary"
-														data-toggle="collapse" data-target="#modif">
-														Modifier adresse<i class="fa fa-chevron-bottom"></i>
-													</button>
-												</div>
-											</div>
-										</div>
-
-										<!-- /.row -->
-
-										<div class="content" id="modif">
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label for="firstname">Nom</label> <input type="text"
-															class="form-control" id="firstname" />
-													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label for="lastname">Prénom</label> <input type="text"
-															class="form-control" id="lastname" />
-													</div>
-												</div>
-											</div>
-											<!-- /.row -->
-
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label for="number">Numero </label> <input type="text"
-															class="form-control" id="number" />
-													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label for="street">Rue</label> <input type="text"
-															class="form-control" id="street" />
-													</div>
-												</div>
-
-											</div>
-											<!-- /.row -->
-
-											<div class="row">
-												<div class="col-sm-6 col-md-3">
-													<div class="form-group">
-														<label for="city">Ville</label> <input type="text"
-															class="form-control" id="city" />
-													</div>
-												</div>
-												<div class="col-sm-6 col-md-3">
-													<div class="form-group">
-														<label for="Code postal">Code postal</label> <input
-															type="text" class="form-control" id="Code postal" />
-													</div>
-												</div>
-												<div class="col-sm-6 col-md-3">
-													<div class="form-group">
-														<label for="country">Pays</label> <input type="text"
-															class="form-control" id="county" />
-													</div>
-												</div>
-											</div>
-											<!-- /.row -->
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label for="phone">Télephone</label> <input type="text"
-															class="form-control" id="phone" />
-													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label for="email">Email</label> <input type="text"
-															class="form-control" id="email" />
-													</div>
-												</div>
-											</div>
-											<!-- /.row -->
-									<div class="row">
+							<div class="content">
+								<div class="row">
+									<div class="col-sm-12">
+										<h5>
+											<h:outputText value="Titinom" />
+										</h5>
+										<h5>
+											<h:outputText value="prenom" />
+										</h5>
+										<h5>
+											<h:outputText value="1 Rue du Paris" />
+										</h5>
+										<h5>
+											<h:outputText value="78500" />
+										</h5>
+										<h5>
+											<h:outputText value="Sartrouville" />
+										</h5>
+										<h5>
+											<h:outputText value="France" />
+										</h5>
+									</div>
+								</div>
+								<div class="row">
 									<div class="col-sm-6">
-                                    <button type="submit" class="btn btn-primary">Valider et payer ma commande<i class="fa fa-chevron-right"></i>
-                                    </button>
-                                </div>
-									</div>
+										<div class="form-group">
+											<button type="submit" class="btn btn-primary">
+												Valider et payer ma commande<i class="fa fa-chevron-right"></i>
+											</button>
 										</div>
-										<!-- /content modif -->
 									</div>
-
-									<div class="box-footer">
-										<div class="pull-left">
-											<a href="basket.html" class="btn btn-default"><i
-												class="fa fa-chevron-left"></i>Retourner au panier</a>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<button type="submit" class="btn btn-primary"
+												data-toggle="collapse" data-target="#modif">
+												Modifier adresse<i class="fa fa-chevron-bottom"></i>
+											</button>
 										</div>
-
 									</div>
-								</form>
-							</div>
-							<!-- /.box -->
-
-
-						</div>
-						<!-- /.col-md-9 -->
-
-						<div class="col-md-3">
-
-							<div class="box" id="order-summary">
-								<div class="box-header">
-									<h3>Récapitulatif de commande</h3>
-								</div>
-								<p class="text-muted"> Vous avez <h:outputLabel value="5"/> produits dans votre commandes</p>
-
-								<div class="table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<td>Les articles</td>
-												<th>€446.00</th>
-											</tr>
-											<tr>
-												<td>Frais de transport</td>
-												<th>€10.00</th>
-											</tr>
-											<tr>
-												<td>Taxe</td>
-												<th>€0.00</th>
-											</tr>
-											<tr class="total">
-												<td>Total</td>
-												<th>€456.00</th>
-											</tr>
-										</tbody>
-									</table>
 								</div>
 
+								<!-- /.row -->
+
+								<div class="content" id="modif">
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="firstname">Nom</label> <input type="text"
+													class="form-control" id="firstname" />
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="lastname">Prénom</label> <input type="text"
+													class="form-control" id="lastname" />
+											</div>
+										</div>
+									</div>
+									<!-- /.row -->
+
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="number">Numero </label> <input type="text"
+													class="form-control" id="number" />
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="street">Rue</label> <input type="text"
+													class="form-control" id="street" />
+											</div>
+										</div>
+
+									</div>
+									<!-- /.row -->
+
+									<div class="row">
+										<div class="col-sm-6 col-md-3">
+											<div class="form-group">
+												<label for="city">Ville</label> <input type="text"
+													class="form-control" id="city" />
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-3">
+											<div class="form-group">
+												<label for="Code postal">Code postal</label> <input
+													type="text" class="form-control" id="Code postal" />
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-3">
+											<div class="form-group">
+												<label for="country">Pays</label> <input type="text"
+													class="form-control" id="county" />
+											</div>
+										</div>
+									</div>
+									<!-- /.row -->
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="phone">Télephone</label> <input type="text"
+													class="form-control" id="phone" />
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label for="email">Email</label> <input type="text"
+													class="form-control" id="email" />
+											</div>
+										</div>
+									</div>
+									<!-- /.row -->
+									<div class="row">
+										<div class="col-sm-6">
+											<button type="submit" class="btn btn-primary">
+												Valider et payer ma commande<i class="fa fa-chevron-right"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<!-- /content modif -->
 							</div>
 
-						</div>
-						<!-- /.col-md-3 -->
+							<div class="box-footer">
+								<div class="pull-left">
+									<a href="basket.html" class="btn btn-default"><i
+										class="fa fa-chevron-left"></i>Retourner au panier</a>
+								</div>
 
+							</div>
+						</form>
+					</div>
+					<!-- /.box -->
+
+
+				</div>
+				<!-- /.col-md-9 -->
+
+				<div class="col-md-3">
+
+					<div class="box" id="order-summary">
+						<div class="box-header">
+							<h3>Récapitulatif de commande</h3>
+						</div>
+						<p class="text-muted">
+							Vous avez
+							<h:outputLabel value="5" />
+							produits dans votre commandes
+						</p>
+
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td>Les articles</td>
+										<th>€446.00</th>
+									</tr>
+									<tr>
+										<td>Frais de transport</td>
+										<th>€10.00</th>
+									</tr>
+									<tr>
+										<td>Taxe</td>
+										<th>€0.00</th>
+									</tr>
+									<tr class="total">
+										<td>Total</td>
+										<th>€456.00</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
 					</div>
-					<!-- /.container -->
+
 				</div>
-			</form>
-
-		</ui:define>
-
-	</ui:composition>
-
+				<!-- /.col-md-3 -->
+			</div>
+			<!-- /.container -->
+		</div>
+	</ui:define>
+</ui:composition>

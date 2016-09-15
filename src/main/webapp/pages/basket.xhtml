@@ -1,15 +1,16 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="/WEB-INF/templates/commons.xhtml">
     <ui:define name="body">
         <!-- <f:metadata>
             <f:event listener="#{mBeanCartManagement.initCart()}"
                      type="preRenderView"></f:event>
         </f:metadata> -->
-        <form jsfc="h:form" id="Form">
+        <form jsf:id="form1">
             <div id="content">
                 <div class="container">
 
@@ -49,7 +50,7 @@
                                                        var="orderDetail">
                                                 <tr>
                                                     <td>#{orderDetail.productOrdered.name}</td>
-                                                    <td>#{orderDetail.quantite}</td>
+                                                    <td>#{orderDetail.productOrdered.quantite}</td>
                                                     <td>#{orderDetail.productOrdered.price}</td>
                                                     <td>#{mBeanCartManagement.calculDiscount(orderDetail)}</td>
                                                     <td>#{mBeanCartManagement.calculTotalLine(orderDetail)}</td>
@@ -210,7 +211,6 @@
                             </div>
                             <p class="text-muted">If you have a coupon code, please enter
                                 it in the box below.</p>
-                            <form>
                                 <div class="input-group">
 
                                     <h:inputText value="" class="form-control" />
@@ -221,7 +221,6 @@
                                     </span>
                                 </div>
                                 <!-- /input-group -->
-                            </form>
                         </div>
                     </div>
                     <!-- /.col-md-3 -->
