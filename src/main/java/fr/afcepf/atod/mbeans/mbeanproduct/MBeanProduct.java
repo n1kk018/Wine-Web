@@ -21,81 +21,82 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.apache.log4j.Logger;
+
 /**
  *
  * @author ronan
  */
 @ManagedBean
 @SessionScoped
-public class MBeanProduct implements Serializable{
-    
+public class MBeanProduct implements Serializable {
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8118205383226441401L;
-	private Logger log = Logger.getLogger(MBeanConnexion.class);
-	
-	@ManagedProperty(value="#{buProduct}")
+     *
+     */
+    private static final long serialVersionUID = -8118205383226441401L;
+    private Logger log = Logger.getLogger(MBeanConnexion.class);
+
+    @ManagedProperty(value = "#{buProduct}")
     private IBuProduct buProduct;
-    
+
     private String nameProd;
     private List<Product> expensiveProducts;
     private String errorSearch;
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
-    
+
     public MBeanProduct() {
         super();
         nameProd = "";
         errorSearch = "";
     }
-    
+
     @PostConstruct
-    public void initIndex(){
-    	if(promotedWinesList==null){
-    		try {
-				promotedWinesList = buProduct.getPromotedProductsSelection();
-				
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
-    	if(wineTypes==null){
-    		try {
-				wineTypes = buProduct.getWineTypes();
-				log.info(wineTypes);
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
+    public void initIndex() {
+        if (promotedWinesList == null) {
+            try {
+                promotedWinesList = buProduct.getPromotedProductsSelection();
+
+            } catch (WineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        if (wineTypes == null) {
+            try {
+                wineTypes = buProduct.getWineTypes();
+                log.info(wineTypes);
+            } catch (WineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
-    
+
     public String findByNameProduct() throws WineException {
         String str = null;
-        if(!nameProd.equalsIgnoreCase("")) {
+        if (!nameProd.equalsIgnoreCase("")) {
             buProduct.findByName(nameProd);
         }
         return str;
     }
-        
+
     /**
-     * 
+     *
      * @param min
-     * @return 
+     * @return
      */
-    public String findExpensiveProducts(double min){
+    public String findExpensiveProducts(double min) {
         String str = null;
         expensiveProducts = new ArrayList<>();
         if (min >= 0.0) {
             try {
                 expensiveProducts = buProduct.findExpensive(min);
             } catch (WineException ex) {
-               errorSearch = "Research not found in the Database.";
+                errorSearch = "Research not found in the Database.";
             }
-            if (!expensiveProducts.isEmpty()){
-                
+            if (!expensiveProducts.isEmpty()) {
+
             } else {
                 errorSearch = "Research not found in the Database.";
             }
@@ -104,9 +105,8 @@ public class MBeanProduct implements Serializable{
         }
         return str;
     }
-    
-     // ----------- Getters && Setters ----------------//
 
+    // ----------- Getters && Setters ----------------//
     public String getNameProd() {
         return nameProd;
     }
@@ -123,21 +123,20 @@ public class MBeanProduct implements Serializable{
         this.buProduct = buProduct;
     }
 
-	public List<Product> getPromotedWinesList() {
-		return promotedWinesList;
-	}
+    public List<Product> getPromotedWinesList() {
+        return promotedWinesList;
+    }
 
-	public void setPromotedWinesList(List<Product> promotedWinesList) {
-		this.promotedWinesList = promotedWinesList;
-	}
+    public void setPromotedWinesList(List<Product> promotedWinesList) {
+        this.promotedWinesList = promotedWinesList;
+    }
 
-	public List<ProductType> getWineTypes() {
-		return wineTypes;
-	}
+    public List<ProductType> getWineTypes() {
+        return wineTypes;
+    }
 
-	public void setWineTypes(List<ProductType> wineTypes) {
-		this.wineTypes = wineTypes;
-	}
-	
-   
+    public void setWineTypes(List<ProductType> wineTypes) {
+        this.wineTypes = wineTypes;
+    }
+
 }
