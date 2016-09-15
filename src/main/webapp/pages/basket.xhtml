@@ -59,6 +59,12 @@
                             </div>
                             <!-- /.table-responsive -->
 
+                            <!-- panel empty -->
+                            <h:panelGroup>
+                                <h3>Votre panier est vide pour le moment.</h3>
+                            </h:panelGroup>
+                            
+                            
                             <div class="box-footer">
                                 <div class="pull-left">
                                     <a href="pages/category.jsf" class="btn btn-default"><i
@@ -164,8 +170,9 @@
 
                     </div>
                     <!-- /.col-md-9 -->
-
+                    
                     <div class="col-md-3">
+                        <h:panelGroup rendered="#{mBeanCartManagement.order.ordersDetail != null}">
                         <div class="box" id="order-summary">
                             <div class="box-header">
                                 <h3>Order summary</h3>
@@ -193,10 +200,40 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-
+                            </div>                            
                         </div>
-
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{mBeanCartManagement.order.ordersDetail == null}">
+                        <div class="box" id="order-summary">
+                            <div class="box-header">
+                                <h3>Order summary</h3>
+                            </div>
+                            <p class="text-muted">Shipping and additional costs are
+                                calculated based on the values you have entered.</p>
+                            <div class="table-responsive">
+                                <table class="table" id="tabRecapOrder">
+                                    <tbody>
+                                        <tr>
+                                            <td>prix articles</td>
+                                            <th>0.00 €</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Frais de transport</td>
+                                            <th>0.00 €</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Tax</td>
+                                            <th>0.00 €</th>
+                                        </tr>
+                                        <tr class="total">
+                                            <td>Total</td>
+                                            <th>0.00 €</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>                            
+                        </div>
+                        </h:panelGroup>
 
                         <div class="box">
                             <div class="box-header">
@@ -217,7 +254,7 @@
                                 <!-- /input-group -->
                             </form>
                         </div>
-                    </div>
+                    </div>                   
                     <!-- /.col-md-3 -->
                 </div>
                 <!-- /.container -->
