@@ -50,26 +50,26 @@
 									<div class="flip-container">
 										<div class="flipper">
 											<div class="front">
-												<a href="article.jsf"> <img
+												<a href="pages/article.jsf"> <img
 													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
 													alt="" class="img-responsive" />
 												</a>
 											</div>
 											<div class="back">
-												<a href="article.jsf"> <img
+												<a href="pages/article.jsf"> <img
 													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
 													alt="" class="img-responsive" />
 												</a>
 											</div>
 										</div>
 									</div>
-									<a href="article.jsf" class="invisible"> <img
+									<a href="pages/article.jsf" class="invisible"> <img
 										src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
 										alt="" class="img-responsive" />
 									</a>
 									<div class="text">
 										<h3>
-											<a href="article.jsf">#{product.name}</a>
+											<a href="pages/article.jsf">#{product.name}</a>
 										</h3>
 										<p class="price">#{product.price} €</p>
 										<a jsf:action="#{mBeanCartManagement.addProductCart(product)}" class="btn btn-primary hotlist-btn">
