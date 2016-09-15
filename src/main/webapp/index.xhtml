@@ -1,14 +1,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:jsf="http://java.sun.com/jsf"
-	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	template="/WEB-INF/templates/commons.xhtml">
-	
-	<f:metadata>
-		<f:event listener="#{mBeanProduct.initIndex()}" type="preRenderView"></f:event>
-	</f:metadata>
-	
 	<ui:define name="body">
 		<div class="container">
 			<div class="col-md-12">
@@ -38,65 +33,63 @@
 			</div>
 		</div>
 		<!-- *** HOT PRODUCT SLIDESHOW *** -->
-		<h:form>
-		<div id="hot">
-			<div class="box">
+		<form jsf:id="form1">
+			<div id="hot">
+				<div class="box">
+					<div class="container">
+						<div class="col-md-12">
+							<h2>Les Affaires de la semaine</h2>
+						</div>
+					</div>
+				</div>
 				<div class="container">
-					<div class="col-md-12">
-						<h2>Les Affaires de la semaine</h2>
+					<div class="product-slider">
+						<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
+							<div class="item">
+								<div class="product">
+									<div class="flip-container">
+										<div class="flipper">
+											<div class="front">
+												<a href="pages/article.jsf"> <img
+													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
+													alt="" class="img-responsive" />
+												</a>
+											</div>
+											<div class="back">
+												<a href="pages/article.jsf"> <img
+													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
+													alt="" class="img-responsive" />
+												</a>
+											</div>
+										</div>
+									</div>
+									<a href="pages/article.jsf" class="invisible"> <img
+										src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
+										alt="" class="img-responsive" />
+									</a>
+									<div class="text">
+										<h3>
+											<a href="pages/article.jsf">#{product.name}</a>
+										</h3>
+										<p class="price">#{product.price} €</p>
+										<a jsf:action="#{mBeanCartManagement.addProductCart(product)}" class="btn btn-primary hotlist-btn">
+											<i class="fa fa-shopping-cart"></i><span class="hidden-sm">Ajouter au panier</span>
+										</a>										
+									</div>
+									<!-- /.text -->
+									<div class="ribbon new">
+										<div class="theribbon">NEW</div>
+										<div class="ribbon-background"></div>
+									</div>
+								</div>
+								<!-- /.product -->
+							</div>
+						</ui:repeat>
+						
 					</div>
 				</div>
 			</div>
-			<div class="container">
-				<div class="product-slider">
-					
-					<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
-						<div class="item">
-							<div class="product">
-								<div class="flip-container">
-									<div class="flipper">
-										<div class="front">
-											<a href="article.jsf"> <img
-												src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-												alt="" class="img-responsive" />
-											</a>
-										</div>
-										<div class="back">
-											<a href="article.jsf"> <img
-												src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
-												alt="" class="img-responsive" />
-											</a>
-										</div>
-									</div>
-								</div>
-								<a href="article.jsf" class="invisible"> <img
-									src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-									alt="" class="img-responsive" />
-								</a>
-								<div class="text">
-									<h3>
-										<a href="article.jsf">#{product.name}</a>
-									</h3>
-									<p class="price">#{product.price} €</p>
-										<h:commandLink class="btn btn-primary hotlist-btn" action="#{mBeanCartManagement.addProductCart(product)}">
-											<i class="fa fa-shopping-cart"></i><span class="hidden-sm">Ajouter au panier</span>
-										</h:commandLink>
-								</div>
-								<!-- /.text -->
-
-								<div class="ribbon new">
-									<div class="theribbon">NEW</div>
-									<div class="ribbon-background"></div>
-								</div>
-							</div>
-							<!-- /.product -->
-						</div>
-					</ui:repeat>
-					
-				</div>
-			</div>
-		</div>
-		</h:form>
+		</form>
 		       <!-- *** BLOG HOMEPAGE ***-->
 
         <div class="box text-center" data-animate="fadeInUp">

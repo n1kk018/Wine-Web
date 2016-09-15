@@ -37,6 +37,7 @@ public class MBeanCartManagement implements Serializable {
 
     // global error adding product
     private String errorAddProduct;
+    
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
 
@@ -52,12 +53,18 @@ public class MBeanCartManagement implements Serializable {
      */
     public String addProductCart(Product product) {
         String page = null;
+        log.info("=================================================>");
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-                order = buOrder.addItemCart(order, product);
-                //page = "pages/basket";
+            	if(order == null){
+            		order = new Order();
+            	}
+               order = buOrder.addItemCart(order, product);
+               log.info("# order: order details empty: " 
+                       + order.getOrdersDetail().isEmpty() 
+                       + " #product :" + product.getName());
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
             }
