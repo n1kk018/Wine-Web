@@ -143,4 +143,14 @@ public class MBeanProduct implements Serializable {
         this.wineTypes = wineTypes;
     }
 
+	public Map<ProductType, List<String>> getAppellations() {
+		return appellations;
+	}
+
+	public void setAppellations(Map<ProductType, List<String>> appellations) {
+		this.appellations = appellations;
+	}
+    
+    
+
 }

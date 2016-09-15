@@ -164,12 +164,12 @@ public class MBeanCartManagement implements Serializable {
     public String addNewOrder(Order o){
     	String suite =null;
     	if(mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname()!=null) {
-    		try {
+    		/*try {
 				buOrder.addNewOrder(o);
 				suite = "checkout1adress.xhtml";
 			} catch (WineException e) {
 				e.printStackTrace();
-			}
+			}*/
     	}else{
     		suite = "register.xhtml";
 		return suite;
