@@ -5,14 +5,19 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
+import fr.afcepf.atod.wine.entity.User;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+
+import org.hibernate.Session;
 /**
  *
  * @author ronan
@@ -29,6 +34,9 @@ public class MBeanCartManagement {
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
+    
+    @ManagedProperty(value = "mBeanConnexion")
+    private MBeanConnexion mBeanConnexion;
 
  
     public MBeanCartManagement() {
@@ -36,6 +44,12 @@ public class MBeanCartManagement {
         errorAddProduct = "";
     }
     
+    // ajouter une commande dans la base, verifier la session avant methode
+    private Session session;
+    private User user = new User();
+    
+    
+   
 //    
 //    ProductWine redWine = new ProductWine(null, "bourgogne", 200.0, "bourgogne", "bourgogne", null, null, null, 512);
 //	ProductWine whiteWine = new ProductWine(null, "provence", 100.0, "provence", "provence", null, null, null, 512);
@@ -126,6 +140,30 @@ public class MBeanCartManagement {
         
         return shipping;
     }
+    
+    
+    /**
+     * 
+     * @param orderDetail
+     * @return 
+     */
+    public String addNewOrder(Order o){
+    	String suite =null;
+    	if(mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname()!=null) {
+    		try {
+				buOrder.addNewOrder(o);
+				suite = "checkout1adress.xhtml";
+			} catch (WineException e) {
+				e.printStackTrace();
+			}
+    	}else{
+    		suite = "register.xhtml";
+		return suite;
+		}
+    	return suite;
+    }
+    
+    
     
     //  ######################################################## //
     /**
