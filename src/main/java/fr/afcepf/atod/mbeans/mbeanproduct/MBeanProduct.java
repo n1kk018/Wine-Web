@@ -14,6 +14,7 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -43,6 +44,7 @@ public class MBeanProduct implements Serializable{
     private String errorSearch;
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
+    private Map<ProductType,List<String>> appellations;
     
     public MBeanProduct() {
         super();
@@ -61,10 +63,12 @@ public class MBeanProduct implements Serializable{
 				e.printStackTrace();
 			}
     	}
+    	//Données Nav
     	if(wineTypes==null){
     		try {
 				wineTypes = buProduct.getWineTypes();
-				log.info(wineTypes);
+				appellations = buProduct.getAppellationsByType(wineTypes);
+				log.info(appellations);
 			} catch (WineException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
