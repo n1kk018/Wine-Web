@@ -183,7 +183,8 @@ public class MBeanCartManagement implements Serializable {
      */
     public String addNewOrder(Order o){
     	String suite =null;
-    	if(mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname()!=null) {
+    	if(mBeanConnexion.getUserConnected().getId() != null 
+                && mBeanConnexion.getUserConnected().getFirstname()!=null) {
     		/*try {
 				buOrder.addNewOrder(o);
 				suite = "checkout1adress.xhtml";
@@ -191,19 +192,11 @@ public class MBeanCartManagement implements Serializable {
 				e.printStackTrace();
 			}*/
     	}else{
-    		suite = "register.xhtml";
+    		suite = "pages/register.jsf";
 		}
     	return suite;
     }
-    
-    //  ######################################################## //
-    /**
-     * ********************************************************
-     * Methode pour initialiser le panier pour faire le parcours
-     * panier/validation paiement/.
-     * ********************************************************
-     */
-
+ 
     
     public Order getOrder() {
         return order;
