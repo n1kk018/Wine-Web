@@ -5,14 +5,18 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -21,12 +25,16 @@ import org.apache.log4j.Logger;
  */
 @SessionScoped
 @ManagedBean(name = "mBeanCartManagement")
-public class MBeanCartManagement {
+public class MBeanCartManagement implements Serializable {
+
     // temporary
-    private static Logger log = 
-            Logger.getLogger(MBeanCartManagement.class);
+    private static Logger log
+            = Logger.getLogger(MBeanCartManagement.class);
     // create a new command if necessary or 
     private Order order = new Order();
+
+    private static final long serialVersionUID = -2317461571703883416L;
+
     // global error adding product
     private String errorAddProduct;
     @ManagedProperty(value = "#{buOrder}")
@@ -43,13 +51,12 @@ public class MBeanCartManagement {
      * @return
      */
     public String addProductCart(Product product) {
-        log.info("\t ##### Passe par la methode add au panier ####");
         String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-               order = buOrder.addItemCart(order, product);
+                order = buOrder.addItemCart(order, product);
                 //page = "pages/basket";
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
@@ -62,63 +69,66 @@ public class MBeanCartManagement {
         }
         return page;
     }
+
     /**
-     * 
-     * @param orderDetail 
+     *
+     * @param orderDetail
      */
     public void removeProductCart(OrderDetail orderDetail) {
         if (!order.getOrdersDetail().isEmpty()) {
             order.getOrdersDetail().remove(orderDetail);
         }
     }
+
     /**
-     * 
+     *
      * @param orderDetail
-     * @return 
+     * @return
      */
     public double calculDiscount(OrderDetail orderDetail) {
         return orderDetail.getProductOrdered().getPrice()
                 * (orderDetail.getProductOrdered()
-                  .getSpeEvent().getPourcentage()/100);
+                .getSpeEvent().getPourcentage() / 100);
     }
+
     /**
-     * 
+     *
      * @param orderDetail
-     * @return 
+     * @return
      */
     public double calculTotalLine(OrderDetail orderDetail) {
-        return orderDetail.getQuantite()*
-                (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+        return orderDetail.getQuantite()
+                * (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
     }
-    
+
     public double calculSubTotal() {
         double subTotal = 0.0;
-        
-        for(OrderDetail o : order.getOrdersDetail()){
-            if(!order.getOrdersDetail().isEmpty()){
-            subTotal = subTotal + calculTotalLine(o);
+
+        for (OrderDetail o : order.getOrdersDetail()) {
+            if (!order.getOrdersDetail().isEmpty()) {
+                subTotal = subTotal + calculTotalLine(o);
             }
         }
-        
+
         return subTotal;
     }
-    
-    public int numTotalQantity(){
+
+    public int numTotalQantity() {
         int numTotalQuantity = 0;
-        if(!order.getOrdersDetail().isEmpty()){
-            for(OrderDetail o : this.order.getOrdersDetail()){
+        if (!order.getOrdersDetail().isEmpty()) {
+            for (OrderDetail o : this.order.getOrdersDetail()) {
                 numTotalQuantity = numTotalQuantity + o.getQuantite();
             }
-        }  
+        }
         return numTotalQuantity;
     }
-    
+
     public double caclulShippingFree(OrderDetail orderDetail) {
-        double shipping=0.0;
-        
+        double shipping = 0.0;
+
         return shipping;
     }
-    
+
     //  ######################################################## //
     /**
      * ********************************************************
@@ -168,3 +178,4 @@ public class MBeanCartManagement {
     }
 
 }
+
