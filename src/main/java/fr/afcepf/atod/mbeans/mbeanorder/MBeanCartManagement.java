@@ -57,7 +57,9 @@ public class MBeanCartManagement {
                 && !product.getProductSuppliers().isEmpty()) {
             try {
                 order = buOrder.addItemCart(order, product);
-                page = "pages/basket";
+            	//log.info("Ajout panier");
+               order = buOrder.addItemCart(order, product);
+                //page = "pages/basket";
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
             }
