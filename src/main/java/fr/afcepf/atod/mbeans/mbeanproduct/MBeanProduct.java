@@ -14,6 +14,7 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -44,7 +45,8 @@ public class MBeanProduct implements Serializable {
     private String errorSearch;
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
-
+    private Map<ProductType,List<String>> appellations;
+    
     public MBeanProduct() {
         super();
         nameProd = "";
@@ -52,25 +54,27 @@ public class MBeanProduct implements Serializable {
     }
 
     @PostConstruct
-    public void initIndex() {
-        if (promotedWinesList == null) {
-            try {
-                promotedWinesList = buProduct.getPromotedProductsSelection();
-
-            } catch (WineException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        if (wineTypes == null) {
-            try {
-                wineTypes = buProduct.getWineTypes();
-                log.info(wineTypes);
-            } catch (WineException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+    public void initIndex(){
+    	if(promotedWinesList==null){
+    		try {
+				promotedWinesList = buProduct.getPromotedProductsSelection();
+				
+			} catch (WineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	//Données Nav
+    	if(wineTypes==null){
+    		try {
+				wineTypes = buProduct.getWineTypes();
+				appellations = buProduct.getAppellationsByType(wineTypes);
+				log.info(appellations);
+			} catch (WineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
     }
 
     public String findByNameProduct() throws WineException {
