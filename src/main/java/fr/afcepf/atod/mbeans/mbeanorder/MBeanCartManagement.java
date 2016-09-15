@@ -75,7 +75,8 @@ public class MBeanCartManagement implements Serializable {
                     order = new Order();
                 }
                 order = buOrder.addItemCart(order, product);
-                listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());
+                listOrderDetails = UtilConverter
+                        .retrieveListAsSet(order.getOrdersDetail());
                 
                 page="pages/basket.jsf";
             } catch (WineException ex) {
