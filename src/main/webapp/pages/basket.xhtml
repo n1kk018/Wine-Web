@@ -37,10 +37,10 @@
                                     </thead>
                                     <tbody>
                                         <h:panelGroup id="myPanel">
-                                            <ui:repeat value="#{mBeanCartManagement.order.ordersDetail.toArray()}"
+                                            <ui:repeat value="#{mBeanCartManagement.order.ordersDetail.toArray}"
                                                        var="orderDetail">
                                                 <tr>
-                                                    <td>#{orderDetail[0]}</td>
+                                                    <td>#{orderDetail.productOrdered.name}</td>
                                                     <td>#{orderDetail.quantite}</td>
                                                     <td>#{orderDetail.productOrdered.price} €</td>
                                                     <td>#{mBeanCartManagement.calculDiscount(orderDetail)} €</td>

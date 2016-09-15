@@ -12,6 +12,7 @@ import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -27,17 +28,18 @@ import org.apache.log4j.Logger;
 @ManagedBean(name = "mBeanCartManagement")
 public class MBeanCartManagement implements Serializable {
 
+    private static final long serialVersionUID = -2317461571703883416L;
     // temporary
     private static Logger log
             = Logger.getLogger(MBeanCartManagement.class);
     // create a new command if necessary or 
     private Order order = new Order();
-
-    private static final long serialVersionUID = -2317461571703883416L;
-
+    
+    private List<OrderDetail> listOrderDetails;
+    
     // global error adding product
     private String errorAddProduct;
-    
+
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
 
@@ -52,18 +54,19 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public String addProductCart(Product product) {
-        String page = null;        
+        String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
                 && !product.getProductSuppliers().isEmpty()) {
             try {
-            	if(order == null){
-            		order = new Order();
-            	}
-               order = buOrder.addItemCart(order, product);
-               log.info("# order: order details empty: " 
-                       + order.getOrdersDetail().isEmpty() 
-                       + " #product :" + product.getName());
+                if (order == null) {
+                    order = new Order();
+                }
+                order = buOrder.addItemCart(order, product);
+                log.info("# order: order details empty: "
+                        + order.getOrdersDetail().isEmpty()
+                        + " #product :" + product.getName());
+                
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
             }
@@ -184,4 +187,3 @@ public class MBeanCartManagement implements Serializable {
     }
 
 }
-
