@@ -47,7 +47,7 @@ public class MBeanConnexion implements Serializable{
     /**
      * Message invalid connexion
      */
-    private static final String INVALID_CO 
+    private String invalidConnexion
             = "False username and password combination.";
     /**
      * result connection
@@ -75,10 +75,10 @@ public class MBeanConnexion implements Serializable{
                 if (!userConnected.getLastname().equalsIgnoreCase("")) {
                     
                 } else {
-                    errors.put(INVALID_CO,"User not registered into the database");
+                    errors.put(invalidConnexion,"User not registered into the database");
                 }
             } catch (Exception e) {
-                errors.put(INVALID_CO,e.getMessage());
+                errors.put(invalidConnexion,e.getMessage());
             }
         } else {
             errors.put("Empty Field", "Please complete all mandatory fields before "
@@ -93,9 +93,13 @@ public class MBeanConnexion implements Serializable{
         if (errors.isEmpty()) {
             resultConnection = null;
         } else {
-            resultConnection = errors.get(INVALID_CO);
+            resultConnection = errors.get(invalidConnexion);
         }
     }
+    /*
+    public static String getINVALID_CO() {
+        return INVALID_CO;
+    }*/
     
     /**
      * disconnect current user/customer
@@ -109,7 +113,15 @@ public class MBeanConnexion implements Serializable{
     }
     
     // ----------- Getters && Setters ----------------//
-    
+
+    public String getInvalidConnexion() {
+        return invalidConnexion;
+    }
+
+    public void setInvalidConnexion(String invalidConnexion) {
+        this.invalidConnexion = invalidConnexion;
+    }
+        
     public User getUserConnected() {
         return userConnected;
     }

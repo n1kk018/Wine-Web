@@ -1,12 +1,13 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" id="top">
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" id="top">
 	<div class="container">
 		<div class="col-md-6 offer" data-animate="fadeInDown">
-			<a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer
-				of the day</a> <a href="#">Get flat 35% off on orders over $50!</a>
+			<a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offre
+				spéciale aujourd'hui ! </a> <a href="#">10€ d'économies dès 200€
+				commandés</a>
 		</div>
 		<div class="col-md-6" data-animate="fadeInDown">
 			<form jsf:id="maform" jsf:prependId="false">
@@ -35,7 +36,6 @@
 	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog"
 		aria-labelledby="Login" aria-hidden="true">
 		<div class="modal-dialog modal-sm">
-
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -47,8 +47,9 @@
 						<h:panelGroup id="messages">
 							<h:outputFormat
 								rendered="#{mBeanConnexion.resultConnection  != null}" value="">
-								<div class="resultatConnection">
-									#{mBeanConnexion.INVALID_CO }</div>
+								<div>
+									<p>#{mBeanConnexion.invalidConnexion}</p>
+								</div>
 							</h:outputFormat>
 							<h:outputFormat
 								rendered="#{mBeanConnexion.resultConnection  == null}" value="" />
@@ -67,7 +68,7 @@
 						<p class="text-center">
 							<button jsf:action="#{mBeanConnexion.connect()}"
 								class="btn btn-primary">
-								<i class="fa fa-sign-in"></i> Log in
+								<i class="fa fa-sign-in"></i> Se connecter
 							</button>
 						</p>
 
@@ -77,9 +78,9 @@
 					</p>
 					<p class="text-center text-muted">Pas encore inscrit ?</p>
 					<p class="text-center text-muted">
-						<a href="register.html"><strong>Créez votre compte</strong></a> !
-						pour commander plus vite et accéder aux services personnalisés,
-						aux cadeaux, aux avantages sur-mesure ...!
+						<a href="pages/register.jsf"><strong>Créez votre
+								compte</strong></a> ! pour commander plus vite et accéder aux services
+						personnalisés, aux cadeaux, aux avantages sur-mesure ...!
 					</p>
 
 				</div>
@@ -87,3 +88,7 @@
 		</div>
 	</div>
 </div>
+
+<!-- *** TOP BAR END *** -->
+
+
