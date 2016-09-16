@@ -12,11 +12,13 @@ import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductAccessories;
 import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
+import fr.afcepf.atod.wine.entity.ProductWine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -49,6 +51,7 @@ public class MBeanProduct implements Serializable {
     private String errorSearch;
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
+    private List<Product> wineProducts;
     private Map<ProductType, List<String>> appellations;
     private Map<ProductType, List<ProductVarietal>> varietals;
 
@@ -84,34 +87,72 @@ public class MBeanProduct implements Serializable {
         }
     }
 
-    public String findByNameProduct() throws WineException {
+    public String findByNameProduct() {
         String str = null;
         if (!nameProd.equalsIgnoreCase("")) {
-            buProduct.findByName(nameProd);
+            try {
+                buProduct.findByName(nameProd);
+            } catch (WineException ex) {
+                errorSearch = "Produits non trouves en base.";
+            }
+        } else {
+            errorSearch = "Produits non trouves en base.";
         }
         return str;
     }
     
-    public String article(Integer id) throws WineException {
+    public String article(Integer id) {
     	String str = null;
         if (id>0) {
-        	currentProd = buProduct.findById(id);
+                try {
+                    currentProd = buProduct.findById(id);
+                } catch (WineException ex) {
+                   errorSearch = "Article non trouve dans la base.";
+                } 
         	str = "pages/article.jsf";
+        } else {
+            errorSearch = "Article non trouve dans la base.";
         }
         return str;
     }
     
-    public String category(Object o) throws WineException {
-    	String str = null;
-    	log.info(o.getClass());
-    	
+    public String category(ProductType prodType)  {
+        String str = null;
+        wineTypes = new ArrayList<>();
+    	if(!prodType.getType().equalsIgnoreCase("")) {
+            try {
+                wineTypes = buProduct.findProductsType(prodType.getType());
+            } catch (WineException ex) {
+                errorSearch = "Type de vin n'a pas ete trouve dans la base "
+                    + "de donnees.";
+            }
+            if (wineTypes.isEmpty()) {
+                errorSearch = "Type de vin n'a pas ete trouve dans la base "
+                    + "de donnees.";
+            } else {
+                str = "/pages/category.jsf?faces-redirect=true";
+            }
+        } else {
+            errorSearch = "Type de vin n'a pas ete trouve dans la base "
+                    + "de donnees.";
+        }    	
     	return str;
     }
     
-    public String category(ProductType type, Object o) throws WineException {
+    public String category(ProductType type, Object o) {
     	String str = null;
-    	log.info(o.getClass());
-    	
+        wineProducts = new ArrayList<Product>();
+    	if (type.getType().equalsIgnoreCase("")) {
+                try {
+                    buProduct.categoryAccordingToObjectType(type,o);
+                } catch (WineException ex) {
+                    errorSearch = "Produits selon la categorie " + 
+                   type.getType() + " ne sont pas trouves en base";
+                }
+        } else {
+           errorSearch = "Produits selon la categorie " + 
+                   type.getType() + " ne sont pas trouves en base";
+        }    	
     	return str;
     }
 
