@@ -196,10 +196,10 @@
                             </div>
 
                             <div class="row">
-                            	<ui:repeat var="url" value="#{mBeanProduct.currentProd.imagesUrl.split('\\|')}">
+                            	<ui:repeat var="image" value="#{mBeanProduct.currentProd.images.split('\\|')}">
                                 	<div class="col-xs-4">
                                     	<a href="javascript:void(0);" class="thumb">
-                                        	<img src="#{url}" alt="" class="img-responsive"/>
+                                        	<img src="img/wine_pictures/#{mBeanProduct.currentProd.apiId}/#{image}" alt="" class="img-responsive"/>
                                     	</a>
                                 	</div>
                                 </ui:repeat>
