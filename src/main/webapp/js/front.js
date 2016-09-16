@@ -9,6 +9,7 @@ $(function() {
     carousels();
     utils();
     demo();
+    pagination();
 });
 
 
@@ -231,7 +232,18 @@ $.fn.alignElementsSameHeight = function() {
 	children.innerHeight(maxHeight);
 
     });
+}
 
-
-
+function pagination() {
+	$('.pagination').bootpag({
+	    total: 9,
+	    page: 5,
+	    maxVisible: 6,
+	    href: "#pro-page-{{number}}",
+	    leaps: false,
+	    next: 'next',
+	    prev: null
+	 }).on('page', function(event, num){
+	     $(".ajaxcontent").html("Page " + num); // or some ajax content loading...
+	 });
 }
