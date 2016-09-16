@@ -91,6 +91,7 @@ public class MBeanCartManagement implements Serializable {
                 then the same effect can be achieved by adding <redirect/> to the case
                     2) In JSF 2.0+ you could instead use the flash scope for this or to just let
                 the POST take place by <f:ajax> submit instead of a normal submit.
+                    3) Another method
                  */
                 page = "pages/basket.jsf?faces-redirect=true";
             } catch (WineException ex) {
