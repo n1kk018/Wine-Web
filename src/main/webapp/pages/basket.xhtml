@@ -41,7 +41,7 @@
                                         </thead>
                                         <tbody>
                                             <h:panelGroup id="myPanel">
-                                                <ui:repeat value="#{mBeanCartManagement.listOrderDetails}"
+                                                <ui:repeat id="uiRepeatCart" value="#{mBeanCartManagement.listOrderDetails}"
                                                            var="orderDetail">
                                                     <tr>    
                                                         <td>
@@ -50,10 +50,10 @@
                                                                      alt="#{orderDetail.productOrdered.name}"/>
                                                             </a>
                                                         </td>
-                                                        <td><input type="number" value="#{orderDetail.quantite}" 
+                                                        <td><input jsf:id="quantityProduct" type="number" jsf:value="#{orderDetail.quantite}" 
                                                                    class="form-control">
-                                                                <f:ajax event="keyup" execute="@form" 
-                                                                        render=":form1:totalLine :form1:subTotal :form1:total :form1:shipping" />
+                                                                <f:ajax event="change" execute="@form" 
+                                                                        render="@form" />
                                                             </input>                                                            
                                                         </td>
                                                         <td><h:outputText value="#{orderDetail.productOrdered.price}€">
@@ -62,13 +62,17 @@
                                                         <td><h:outputText value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
                                                             </h:outputText>
                                                         </td>
-                                                        <td><h:outputText id="totalLine" value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
+                                                        <td>
+                                                            <h:outputText  id="totalLine"
+                                                                           value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
                                                             </h:outputText>
+
                                                         </td>
                                                         <td><h:commandLink 
                                                                 action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
                                                                 <i class="fa fa-trash-o"></i>
-                                                            </h:commandLink></td>
+                                                            </h:commandLink>
+                                                        </td>
                                                     </tr>
                                                 </ui:repeat>
                                             </h:panelGroup>
@@ -204,8 +208,11 @@
                                 <div class="box-header">
                                     <h3>Recapitulatif du panier</h3>
                                 </div>
-                                <p class="text-muted">Shipping and additional costs are
-                                    calculated based on the values you have entered.</p>
+                                <p class="text-muted"> 
+                                    Les Couts du transport et couts additionnel
+                                    sont calculees a partir des valeurs que 
+                                    vous avez rentrees.
+                                </p>
                                 <div class="table-responsive">
                                     <table class="table" id="tabRecapOrder">
                                         <tbody>
