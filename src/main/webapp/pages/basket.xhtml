@@ -31,7 +31,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th colspan="2">Produit</th>
+                                                <th>Produit</th>
                                                 <th>Quantite</th>
                                                 <th>Prix Unitaire</th>
                                                 <th>Reduction</th>
@@ -41,25 +41,38 @@
                                         </thead>
                                         <tbody>
                                             <h:panelGroup id="myPanel">
-                                                <ui:repeat value="#{mBeanCartManagement.listOrderDetails}"
+                                                <ui:repeat id="uiRepeatCart" value="#{mBeanCartManagement.listOrderDetails}"
                                                            var="orderDetail">
                                                     <tr>    
                                                         <td>
                                                             <a href="pages/article.jsf">
-                                                                <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}m.jpg" 
+                                                                <img src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg" 
                                                                      alt="#{orderDetail.productOrdered.name}"/>
                                                             </a>
                                                         </td>
-                                                        <td>#{orderDetail.quantite}</td>
-                                                        <td>#{orderDetail.productOrdered.price}€</td>
-                                                        <td>#{mBeanCartManagement.calculDiscount(orderDetail)}
-                                                            €</td>
-                                                        <td>#{mBeanCartManagement.calculTotalLine(orderDetail)}
-                                                            €</td>
+                                                        <td><input jsf:id="quantityProduct" type="number" jsf:value="#{orderDetail.quantite}" 
+                                                                   class="form-control">
+                                                                <f:ajax event="change" execute="@form" 
+                                                                        render="@form" />
+                                                            </input>                                                            
+                                                        </td>
+                                                        <td><h:outputText value="#{orderDetail.productOrdered.price}€">
+                                                            </h:outputText>
+                                                        </td>
+                                                        <td><h:outputText value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
+                                                            </h:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText  id="totalLine"
+                                                                           value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
+                                                            </h:outputText>
+
+                                                        </td>
                                                         <td><h:commandLink 
                                                                 action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
                                                                 <i class="fa fa-trash-o"></i>
-                                                            </h:commandLink></td>
+                                                            </h:commandLink>
+                                                        </td>
                                                     </tr>
                                                 </ui:repeat>
                                             </h:panelGroup>
@@ -195,18 +208,25 @@
                                 <div class="box-header">
                                     <h3>Recapitulatif du panier</h3>
                                 </div>
-                                <p class="text-muted">Shipping and additional costs are
-                                    calculated based on the values you have entered.</p>
+                                <p class="text-muted"> 
+                                    Les Couts du transport et couts additionnel
+                                    sont calculees a partir des valeurs que 
+                                    vous avez rentrees.
+                                </p>
                                 <div class="table-responsive">
                                     <table class="table" id="tabRecapOrder">
                                         <tbody>
                                             <tr>
                                                 <td>prix articles</td>
-                                                <th>#{mBeanCartManagement.calculSubTotal()}€</th>
+                                                <th><h:outputText id="subTotal" value="#{mBeanCartManagement.calculSubTotal()}€">
+                                                    </h:outputText>
+                                                </th>
                                             </tr>
                                             <tr>
                                                 <td>Frais de transport</td>
-                                                <th>#{mBeanCartManagement.caclulShippingFree()}€</th>
+                                                <th><h:outputText id="shipping" value="#{mBeanCartManagement.caclulShippingFree()}€">
+                                                    </h:outputText>
+                                                </th>
                                             </tr>
                                             <tr>
                                                 <td>Tax</td>
@@ -214,7 +234,9 @@
                                             </tr>
                                             <tr class="total">
                                                 <td>Total</td>
-                                                <th>#{mBeanCartManagement.calculTotal()}€</th>
+                                                <th><h:outputText id="total" value="#{mBeanCartManagement.calculTotal()}€">
+                                                    </h:outputText>
+                                                </th>
                                             </tr>
                                         </tbody>
                                     </table>

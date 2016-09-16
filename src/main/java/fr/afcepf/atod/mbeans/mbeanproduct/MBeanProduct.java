@@ -9,6 +9,7 @@ import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Product;
+import fr.afcepf.atod.wine.entity.ProductAccessories;
 import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
 
@@ -41,6 +42,8 @@ public class MBeanProduct implements Serializable {
     @ManagedProperty(value = "#{buProduct}")
     private IBuProduct buProduct;
 
+    private ProductAccessories accessory;
+    private Product currentProd;
     private String nameProd;
     private List<Product> expensiveProducts;
     private String errorSearch;
@@ -53,6 +56,7 @@ public class MBeanProduct implements Serializable {
         super();
         nameProd = "";
         errorSearch = "";
+        accessory = new ProductAccessories();
     }
 
     @PostConstruct
@@ -86,6 +90,29 @@ public class MBeanProduct implements Serializable {
             buProduct.findByName(nameProd);
         }
         return str;
+    }
+    
+    public String article(Integer id) throws WineException {
+    	String str = null;
+        if (id>0) {
+        	currentProd = buProduct.findById(id);
+        	str = "pages/article.jsf";
+        }
+        return str;
+    }
+    
+    public String category(Object o) throws WineException {
+    	String str = null;
+    	log.info(o.getClass());
+    	
+    	return str;
+    }
+    
+    public String category(ProductType type, Object o) throws WineException {
+    	String str = null;
+    	log.info(o.getClass());
+    	
+    	return str;
     }
 
     /**
@@ -158,8 +185,19 @@ public class MBeanProduct implements Serializable {
         return varietals;
     }
 
-    public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
-        this.varietals = varietals;
-    }
+	public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
+		this.varietals = varietals;
+	}
 
+	public ProductAccessories getAccessory() {
+		return accessory;
+	}
+
+	public void setAccessory(ProductAccessories accessory) {
+		this.accessory = accessory;
+	}
+
+	public Product getCurrentProd() {
+		return currentProd;
+	}
 }

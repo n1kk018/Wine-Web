@@ -39,6 +39,7 @@ public class MBeanCartManagement implements Serializable {
             = Logger.getLogger(MBeanCartManagement.class);
     // create a new command if necessary or 
     private Order order = SingletonSessionOrderTemp.getInstance().getOrder();
+    // set transforme en list
     private List<OrderDetail> listOrderDetails;
 
     // global error adding product
@@ -75,7 +76,7 @@ public class MBeanCartManagement implements Serializable {
                 }
                 order = buOrder.addItemCart(order, product);
                 listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());
-                
+
                 /*The symptoms indicate that the page was requested by a POST request and that
                 you're ignoring the webbrowser's warning that the data will be resent when refreshing
                 the request. Refreshing a POST request will of course result in it being re-executed.
@@ -127,9 +128,13 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public double calculDiscount(OrderDetail orderDetail) {
-        return orderDetail.getProductOrdered().getPrice()
-                * (orderDetail.getProductOrdered()
-                .getSpeEvent().getPourcentage() / 100);
+        double discount = 0.0;
+        if (orderDetail != null) {
+            discount = orderDetail.getProductOrdered().getPrice()
+                    * (orderDetail.getProductOrdered()
+                    .getSpeEvent().getPourcentage() / 100);
+        }
+        return Math.round(discount * 100) / 100;
     }
 
     /**
@@ -138,8 +143,12 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public double calculTotalLine(OrderDetail orderDetail) {
-        return orderDetail.getQuantite()
-                * (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+        double totalLine = 0.0;
+        if (orderDetail != null) {
+            totalLine = orderDetail.getQuantite()
+                    * (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+        }
+        return Math.round(totalLine * 100) / 100;
     }
 
     /**
@@ -153,7 +162,7 @@ public class MBeanCartManagement implements Serializable {
             }
         }
 
-        return subTotal;
+        return Math.round(subTotal*100)/100;
     }
 
     /**
@@ -168,7 +177,7 @@ public class MBeanCartManagement implements Serializable {
                 numTotalQuantity = numTotalQuantity + o.getQuantite();
             }
         }
-        return numTotalQuantity;
+        return Math.round(numTotalQuantity*100)/100;
     }
 
     /**
@@ -180,9 +189,9 @@ public class MBeanCartManagement implements Serializable {
     public double caclulShippingFree() {
         double shipping = 0.0;
         if (calculerNumTotalQantity() != 0.0) {
-            shipping = calculerNumTotalQantity() * 0.5;
+            shipping = calculerNumTotalQantity() * 0.75;
         }
-        return shipping;
+        return Math.round(shipping*100)/100;
     }
 
     /**
@@ -196,7 +205,7 @@ public class MBeanCartManagement implements Serializable {
         for (OrderDetail o : order.getOrdersDetail()) {
             subtotal = subtotal + calculTotalLine(o);
         }
-        return subtotal + caclulShippingFree();
+        return Math.round((subtotal + caclulShippingFree())*100)/100;
     }
 
     /**
