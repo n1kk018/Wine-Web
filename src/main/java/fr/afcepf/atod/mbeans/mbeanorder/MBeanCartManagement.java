@@ -10,10 +10,12 @@ import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
+import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
@@ -201,25 +203,66 @@ public class MBeanCartManagement implements Serializable {
 
     /**
      * Ajouter une nouvelle commande a la base
-     *
+     *apres l'etape validePanier, valide adress, valide transport, valide paiement
      * @param orderDetail
      * @return
      */
-    public String addNewOrder(Order o) {
-        String suite = null;
+    public String addNewOrder() {
+    	log.info("****************************************** add order debut********************************");
+        String page = null;
         if (mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname() != null) {
-            /*try {
-				buOrder.addNewOrder(o);
-				suite = "checkout1adress.xhtml";
+        	log.info("****************************************** add order deja connecter********************************");
+            try {
+            	order.setCustomer((Customer)mBeanConnexion.getUserConnected());
+            	order.setCreatedAt(new Date());
+				buOrder.addNewOrder(order);
+				page = "/pages/checkout1adress.jsf?faces-redirect=true";
 			} catch (WineException e) {
 				e.printStackTrace();
-			}*/
+			}
         } else {
-            suite = "register.xhtml";
+        	log.info("****************************************** pas connecter********************************");
+            page ="/pages/register.jsf?faces-redirect=true";
         }
-        return suite;
+        return page;
     }
-
+    /**
+     *verifier si le customer est connecté
+     *si oui creer date order et diriger vers page valide adresse
+     *sinon direger vers page register
+     **/
+    public String validePanier(){
+    	String page = null;
+        if (mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname() != null) {
+            order.setCustomer((Customer)mBeanConnexion.getUserConnected());
+			order.setCreatedAt(new Date());
+			page = "/pages/checkout1adress.jsf?faces-redirect=true";
+        } else {
+            page ="/pages/register.jsf?faces-redirect=true";
+        }
+        return page;
+    }
+    /**
+     *customer non connecté, soit s'inscrire soit connecter a partir du register 
+     *pour valider le panier et direger vers valide adresse
+     **/
+    
+    public String connectedGoToCheckout1(){
+    	String page = null;
+    	
+    	if(mBeanConnexion.connect()!=null){
+    		order.setCustomer((Customer)mBeanConnexion.getUserConnected());
+ 			order.setCreatedAt(new Date());
+    		page ="/pages/checkout1adress.jsf?faces-redirect=true";
+    	}
+    	return page;
+    }
+    
+    /**
+     * 
+     * */
+    
+    
     //  ######################################################## //
     /**
      * ********************************************************

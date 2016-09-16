@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ronan
  */
-@ManagedBean(name = "mBeanConnexion")
+@ManagedBean(name ="mBeanConnexion")
 @SessionScoped
 public class MBeanConnexion implements Serializable {
 
@@ -71,6 +71,7 @@ public class MBeanConnexion implements Serializable {
             try {
                 userConnected = buCustomer.connect(userConnected.getMail(),
                         userConnected.getPassword());
+                page = "index.jsf";
                 if (!userConnected.getLastname().equalsIgnoreCase("")) {
 
                 } else {
@@ -94,7 +95,7 @@ public class MBeanConnexion implements Serializable {
         } else {
             resultConnection = errors.get(invalidConnexion);
         }
-    }
+    }   
 
     /*
     public static String getINVALID_CO() {

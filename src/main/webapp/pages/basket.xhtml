@@ -78,9 +78,9 @@
                                         <button class="btn btn-default">
                                             <i class="fa fa-refresh"></i> Update basket
                                         </button>
-                                        <button type="submit" class="btn btn-primary">
-                                            Proceed to checkout <i class="fa fa-chevron-right"></i>
-                                        </button>
+                                        <a jsf:action="#{mBeanCartManagement.validePanier()}" class="btn btn-primary">
+											<i class="fa fa-chevron-right"></i>Valider et payer ma commande
+										</a>	
                                     </div>
                                 </div>
                             </h:panelGroup>
@@ -100,7 +100,7 @@
                                             <i class="fa fa-refresh"></i> Actualiser mon panier
                                         </button>
                                         <button type="submit" class="btn btn-primary">
-                                            Proceed to checkout <i class="fa fa-chevron-right"></i>
+                                            Valider et payer ma commande <i class="fa fa-chevron-right"></i>
                                         </button>
                                     </div>
                                 </div>
