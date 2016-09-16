@@ -15,10 +15,12 @@ import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
+
 /**
  *
  * @author ronan
@@ -28,7 +30,7 @@ import org.apache.log4j.Logger;
  *
  */
 @SessionScoped
-@ManagedBean(name="mBeanCartManagement")
+@ManagedBean(name = "mBeanCartManagement")
 public class MBeanCartManagement implements Serializable {
 
     private static final long serialVersionUID = -2317461571703883416L;
@@ -37,24 +39,22 @@ public class MBeanCartManagement implements Serializable {
             = Logger.getLogger(MBeanCartManagement.class);
     // create a new command if necessary or 
     private Order order = SingletonSessionOrderTemp.getInstance().getOrder();
+    // set transforme en list
     private List<OrderDetail> listOrderDetails;
-   
+
     // global error adding product
-    
     private String errorAddProduct;
 
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
     @ManagedProperty(value = "#{mBeanConnexion}")
-    private MBeanConnexion mBeanConnexion;   
-   
-	public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
-		this.mBeanConnexion = mBeanConnexion;
-	}
-	
-	
+    private MBeanConnexion mBeanConnexion;
 
-	public MBeanCartManagement() {
+    public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
+        this.mBeanConnexion = mBeanConnexion;
+    }
+
+    public MBeanCartManagement() {
         super();
         errorAddProduct = "";
     }
@@ -65,7 +65,7 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public String addProductCart(Product product) {
+    public String addProductCart(Product product) {
         String page = null;
         if (!product.getName().equalsIgnoreCase("")
                 && product.getPrice() >= 0
@@ -76,8 +76,25 @@ public class MBeanCartManagement implements Serializable {
                 }
                 order = buOrder.addItemCart(order, product);
                 listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());
+
+                /*The symptoms indicate that the page was requested by a POST request and that
+                you're ignoring the webbrowser's warning that the data will be resent when refreshing
+                the request. Refreshing a POST request will of course result in it being re-executed.
+                This is not a JSF specific problem.The common solution to that is to send a redirect
+                to a GET request after executing the POST request. This way the client will end up
+                having the GET request in the browser view. Refreshing this will then only re-execute
+                the GET request which doesn't (shouldn't) modify anything (unless you're doing this in
+                the constructor of a request scoped bean associated with the view). This is also known
+                as the POST-Redirect-GET pattern.With JSF 2.0, you can achieve this by simply adding
+                faces-redirect=true parameter to the bean action's outcome.
                 
-                page="pages/basket.jsf";
+                N.B:1)If you're still using old fashioned <navigation-case>s in faces-config.xml,
+                then the same effect can be achieved by adding <redirect/> to the case
+                    2) In JSF 2.0+ you could instead use the flash scope for this or to just let
+                the POST take place by <f:ajax> submit instead of a normal submit.
+                    3) Another method
+                 */
+                page = "pages/basket.jsf?faces-redirect=true";
             } catch (WineException ex) {
                 errorAddProduct = "Product not available, stock empty";
             }
@@ -91,15 +108,18 @@ public class MBeanCartManagement implements Serializable {
     }
 
     /**
-     *supprimer une ligne de commande
+     * supprimer une ligne de commande
+     *
      * @param orderDetail
      */
     public String removeProductCart(OrderDetail orderDetail) {
-    	String page = null;
+        String page = null;
         if (!order.getOrdersDetail().isEmpty()) {
-            order.getOrdersDetail().remove(orderDetail);
+            listOrderDetails.remove(orderDetail);
+            Set<OrderDetail> set = UtilConverter.retrieveSetAsList(listOrderDetails);
+            order.setOrdersDetail(set);
         }
-        return page;
+        return "#?faces-redirect=true";
     }
 
     /**
@@ -108,9 +128,13 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public double calculDiscount(OrderDetail orderDetail) {
-        return orderDetail.getProductOrdered().getPrice()
-                * (orderDetail.getProductOrdered()
-                .getSpeEvent().getPourcentage() / 100);
+        double discount = 0.0;
+        if (orderDetail != null) {
+            discount = orderDetail.getProductOrdered().getPrice()
+                    * (orderDetail.getProductOrdered()
+                    .getSpeEvent().getPourcentage() / 100);
+        }
+        return Math.round(discount * 100) / 100;
     }
 
     /**
@@ -119,27 +143,31 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public double calculTotalLine(OrderDetail orderDetail) {
-        return orderDetail.getQuantite()
-                * (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+        double totalLine = 0.0;
+        if (orderDetail != null) {
+            totalLine = orderDetail.getQuantite()
+                    * (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+        }
+        return Math.round(totalLine * 100) / 100;
     }
 
-    
     /**
      * @return
      */
     public double calculSubTotal() {
         double subTotal = 0.0;
-        if(!order.getOrdersDetail().isEmpty()){
-        for(OrderDetail o : order.getOrdersDetail()){
-            subTotal = subTotal + calculTotalLine(o);
+        if (!order.getOrdersDetail().isEmpty()) {
+            for (OrderDetail o : order.getOrdersDetail()) {
+                subTotal = subTotal + calculTotalLine(o);
             }
         }
 
-        return subTotal;
+        return Math.round(subTotal*100)/100;
     }
-   
+
     /**
      * quantite total des articles dans le panier
+     *
      * @return
      */
     public int calculerNumTotalQantity() {
@@ -148,53 +176,59 @@ public class MBeanCartManagement implements Serializable {
             for (OrderDetail o : this.order.getOrdersDetail()) {
                 numTotalQuantity = numTotalQuantity + o.getQuantite();
             }
-       }
-        return numTotalQuantity;
+        }
+        return Math.round(numTotalQuantity*100)/100;
     }
+
     /**
-     * Calculer  frais transport
+     * Calculer frais transport
+     *
      * @param orderDetail
-     * @return 
+     * @return
      */
     public double caclulShippingFree() {
         double shipping = 0.0;
-        if(calculerNumTotalQantity()!=0.0){
-       shipping = calculerNumTotalQantity()*0.5;
+        if (calculerNumTotalQantity() != 0.0) {
+            shipping = calculerNumTotalQantity() * 0.75;
         }
-        return shipping;
+        return Math.round(shipping*100)/100;
     }
+
     /**
      * Calculer le total de la commande: total articles + frais transport
+     *
      * @param orderDetail
-     * @return 
+     * @return
      */
-    public double calculTotal(){
-    	double subtotal = 0.0;
-    	for(OrderDetail o : order.getOrdersDetail()){
-    		subtotal = subtotal + calculTotalLine(o);
-    	}
-    	return subtotal + caclulShippingFree();
+    public double calculTotal() {
+        double subtotal = 0.0;
+        for (OrderDetail o : order.getOrdersDetail()) {
+            subtotal = subtotal + calculTotalLine(o);
+        }
+        return Math.round((subtotal + caclulShippingFree())*100)/100;
     }
+
     /**
      * Ajouter une nouvelle commande a la base
+     *
      * @param orderDetail
-     * @return 
+     * @return
      */
-    public String addNewOrder(Order o){
-    	String suite =null;
-    	if(mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname()!=null) {
-    		/*try {
+    public String addNewOrder(Order o) {
+        String suite = null;
+        if (mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname() != null) {
+            /*try {
 				buOrder.addNewOrder(o);
 				suite = "checkout1adress.xhtml";
 			} catch (WineException e) {
 				e.printStackTrace();
 			}*/
-    	}else{
-    		suite = "register.xhtml";
-		}
-    	return suite;
+        } else {
+            suite = "register.xhtml";
+        }
+        return suite;
     }
-    
+
     //  ######################################################## //
     /**
      * ********************************************************
@@ -202,12 +236,11 @@ public class MBeanCartManagement implements Serializable {
      * panier/validation paiement/.
      * ********************************************************
      */
-
-    
     public Order getOrder() {
         return order;
     }
-/*
+
+    /*
     public int getNumTotalQuantity() {
 		return numTotalQuantity;
 	}
@@ -217,22 +250,19 @@ public class MBeanCartManagement implements Serializable {
 	public void setNumTotalQuantity(int numTotalQuantity) {
 		this.numTotalQuantity = numTotalQuantity;
 	} */
+    public List<OrderDetail> getListOrderDetails() {
+        return listOrderDetails;
+    }
 
+    public void setListOrderDetails(List<OrderDetail> listOrderDetails) {
+        this.listOrderDetails = listOrderDetails;
+    }
 
+    public MBeanConnexion getmBeanConnexion() {
+        return mBeanConnexion;
+    }
 
-	public List<OrderDetail> getListOrderDetails() {
-		return listOrderDetails;
-	}
-
-	public void setListOrderDetails(List<OrderDetail> listOrderDetails) {
-		this.listOrderDetails = listOrderDetails;
-	}
-	
-	public MBeanConnexion getmBeanConnexion() {
-		return mBeanConnexion;
-	}
-
-	public void setOrder(Order order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
@@ -248,10 +278,8 @@ public class MBeanCartManagement implements Serializable {
         return buOrder;
     }
 
-
     public void setBuOrder(IBuOrder buOrder) {
         this.buOrder = buOrder;
     }
-
 
 }
