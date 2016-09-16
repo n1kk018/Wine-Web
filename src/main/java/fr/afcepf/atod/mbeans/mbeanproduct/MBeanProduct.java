@@ -46,9 +46,9 @@ public class MBeanProduct implements Serializable {
     private String errorSearch;
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
-    private Map<ProductType,List<String>> appellations;
-    private Map<ProductType,List<ProductVarietal>> varietals;
-    
+    private Map<ProductType, List<String>> appellations;
+    private Map<ProductType, List<ProductVarietal>> varietals;
+
     public MBeanProduct() {
         super();
         nameProd = "";
@@ -56,28 +56,28 @@ public class MBeanProduct implements Serializable {
     }
 
     @PostConstruct
-    public void initIndex(){
-    	if(promotedWinesList==null){
-    		try {
-				promotedWinesList = buProduct.getPromotedProductsSelection();
-				
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
-    	//Données Nav
-    	if(wineTypes==null){
-    		try {
-				wineTypes = buProduct.getWineTypes();
-				appellations = buProduct.getAppellationsByType(wineTypes);
-				varietals = buProduct.getVarietalsByType(wineTypes);
-				log.info(appellations);
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
+    public void initIndex() {
+        if (promotedWinesList == null) {
+            try {
+                promotedWinesList = buProduct.getPromotedProductsSelection();
+
+            } catch (WineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        //Données Nav
+        if (wineTypes == null) {
+            try {
+                wineTypes = buProduct.getWineTypes();
+                appellations = buProduct.getAppellationsByType(wineTypes);
+                varietals = buProduct.getVarietalsByType(wineTypes);
+                log.info(appellations);
+            } catch (WineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     public String findByNameProduct() throws WineException {
@@ -146,23 +146,20 @@ public class MBeanProduct implements Serializable {
         this.wineTypes = wineTypes;
     }
 
-	public Map<ProductType, List<String>> getAppellations() {
-		return appellations;
-	}
+    public Map<ProductType, List<String>> getAppellations() {
+        return appellations;
+    }
 
-	public void setAppellations(Map<ProductType, List<String>> appellations) {
-		this.appellations = appellations;
-	}
+    public void setAppellations(Map<ProductType, List<String>> appellations) {
+        this.appellations = appellations;
+    }
 
-	public Map<ProductType, List<ProductVarietal>> getVarietals() {
-		return varietals;
-	}
+    public Map<ProductType, List<ProductVarietal>> getVarietals() {
+        return varietals;
+    }
 
-	public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
-		this.varietals = varietals;
-	}
-    
-	
-    
+    public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
+        this.varietals = varietals;
+    }
 
 }

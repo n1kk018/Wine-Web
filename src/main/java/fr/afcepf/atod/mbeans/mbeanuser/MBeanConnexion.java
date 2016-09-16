@@ -6,10 +6,6 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
-import fr.afcepf.atod.mbeans.mbeanorder.MBeanCartManagement;
-import fr.afcepf.atod.util.SingletonSessionOrderTemp;
-import fr.afcepf.atod.wine.data.product.test.daoTester;
-import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.User;
 
 import java.io.Serializable;
@@ -21,8 +17,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -205,8 +199,7 @@ public class MBeanConnexion implements Serializable {
                 .getExternalContext().getSessionId(true) != null) {
 
         } else {
-            FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            Order order = SingletonSessionOrderTemp.getInstance().getOrder();
+            FacesContext.getCurrentInstance().getExternalContext().getSession(true);            
         }
     }
 

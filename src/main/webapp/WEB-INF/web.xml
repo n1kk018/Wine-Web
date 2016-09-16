@@ -39,7 +39,7 @@
     </context-param>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/index.xhtml</location>
+        <location>/index.jsf</location>
     </error-page>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
