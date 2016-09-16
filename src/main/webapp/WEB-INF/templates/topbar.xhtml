@@ -20,7 +20,7 @@
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{mBeanConnexion.userConnected.lastname != null}">
-						<li><a href="#">Bonjour Mr
+						<li><a href="#">Bonjour #{mBeanConnexion.userConnected.civility}
 								#{mBeanConnexion.userConnected.firstname}</a></li>
 						<!--<li><button jsf:action="#{mBeanConnexion.disconnect()}">Log out </button>
                             </li>-->

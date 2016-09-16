@@ -10,10 +10,12 @@ import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
+import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.Product;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
@@ -21,14 +23,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author ronan
- */
-/**
- * @author fen
- *
- */
 @SessionScoped
 @ManagedBean(name = "mBeanCartManagement")
 public class MBeanCartManagement implements Serializable {
@@ -162,7 +156,7 @@ public class MBeanCartManagement implements Serializable {
             }
         }
 
-        return Math.round(subTotal*100)/100;
+        return Math.round(subTotal * 100) / 100;
     }
 
     /**
@@ -177,7 +171,7 @@ public class MBeanCartManagement implements Serializable {
                 numTotalQuantity = numTotalQuantity + o.getQuantite();
             }
         }
-        return Math.round(numTotalQuantity*100)/100;
+        return Math.round(numTotalQuantity * 100) / 100;
     }
 
     /**
@@ -191,7 +185,7 @@ public class MBeanCartManagement implements Serializable {
         if (calculerNumTotalQantity() != 0.0) {
             shipping = calculerNumTotalQantity() * 0.75;
         }
-        return Math.round(shipping*100)/100;
+        return Math.round(shipping * 100) / 100;
     }
 
     /**
@@ -205,28 +199,88 @@ public class MBeanCartManagement implements Serializable {
         for (OrderDetail o : order.getOrdersDetail()) {
             subtotal = subtotal + calculTotalLine(o);
         }
-        return Math.round((subtotal + caclulShippingFree())*100)/100;
+        return Math.round((subtotal + caclulShippingFree()) * 100) / 100;
     }
 
     /**
-     * Ajouter une nouvelle commande a la base
+     * Ajouter une nouvelle commande a la base apres l'etape validePanier,
+     * valide adress, valide transport, valide paiement
      *
      * @param orderDetail
      * @return
      */
-    public String addNewOrder(Order o) {
-        String suite = null;
-        if (mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname() != null) {
-            /*try {
-				buOrder.addNewOrder(o);
-				suite = "checkout1adress.xhtml";
-			} catch (WineException e) {
-				e.printStackTrace();
-			}*/
+    public String addNewOrder() {
+        log.info("****************************************** add order debut********************************");
+        String page = null;
+        if (mBeanConnexion.getUserConnected().getId() != null 
+                && mBeanConnexion.getUserConnected().getFirstname() != null) {
+            log.info("****************************************** add order deja connecter********************************");
+            try {
+                order.setCustomer((Customer) mBeanConnexion.getUserConnected());
+                order.setCreatedAt(new Date());
+                
+                buOrder.addNewOrder(order);
+                page = "/pages/checkout1adress.jsf?faces-redirect=true";
+            } catch (WineException e) {
+                e.printStackTrace();
+            }
         } else {
-            suite = "register.xhtml";
+            log.info("****************************************** pas connecter********************************");
+            page = "/pages/register.jsf?faces-redirect=true";
         }
-        return suite;
+        return page;
+    }
+
+    /**
+     * verifier si le customer est connecté si oui creer date order et diriger
+     * vers page valide adresse sinon direger vers page register
+     *
+     */
+    public String validePanier() {
+        String page = null;
+        if (mBeanConnexion.getUserConnected().getId() != null 
+                && order.getOrdersDetail().size() != 0) {
+            order.setCustomer((Customer) mBeanConnexion.getUserConnected());
+            order.setCreatedAt(new Date());
+            page = "/pages/checkout1adress.jsf?faces-redirect=true";
+        } else {
+            page = "/pages/register.jsf?faces-redirect=true";
+        }
+        return page;
+    }
+
+    /**
+     * customer non connecté, soit s'inscrire soit connecter a partir du
+     * register pour valider le panier et direger vers valide adresse
+     *
+     */
+
+    public String connectedGoToCheckout1() {
+        String page = null;
+
+        if (mBeanConnexion.connect() != null) {
+            order.setCustomer((Customer) mBeanConnexion.getUserConnected());
+            order.setCreatedAt(new Date());
+            page = "/pages/checkout1adress.jsf?faces-redirect=true";
+        }
+        return page;
+    }
+
+    /**
+     * valider adresse livraison et direger vers la page paiement
+     *
+     */
+    public String validerAdresse() {
+        log.info("****************************entrer dans methode valide adresse**************************************");
+        String page = null;
+        if (order.getCustomer().getAdress() != null & order.getOrdersDetail().size() != 0) {
+            log.info("****************************il y a customer et order n'est vide**************************************");
+            //order.getCustomer().setAdress(adress);
+            page = "/pages/checkout2livraison.jsf";
+        }
+        log.info("****************************avant return**************************************");
+        page = "/pages/checkout2livraison.jsf";
+        return page;
     }
 
     //  ######################################################## //
@@ -240,16 +294,6 @@ public class MBeanCartManagement implements Serializable {
         return order;
     }
 
-    /*
-    public int getNumTotalQuantity() {
-		return numTotalQuantity;
-	}
-
-
-
-	public void setNumTotalQuantity(int numTotalQuantity) {
-		this.numTotalQuantity = numTotalQuantity;
-	} */
     public List<OrderDetail> getListOrderDetails() {
         return listOrderDetails;
     }
