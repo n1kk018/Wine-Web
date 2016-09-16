@@ -118,7 +118,7 @@ public class MBeanCartManagement implements Serializable {
             Set<OrderDetail> set = UtilConverter.retrieveSetAsList(listOrderDetails);
             order.setOrdersDetail(set);
         }
-        return page;
+        return "#?faces-redirect=true";
     }
 
     /**
