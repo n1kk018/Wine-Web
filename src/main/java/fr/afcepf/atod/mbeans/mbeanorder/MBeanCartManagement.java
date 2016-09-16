@@ -234,7 +234,7 @@ public class MBeanCartManagement implements Serializable {
      **/
     public String validePanier(){
     	String page = null;
-        if (mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname() != null) {
+        if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
             order.setCustomer((Customer)mBeanConnexion.getUserConnected());
 			order.setCreatedAt(new Date());
 			page = "/pages/checkout1adress.jsf?faces-redirect=true";
@@ -260,9 +260,20 @@ public class MBeanCartManagement implements Serializable {
     }
     
     /**
-     * 
+     * valider adresse livraison et direger vers la page paiement
      * */
-    
+    public String validerAdresse(){
+    	log.info("****************************entrer dans methode valide adresse**************************************");
+    	String page = null;
+    	if(order.getCustomer().getAdress()!=null & order.getOrdersDetail().size()!=0){
+    		log.info("****************************il y a customer et order n'est vide**************************************");
+    		//order.getCustomer().setAdress(adress);
+    		page ="/pages/checkout2livraison.jsf";
+    	}
+    	log.info("****************************avant return**************************************");
+    	page ="/pages/checkout2livraison.jsf";
+    	return page;
+    }
     
     //  ######################################################## //
     /**
