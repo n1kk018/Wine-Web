@@ -13,7 +13,10 @@ import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
+import fr.afcepf.atod.wine.entity.PaymentInfo;
 import fr.afcepf.atod.wine.entity.Product;
+import fr.afcepf.atod.wine.entity.ShippingMethod;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -175,17 +178,18 @@ public class MBeanCartManagement implements Serializable {
     }
 
     /**
-     * Calculer frais transport
+     * Calculer frais transport mode livaison colissomo
      *
      * @param orderDetail
      * @return
      */
     public double caclulShippingFree() {
         double shipping = 0.0;
+//        if (calculerNumTotalQantity() != 0.0 & order.getShippingMethod().getId()==1) 
         if (calculerNumTotalQantity() != 0.0) {
             shipping = calculerNumTotalQantity() * 0.75;
         }
-        return Math.round(shipping*100)/100;
+        return shipping;
     }
 
     /**
@@ -202,31 +206,7 @@ public class MBeanCartManagement implements Serializable {
         return Math.round((subtotal + caclulShippingFree())*100)/100;
     }
 
-    /**
-     * Ajouter une nouvelle commande a la base
-     *apres l'etape validePanier, valide adress, valide transport, valide paiement
-     * @param orderDetail
-     * @return
-     */
-    public String addNewOrder() {
-    	log.info("****************************************** add order debut********************************");
-        String page = null;
-        if (mBeanConnexion.getUserConnected().getId() != null && mBeanConnexion.getUserConnected().getFirstname() != null) {
-        	log.info("****************************************** add order deja connecter********************************");
-            try {
-            	order.setCustomer((Customer)mBeanConnexion.getUserConnected());
-            	order.setCreatedAt(new Date());
-				buOrder.addNewOrder(order);
-				page = "/pages/checkout1adress.jsf?faces-redirect=true";
-			} catch (WineException e) {
-				e.printStackTrace();
-			}
-        } else {
-        	log.info("****************************************** pas connecter********************************");
-            page ="/pages/register.jsf?faces-redirect=true";
-        }
-        return page;
-    }
+    
     /**
      *verifier si le customer est connecté
      *si oui creer date order et diriger vers page valide adresse
@@ -263,17 +243,53 @@ public class MBeanCartManagement implements Serializable {
      * valider adresse livraison et direger vers la page paiement
      * */
     public String validerAdresse(){
-    	log.info("****************************entrer dans methode valide adresse**************************************");
     	String page = null;
     	if(order.getCustomer().getAdress()!=null & order.getOrdersDetail().size()!=0){
-    		log.info("****************************il y a customer et order n'est vide**************************************");
     		//order.getCustomer().setAdress(adress);
-    		page ="/pages/checkout2livraison.jsf";
+    		page ="/pages/checkout2livraison.jsf?faces-redirect=true";
     	}
-    	log.info("****************************avant return**************************************");
-    	page ="/pages/checkout2livraison.jsf";
     	return page;
     }
+    /**
+     * valider mode de livraison en colissomo et direger vers la page paiement
+     * 
+     * */
+    public String validerLivraison(){
+    	String page = null;
+    	
+    	if(order.getCustomer().getId()!=null & order.getOrdersDetail().size()!=0){
+    		order.setShippingMethod(new ShippingMethod(1, "Colissomo"));
+    		page = "/pages/checkout3payment.jsf?faces-redirect=true";
+    	}
+    	return page;
+    }
+    
+    /**
+     * valider mode de paiement et date paiement, Ajouter une nouvelle commande a la base
+     *apres l'etape validePanier, valide adress, valide transport, valide paiement
+     * @param orderDetail
+     * @return
+     */
+    public String addNewOrder() {
+    	log.info("****************************************** add order debut********************************");
+        String page = null;
+        if (mBeanConnexion.getUserConnected().getId() != null && order.getCreatedAt()!=null 
+        		&& order.getShippingMethod()!=null && order.getOrdersDetail().size()!=0) {
+        	log.info("****************************************** add order deja connecter********************************");
+            try {
+            	order.setPaidAt(new Date());
+            	order.setPaymentInfo(new PaymentInfo(1, "visa"));
+				buOrder.addNewOrder(order);
+				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
+			} catch (WineException e) {
+				e.printStackTrace();
+			}
+        } else {
+        	log.info("****************************************** pas ajouter********************************");
+        }
+        return page;
+    }
+     
     
     //  ######################################################## //
     /**
@@ -286,16 +302,6 @@ public class MBeanCartManagement implements Serializable {
         return order;
     }
 
-    /*
-    public int getNumTotalQuantity() {
-		return numTotalQuantity;
-	}
-
-
-
-	public void setNumTotalQuantity(int numTotalQuantity) {
-		this.numTotalQuantity = numTotalQuantity;
-	} */
     public List<OrderDetail> getListOrderDetails() {
         return listOrderDetails;
     }

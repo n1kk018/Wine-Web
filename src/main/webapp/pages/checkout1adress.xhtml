@@ -23,8 +23,7 @@
 										de livraison</a></li>
 								<li class="disabled"><a href="#"><i class="fa fa-money"></i><br />Mode
 										de paiement </a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />Visualiser
-										votre commande</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />Confirmation</a></li>
 							</ul>
 							<div class="content">
 								<div class="row">
@@ -282,7 +281,7 @@
 								<div class="pull-right">
 									<h:commandButton
 										action="#{mBeanCartManagement.validerAdresse()}"
-										value="Valider et payer ma commande" class="btn btn-primary"></h:commandButton>
+										value="Valider et aller à la page de livraison" class="btn btn-primary"></h:commandButton>
 								</div>
 							</div>
 						</h:form>
@@ -296,39 +295,41 @@
 				<div class="col-md-3">
 
 					<div class="box" id="order-summary">
-						<div class="box-header">
-							<h3>Récapitulatif de commande</h3>
-						</div>
-						<p class="text-muted">
-							Vous avez
-							<h:outputLabel value="5" />
-							produits dans votre commandes
-						</p>
-
-						<div class="table-responsive">
-							<table class="table">
-								<tbody>
-									<tr>
-										<td>Les articles</td>
-										<th>€446.00</th>
-									</tr>
-									<tr>
-										<td>Frais de transport</td>
-										<th>€10.00</th>
-									</tr>
-									<tr>
-										<td>Taxe</td>
-										<th>€0.00</th>
-									</tr>
-									<tr class="total">
-										<td>Total</td>
-										<th>€456.00</th>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-					</div>
+								<div class="box-header">
+									<h3>Recapitulatif du panier</h3>
+								</div>
+								<p class="text-muted">Les Couts du transport et couts
+									additionnel sont calculees a partir des valeurs que vous avez
+									rentrees.</p>
+								<div class="table-responsive">
+									<table class="table" id="tabRecapOrder">
+										<tbody>
+											<tr>
+												<td>Sous total</td>
+												<th><h:outputText id="subTotal"
+														value="#{mBeanCartManagement.calculSubTotal()}€">
+													</h:outputText></th>
+											</tr>
+											<tr>
+												<td>Frais de transport</td>
+												<th><h:outputText id="shipping"
+														value="#{mBeanCartManagement.caclulShippingFree()}€">
+													</h:outputText></th>
+											</tr>
+											<tr>
+												<td>Tax</td>
+												<th>0.00€</th>
+											</tr>
+											<tr class="total">
+												<td>Total</td>
+												<th><h:outputText id="total"
+														value="#{mBeanCartManagement.calculTotal()}€">
+													</h:outputText></th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 
 				</div>
 				<!-- /.col-md-3 -->

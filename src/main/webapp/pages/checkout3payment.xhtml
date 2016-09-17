@@ -11,7 +11,7 @@
 				<div class="col-md-12">
 					<ul class="breadcrumb">
 						<li><a href="index.jsf">Acceuil</a></li>
-						<li>Mode de livraison</li>
+						<li>Mode de paiement</li>
 					</ul>
 				</div>
 
@@ -23,51 +23,70 @@
 							<ul class="nav nav-pills nav-justified">
 								<li class="disabled"><a href=""><i
 										class="fa fa-map-marker"></i><br />Address</a></li>
-								<li class="active"><a href=""><i class="fa fa-truck"></i><br />Mode
+								<li class="disabled"><a href=""><i class="fa fa-truck"></i><br />Mode
 										de livraison</a></li>
-								<li class="disabled"><a href=""><i class="fa fa-money"></i><br />Mode
+								<li class="active"><a href=""><i class="fa fa-money"></i><br />Mode
 										de paiement </a></li>
 								<li class="disabled"><a href=""><i class="fa fa-eye"></i><br />Confirmation</a></li>
 							</ul>
 
 							<div class="content">
+
 								<div class="row">
 									<div class="col-sm-12">
-										<div class="box shipping-method">
+										<div class="box payment-method">
 											<div class="media-left media-middle">
-												<img class="media-object" src="img/logocolissimo.png" />
+												<img class="media-object" src="img/logoPayment.png" />
 											</div>
-											<p>Livré en 2 jours ouvrés si vous commandez avant 14h du
-												lundi au vendredi</p>
+											<div class="row">
+												<div class="col-md-6">
+													<label>Numero de la carte *</label>
+												</div>
+												<div class="col-md-6">
+													<label>Date d'expiration *</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<h:inputText value="" class="form-control" />
+												</div>
+												<div class="col-md-3">
+													<input type="month" value="1" class="form-control" />
+												</div>
+												<div class="col-md-3">
+													<input type="month" value="1" class="form-control" />
+												</div>
 
-											<div class="box-footer text-center">
+											</div>
+											<!-- /.row -->
+											<div class="row">
 
-												<input type="radio" name="delivery" value=""
-													checked="checked" />
+												<div class="col-sm-6">
+													<label>Cryptogramme *</label> <input type="text" value="1"
+														class="form-control" />
+												</div>
+											</div>
+											<br />
+											<p>* Champs obligatoires</p>
+											<div class="row">
+												<div class="col-sm-8">
+													<p>Ce bouton vaut pour validation de votre commande, de son mode de paiement et de l'acceptation de nos conditions générales de vente</p>
+												</div>
+												<div class="col-sm-4">
+													<div class="pull-left">
+														<h:commandButton
+															action="#{mBeanCartManagement.addNewOrder()}"
+															value="Valider et payer ma commande"
+															class="btn btn-primary"></h:commandButton>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-sm-12">
-										<div class="box shipping-method">
-
-											<div class="media-left media-middle">
-												<img class="media-object" src="img/logochronopost.png" />
-											</div>
-
-											<p>Livré avant 13h le jour suivant si vous commandez
-												avant 12h du lundi au vendredi</p>
-
-											<div class="box-footer text-center">
-
-												<input type="radio" name="delivery" value="delivery2" />
-											</div>
-										</div>
 									</div>
+									<!-- /.row -->
 								</div>
-								<!-- /.row -->
-
-							</div>
-							<!-- /.content -->
+								<!-- /.content -->
 						</form>
 						<h:form>
 							<div class="box-footer">
@@ -77,15 +96,13 @@
 								</div>
 								<div class="pull-right">
 									<h:commandButton
-										action="#{mBeanCartManagement.validerLivraison()}"
-										value="Valider et aller à la page de Paiement"
-										class="btn btn-primary"></h:commandButton>
+										action="#{mBeanCartManagement.addNewOrder()}"
+										value="Valider et payer ma commande" class="btn btn-primary"></h:commandButton>
 								</div>
 							</div>
 						</h:form>
 					</div>
 					<!-- /.box -->
-
 
 				</div>
 				<!-- /.col-md-9 -->
@@ -134,10 +151,6 @@
 
 			</div>
 			<!-- /.container -->
-
-
-
-
 		</div>
 		<!-- /#content -->
 
