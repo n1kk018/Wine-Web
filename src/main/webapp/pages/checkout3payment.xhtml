@@ -39,30 +39,34 @@
 												<img class="media-object" src="img/logoPayment.png" />
 											</div>
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-xs-3">
 													<label>Numero de la carte *</label>
 												</div>
-												<div class="col-md-6">
-													<label>Date d'expiration *</label>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
+												<div class="col-xs-4">
 													<h:inputText value="" class="form-control" />
 												</div>
-												<div class="col-md-3">
-													<input type="month" value="1" class="form-control" />
+											</div>
+											<br />
+											<div class="row">
+												<div class="col-xs-3">
+													<label>Date d'expiration *</label>
 												</div>
-												<div class="col-md-3">
-													<input type="month" value="1" class="form-control" />
+												<div class="col-xs-2">
+													<input type="number" value="1" class="form-control" />
 												</div>
-
+												<div class="col-xs-2">
+													<input type="number" value="1" class="form-control" />
+												</div>
 											</div>
 											<!-- /.row -->
+											<br />
 											<div class="row">
 
-												<div class="col-sm-6">
-													<label>Cryptogramme *</label> <input type="text" value="1"
+												<div class="col-xs-3">
+													<label>Cryptogramme *</label>
+												</div>
+												<div class="col-xs-2">
+												<input type="text" value="1"
 														class="form-control" />
 												</div>
 											</div>
@@ -70,7 +74,9 @@
 											<p>* Champs obligatoires</p>
 											<div class="row">
 												<div class="col-sm-8">
-													<p>Ce bouton vaut pour validation de votre commande, de son mode de paiement et de l'acceptation de nos conditions générales de vente</p>
+													<p>Ce bouton vaut pour validation de votre commande, de
+														son mode de paiement et de l'acceptation de nos conditions
+														générales de vente</p>
 												</div>
 												<div class="col-sm-4">
 													<div class="pull-left">
@@ -83,10 +89,10 @@
 											</div>
 										</div>
 									</div>
-									</div>
-									<!-- /.row -->
 								</div>
-								<!-- /.content -->
+								<!-- /.row -->
+							</div>
+							<!-- /.content -->
 						</form>
 						<h:form>
 							<div class="box-footer">
@@ -95,8 +101,7 @@
 										class="fa fa-chevron-left"></i>Retourne à la page avant</a>
 								</div>
 								<div class="pull-right">
-									<h:commandButton
-										action="#{mBeanCartManagement.addNewOrder()}"
+									<h:commandButton action="#{mBeanCartManagement.addNewOrder()}"
 										value="Valider et payer ma commande" class="btn btn-primary"></h:commandButton>
 								</div>
 							</div>
