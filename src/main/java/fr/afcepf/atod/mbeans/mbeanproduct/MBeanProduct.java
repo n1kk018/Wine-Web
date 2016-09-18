@@ -143,12 +143,12 @@ public class MBeanProduct implements Serializable {
     	String str = null;
         wineProducts = new ArrayList<Product>();
     	if (type.getType().equalsIgnoreCase("")) {
-                /*try {
+                try {
                     buProduct.categoryAccordingToObjectType(type,o);
                 } catch (WineException ex) {
                     errorSearch = "Produits selon la categorie " + 
                    type.getType() + " ne sont pas trouves en base";
-                }*/
+                }
         } else {
            errorSearch = "Produits selon la categorie " + 
                    type.getType() + " ne sont pas trouves en base";
