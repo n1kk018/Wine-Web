@@ -178,6 +178,35 @@ public class MBeanCartManagement implements Serializable {
     }
 
     /**
+     * Calculer frais transport mode livaison colissomo
+     *
+     * @param orderDetail
+     * @return
+     */
+    public double caclulShippingFree() {
+        double shipping = 0.0;
+//        if (calculerNumTotalQantity() != 0.0 & order.getShippingMethod().getId()==1) 
+        if (calculerNumTotalQantity() != 0.0) {
+            shipping = calculerNumTotalQantity() * 0.75;
+        }
+        return shipping;
+    }
+
+    /**
+     * Calculer le total de la commande: total articles + frais transport
+     *
+     * @param orderDetail
+     * @return
+     */
+    public double calculTotal() {
+        double subtotal = 0.0;
+        for (OrderDetail o : order.getOrdersDetail()) {
+            subtotal = subtotal + calculTotalLine(o);
+        }
+        return Math.round((subtotal + caclulShippingFree()) * 100) / 100;
+    }
+
+    /**
      * verifier si le customer est connecté si oui creer date order et diriger
      * vers page valide adresse sinon direger vers page register
      *
@@ -185,7 +214,7 @@ public class MBeanCartManagement implements Serializable {
     public String validePanier() {
         String page = null;
         if (mBeanConnexion.getUserConnected().getId() != null
-                && order.getOrdersDetail().size() != 0) {
+                && !order.getOrdersDetail().isEmpty()) {
             order.setCustomer((Customer) mBeanConnexion.getUserConnected());
             order.setCreatedAt(new Date());
             page = "/pages/checkout1adress.jsf?faces-redirect=true";
