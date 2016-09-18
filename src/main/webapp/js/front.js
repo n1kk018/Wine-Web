@@ -237,12 +237,12 @@ $.fn.alignElementsSameHeight = function() {
 function pagination() {
 	$('.pagination').bootpag({
 	    total: 50,
-	    page: 2,
-	    maxVisible: 5,
+	    page: 1,
+	    maxVisible: 4,
 	    firstLastUse: true,
 	    first: '←',
 	    last: '→',
-	    href: "#pro-page-{{number}}",
+	    //href: "#pro-page-{{number}}",
 	    leaps: false,
 	    next: 'suivant',
 	    prev: 'précédent'
@@ -250,6 +250,7 @@ function pagination() {
     activeClass: 'active',
     disabledClass: 'disabled',*/
 	 }).on('page', function(event, num){
-	     $(".ajaxcontent").html("Page " + num); // or some ajax content loading...
+		 $("#myButton").click();return false;
+	     //$(".ajaxcontent").html("Page " + num); // or some ajax content loading...
 	 });
 }
