@@ -231,7 +231,27 @@ $.fn.alignElementsSameHeight = function() {
 	children.innerHeight(maxHeight);
 
     });
-
-
-
+    
+    function pagination() {
+    	$('.pagination').bootpag({
+    	    total: 50,
+    	    page: 1,
+    	    maxVisible: 4,
+    	    firstLastUse: true,
+    	    first: '←',
+    	    last: '→',
+    	    // href: "#pro-page-{{number}}",
+    	    leaps: false,
+    	    next: 'suivant',
+    	    prev: 'précédent'
+    	   /*
+			 * wrapClass: 'pagination', activeClass: 'active', disabledClass:
+			 * 'disabled',
+			 */
+    	 }).on('page', function(event, num){
+    		 $("#myButton").click();return false;
+    	     // $(".ajaxcontent").html("Page " + num); // or some ajax
+				// content loading...
+    	 });
+    }
 }

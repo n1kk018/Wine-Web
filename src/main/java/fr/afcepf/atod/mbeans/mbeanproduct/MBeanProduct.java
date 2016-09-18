@@ -24,6 +24,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -48,6 +49,7 @@ public class MBeanProduct implements Serializable {
     private List<Product> expensiveProducts;
     private String errorSearch;
     private List<Product> promotedWinesList;
+    private List<Product> winesList;
     private List<ProductType> wineTypes;
     private Map<ProductType, List<String>> appellations;
     private Map<ProductType, List<ProductVarietal>> varietals;
@@ -169,7 +171,15 @@ public class MBeanProduct implements Serializable {
         return wineTypes;
     }
 
-    public void setWineTypes(List<ProductType> wineTypes) {
+    public List<Product> getWinesList() {
+		return winesList;
+	}
+
+	public void setWinesList(List<Product> winesList) {
+		this.winesList = winesList;
+	}
+
+	public void setWineTypes(List<ProductType> wineTypes) {
         this.wineTypes = wineTypes;
     }
 
@@ -200,4 +210,9 @@ public class MBeanProduct implements Serializable {
 	public Product getCurrentProd() {
 		return currentProd;
 	}
+	
+	/*public void getWinesBy(Integer num, Integer page){
+		this.winesList = buProduct.getWinesBy(4, 1);
+		RequestContext.getCurrentInstance().update("ajaxcontent");
+	}*/
 }

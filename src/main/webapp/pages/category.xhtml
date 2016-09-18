@@ -170,8 +170,8 @@
 							</div>
 						</div>
 						<div class="box">
-							<div class="row ajaxcontent">
-								<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
+							<h:panelGroup layout="block" name="ajaxcontent" class="row">
+								<ui:repeat var="product" value="#{mBeanProduct.getWinesBy(4,2)}">
 									<div class="col-md-3 col-sm-6">
 										<div class="product">
 			                                <div class="flip-container">
@@ -210,9 +210,12 @@
 			                            </div>
 									</div>
 								</ui:repeat>
-							</div>
+							</h:panelGroup>
 							<div>
 								<div class="pagination"></div>
+								<h:commandButton id="myButton" action="#{mBeanProduct.getWinesBy(4,2)}" style="display:none">
+									<f:ajax event="click" />
+								</h:commandButton>
 							</div>
 						</div>
 					</div>
