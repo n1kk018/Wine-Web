@@ -176,7 +176,7 @@ public class MBeanCartManagement implements Serializable {
      */
     public int calculerNumTotalQantity() {
         int numTotalQuantity = 0;
-        if (order != null && !order.getOrdersDetail().isEmpty()&& order.getPaidAt()==null) {
+        if (order != null && order.getCreatedAt()!= null && order.getPaidAt()==null) {
             for (OrderDetail o : this.order.getOrdersDetail()) {
                 numTotalQuantity = numTotalQuantity + o.getQuantite();
             }
@@ -194,7 +194,7 @@ public class MBeanCartManagement implements Serializable {
         double shipping = 0.0;
 //        if (calculerNumTotalQantity() != 0.0 & order.getShippingMethod().getId()==1) 
         if (calculerNumTotalQantity() != 0.0) {
-            shipping = calculerNumTotalQantity() * 0.75;
+            shipping = calculerNumTotalQantity() * 1.5;
         }
         return shipping;
     }
@@ -300,8 +300,11 @@ public class MBeanCartManagement implements Serializable {
     	
     	customer = (Customer) mBeanConnexion.getUserConnected();
     	lastOrder = buOrder.getLastOrderByCustomer(customer);
+//    	Set<OrderDetail> set = lastOrder.getOrdersDetail();
+//    	listOrderDetails = UtilConverter.retrieveListAsSet(set);
+//    	order = new Order();
     	return lastOrder;
-    }
+    }    
     
     //  ######################################################## //
     /**
@@ -316,7 +319,15 @@ public class MBeanCartManagement implements Serializable {
         return order;
     }
 
-    public Order getLastOrder() {
+    public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Order getLastOrder() {
 		return lastOrder;
 	}
 
