@@ -177,7 +177,6 @@ public class MBeanCartManagement implements Serializable {
         return Math.round(numTotalQuantity * 100) / 100;
     }
 
-  
     /**
      * verifier si le customer est connecté si oui creer date order et diriger
      * vers page valide adresse sinon direger vers page register
@@ -185,7 +184,7 @@ public class MBeanCartManagement implements Serializable {
      */
     public String validePanier() {
         String page = null;
-        if (mBeanConnexion.getUserConnected().getId() != null 
+        if (mBeanConnexion.getUserConnected().getId() != null
                 && order.getOrdersDetail().size() != 0) {
             order.setCustomer((Customer) mBeanConnexion.getUserConnected());
             order.setCreatedAt(new Date());
@@ -201,7 +200,6 @@ public class MBeanCartManagement implements Serializable {
      * register pour valider le panier et direger vers valide adresse
      *
      */
-
     public String connectedGoToCheckout1() {
         String page = null;
 
@@ -213,45 +211,60 @@ public class MBeanCartManagement implements Serializable {
         return page;
     }
 
-     /**
-     * valider mode de livraison en colissomo et direger vers la page paiement
-     * 
-     * */
-    public String validerLivraison(){
-    	String page = null;
-    	
-    	if(order.getCustomer().getId()!=null & order.getOrdersDetail().size()!=0){
-    		order.setShippingMethod(new ShippingMethod(1, "Colissomo"));
-    		page = "/pages/checkout3payment.jsf?faces-redirect=true";
-    	}
-    	return page;
-    }
-    
     /**
-     * valider mode de paiement et date paiement, Ajouter une nouvelle commande a la base
-     *apres l'etape validePanier, valide adress, valide transport, valide paiement
+     * valider adresse livraison et direger vers la page paiement
+     *
+     */
+    public String validerAdresse() {
+        String page = null;
+        if (order.getCustomer().getAdress() != null & order.getOrdersDetail().size() != 0) {
+            //order.getCustomer().setAdress(adress);
+            page = "/pages/checkout2livraison.jsf?faces-redirect=true";
+        }
+        return page;
+    }
+
+    /**
+     * valider mode de livraison en colissomo et direger vers la page paiement
+     *
+     *
+     */
+    public String validerLivraison() {
+        String page = null;
+
+        if (order.getCustomer().getId() != null & order.getOrdersDetail().size() != 0) {
+            order.setShippingMethod(new ShippingMethod(1, "Colissomo"));
+            page = "/pages/checkout3payment.jsf?faces-redirect=true";
+        }
+        return page;
+    }
+
+    /**
+     * valider mode de paiement et date paiement, Ajouter une nouvelle commande
+     * a la base apres l'etape validePanier, valide adress, valide transport,
+     * valide paiement
+     *
      * @param orderDetail
      * @return
      */
     public String addNewOrder() {
-    	log.info("****************************************** add order debut********************************");
         String page = null;
-        if (mBeanConnexion.getUserConnected().getId() != null && order.getCreatedAt()!=null 
-        		&& order.getShippingMethod()!=null && order.getOrdersDetail().size()!=0) {
-        	log.info("****************************************** add order deja connecter********************************");
+        if (mBeanConnexion.getUserConnected().getId() != null && order.getCreatedAt() != null
+                && order.getShippingMethod() != null && order.getOrdersDetail().size() != 0) {
             try {
-            	order.setPaidAt(new Date());
-            	order.setPaymentInfo(new PaymentInfo(1, "visa"));
-				buOrder.addNewOrder(order);
-				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
-			} catch (WineException e) {
-				e.printStackTrace();
-			}
+                order.setPaidAt(new Date());
+                order.setPaymentInfo(new PaymentInfo(1, "visa"));
+                buOrder.addNewOrder(order);
+                page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
+            } catch (WineException e) {
+                e.printStackTrace();
+            }
         } else {
-        	log.info("****************************************** pas ajouter********************************");
+            log.info("La commande n'a pas ete ajoute");
         }
         return page;
     }
+
     //  ######################################################## //
     /**
      * ********************************************************
@@ -296,8 +309,3 @@ public class MBeanCartManagement implements Serializable {
     }
 
 }
-
-   
-     
-    
-
