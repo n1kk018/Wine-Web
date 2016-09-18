@@ -42,11 +42,15 @@ public class MBeanCartManagement implements Serializable {
     // global error adding product
     private String errorAddProduct;
 
+    private Order lastOrder = new Order();
+    
     @ManagedProperty(value = "#{buOrder}")
     private IBuOrder buOrder;
     @ManagedProperty(value = "#{mBeanConnexion}")
     private MBeanConnexion mBeanConnexion;
 
+    private Customer customer = new Customer();
+    
     public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
         this.mBeanConnexion = mBeanConnexion;
     }
@@ -70,6 +74,9 @@ public class MBeanCartManagement implements Serializable {
             try {
                 if (order == null) {
                     order = new Order();
+         			order.setCreatedAt(new Date());
+         			order.setPaidAt(null);
+
                 }
                 order = buOrder.addItemCart(order, product);
                 listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());
@@ -169,12 +176,12 @@ public class MBeanCartManagement implements Serializable {
      */
     public int calculerNumTotalQantity() {
         int numTotalQuantity = 0;
-        if (order != null && !order.getOrdersDetail().isEmpty()) {
+        if (order != null && !order.getOrdersDetail().isEmpty()&& order.getPaidAt()==null) {
             for (OrderDetail o : this.order.getOrdersDetail()) {
                 numTotalQuantity = numTotalQuantity + o.getQuantite();
             }
         }
-        return Math.round(numTotalQuantity*100)/100;
+        return numTotalQuantity;
     }
 
     /**
@@ -233,7 +240,6 @@ public class MBeanCartManagement implements Serializable {
     	
     	if(mBeanConnexion.connect()!=null){
     		order.setCustomer((Customer)mBeanConnexion.getUserConnected());
- 			order.setCreatedAt(new Date());
     		page ="/pages/checkout1adress.jsf?faces-redirect=true";
     	}
     	return page;
@@ -271,25 +277,31 @@ public class MBeanCartManagement implements Serializable {
      * @return
      */
     public String addNewOrder() {
-    	log.info("****************************************** add order debut********************************");
         String page = null;
         if (mBeanConnexion.getUserConnected().getId() != null && order.getCreatedAt()!=null 
-        		&& order.getShippingMethod()!=null && order.getOrdersDetail().size()!=0) {
-        	log.info("****************************************** add order deja connecter********************************");
+        		&& order.getShippingMethod()!=null && order.getOrdersDetail().size()!=0) {        	
             try {
             	order.setPaidAt(new Date());
             	order.setPaymentInfo(new PaymentInfo(1, "visa"));
 				buOrder.addNewOrder(order);
+				getLastOrder(customer);
 				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
 			} catch (WineException e) {
 				e.printStackTrace();
 			}
-        } else {
-        	log.info("****************************************** pas ajouter********************************");
-        }
+        } 
         return page;
     }
      
+    /**
+     * recuperer le dernier commande de client qui viens de passer pour le recap confirmation
+     * */
+    public Order getLastOrder(Customer customer){
+    	
+    	customer = (Customer) mBeanConnexion.getUserConnected();
+    	lastOrder = buOrder.getLastOrderByCustomer(customer);
+    	return lastOrder;
+    }
     
     //  ######################################################## //
     /**
@@ -298,11 +310,21 @@ public class MBeanCartManagement implements Serializable {
      * panier/validation paiement/.
      * ********************************************************
      */
+    
+    
     public Order getOrder() {
         return order;
     }
 
-    public List<OrderDetail> getListOrderDetails() {
+    public Order getLastOrder() {
+		return lastOrder;
+	}
+
+	public void setLastOrder(Order lastOrder) {
+		this.lastOrder = lastOrder;
+	}
+
+	public List<OrderDetail> getListOrderDetails() {
         return listOrderDetails;
     }
 
