@@ -99,8 +99,6 @@ public class MBeanProduct implements Serializable {
 
 	@PostConstruct
 	public void initIndex() {
-
-
 		if (promotedWinesList == null ) {
 			try {
 				promotedWinesList = buProduct.getPromotedProductsSelection();
@@ -109,7 +107,6 @@ public class MBeanProduct implements Serializable {
 				e.printStackTrace();
 			}
 		}
-		
 		
 		//Données Nav
 		if (wineTypes == null) {
@@ -123,19 +120,6 @@ public class MBeanProduct implements Serializable {
 				e.printStackTrace();
 			}
 		}
-            
-        //Données Nav
-        if (wineTypes == null) {
-            try {
-                wineTypes = buProduct.getWineTypes();
-                appellations = buProduct.getAppellationsByType(wineTypes);
-                varietals = buProduct.getVarietalsByType(wineTypes);
-                log.info(appellations);
-            } catch (WineException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
     }
     
     public String getProductParam(FacesContext fc){
@@ -159,12 +143,13 @@ public class MBeanProduct implements Serializable {
 		Integer id = Integer.valueOf(getProductParam(fc));
         if (id>0) {
         	currentProd = buProduct.findById(id);
-        	String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
+        	/*String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
         	log.info(referrer);
         	str = "article.jsf?faces-redirect=true";
         	if(!referrer.contains("/pages/")){
         		str="pages/"+str;
-        	}
+        	}*/
+        	str = UtilFindPath.findURLPath("category.jsf");
         }
         return str;
     }
@@ -172,13 +157,9 @@ public class MBeanProduct implements Serializable {
     public String category(ProductType type){
     	String str = null;
     	currentProdType = type;
+    	currentSubCategory = null;
     	getWinesList();
-    	String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
-    	log.info(referrer);
-    	str = "category.jsf?faces-redirect=true";
-    	if(!referrer.contains("/pages/")){
-    		str="pages/"+str;
-    	}
+    	str = UtilFindPath.findURLPath("category.jsf");
     	return str;
     }
     
@@ -190,14 +171,6 @@ public class MBeanProduct implements Serializable {
 		log.info(totalRows);
 		log.info(currentPage);
 		log.info(winesList);
-		/*String referrer = FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRequestHeaderMap().get("referer");
-    	log.info(referrer);
-    	str = "?faces-redirect=true";
-    	if(!referrer.contains("/pages/")){
-    		str="pages/"+str;
-    	}*/
     	str = UtilFindPath.findURLPath("category.jsf");
     	return str;
     			
