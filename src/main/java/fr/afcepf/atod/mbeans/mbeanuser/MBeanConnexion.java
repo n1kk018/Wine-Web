@@ -15,7 +15,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpRequest;
 
 
 /**
@@ -25,7 +29,7 @@ import javax.servlet.http.HttpSession;
 @ManagedBean(name ="mBeanConnexion")
 @SessionScoped
 public class MBeanConnexion implements Serializable {
-
+	private static Logger log = Logger.getLogger(MBeanConnexion.class);
     /**
      *
      */
@@ -33,7 +37,8 @@ public class MBeanConnexion implements Serializable {
 
     @ManagedProperty(value = "#{buCustomer}")
     private IBuCustomer buCustomer;
-
+    
+    private String absUrl;
     /**
      * user / customer
      */
@@ -113,6 +118,8 @@ public class MBeanConnexion implements Serializable {
                 .getExternalContext().getSession(true)).invalidate();
         return page;
     }
+    
+    
 
     // ----------- Getters && Setters ----------------//
     public String getInvalidConnexion() {
@@ -203,5 +210,37 @@ public class MBeanConnexion implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);            
         }
     }
+    
+    public void initPath() {
+    	log.info("\t ### Init path  ###");
+    	HttpServletRequest request = (HttpServletRequest) FacesContext
+    			.getCurrentInstance()
+    			.getExternalContext()
+    			.getRequest();
+    	String url  = request.getRequestURL().toString();
+    	String uri  = request.getRequestURI().toString();
+    	String cpath = request.getContextPath();
+    	String str  = request.getRequestURL()
+    			.substring(0, request.getRequestURL().length() 
+    					- request.getRequestURI().length()) + 
+    			request.getContextPath();
+    	if(url.contains("pages")==false && url.contains("index.jsf")==false){
+    		str=str+"/pages";
+    	}
+    	this.absUrl=str;
+    	//#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/"
+    	log.info(url);
+    	log.info(str);
+    }
+
+	public String getAbsUrl() {
+		return absUrl;
+	}
+
+	public void setAbsUrl(String absUrl) {
+		this.absUrl = absUrl;
+	}
+    
+    
 
 }

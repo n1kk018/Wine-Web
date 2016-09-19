@@ -4,12 +4,13 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	template="/WEB-INF/templates/commons.xhtml">
+	<f:metadata>
+		<f:event listener="#{mBeanProduct.initExpensive()}" type="preRenderView"></f:event>
+	</f:metadata>   
 	<ui:define name="body">
-
 		<form jsf:id="form1">
 			<div id="content">
 				<div class="container">
-
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a href="#">Accueil</a></li>
@@ -27,51 +28,54 @@
 										value="#{mBeanCartManagement.calculerNumTotalQantity()}" />
 									produits.
 								</p>
-								<div class="table-responsive">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>Produit</th>
-												<th>Quantite</th>
-												<th>Prix Unitaire</th>
-												<th>Reduction</th>
-												<th colspan="2">Totale</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<h:panelGroup id="myPanel">
-												<ui:repeat id="uiRepeatCart"
-													value="#{mBeanCartManagement.listOrderDetails}"
-													var="orderDetail">
-													<tr>
-														<td><a href="pages/article.jsf"> <img
-																src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg"
-																alt="#{orderDetail.productOrdered.name}" />
-														</a></td>
-														<td><input jsf:id="quantityProduct" type="number"
-															jsf:value="#{orderDetail.quantite}" class="form-control">
-														<f:ajax event="change" execute="@form" render="@form" />
-															</input></td>
-														<td><h:outputText
-																value="#{orderDetail.productOrdered.price}€">
-															</h:outputText></td>
-														<td><h:outputText
-																value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
-															</h:outputText></td>
-														<td><h:outputText id="totalLine"
-																value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
-															</h:outputText></td>
-														<td><h:commandLink
-																action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
-																<i class="fa fa-trash-o"></i>
-															</h:commandLink></td>
-													</tr>
-												</ui:repeat>
-											</h:panelGroup>
-										</tbody>
-									</table>
-								</div>
+								<h:panelGroup
+									rendered="#{mBeanCartManagement.validOrder == false}">
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Produit</th>
+													<th>Quantite</th>
+													<th>Prix Unitaire</th>
+													<th>Reduction</th>
+													<th colspan="2">Totale</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<h:panelGroup id="myPanel">
+													<ui:repeat id="uiRepeatCart"
+														value="#{mBeanCartManagement.listOrderDetails}"
+														var="orderDetail">
+														<tr>
+															<td><a href="pages/article.jsf"> <img
+																	src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg"
+																	alt="#{orderDetail.productOrdered.name}" />
+															</a></td>
+															<td><input jsf:id="quantityProduct" type="number"
+																jsf:value="#{orderDetail.quantite}" class="form-control">
+															<f:ajax event="change" execute="@form" render="@form" />
+																</input></td>
+															<td><h:outputText
+																	value="#{orderDetail.productOrdered.price}€">
+																</h:outputText></td>
+															<td><h:outputText
+																	value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
+																</h:outputText></td>
+															<td><h:outputText id="totalLine"
+																	value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
+																</h:outputText></td>
+															<td><h:commandLink
+																	action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
+																	<i class="fa fa-trash-o"></i>
+																</h:commandLink></td>
+														</tr>
+													</ui:repeat>
+												</h:panelGroup>
+											</tbody>
+										</table>
+									</div>
+								</h:panelGroup>
 								<!-- /.table-responsive -->
 
 
@@ -114,83 +118,29 @@
 
 						</div>
 						<!-- /.box -->
-						<div class="row same-height-row">
-							<div class="col-md-3 col-sm-6">
-								<div class="box same-height">
-									<h3>You may also like these products</h3>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="product same-height">
-									<div class="flip-container">
-										<div class="flipper">
-											<div class="front">
-												<a href="detail.html"> <img src="../img/product2.jpg"
-													alt="" class="img-responsive" /></a>
-											</div>
-											<div class="back">
-												<a href="detail.html"> <img src="../img/product2_2.jpg"
-													alt="" class="img-responsive" /></a>
-											</div>
+						<!-- 						<div class="row same-height-row"> -->
+							<div id="hot">
+								<div class="box">
+									<div class="container">
+										<div class="col-md-9">
+											<h3>Vous pourriez également aimer ces produits</h3>
 										</div>
 									</div>
-									<a href="detail.html" class="invisible"> <img
-										src="/img/product2.jpg" alt="" class="img-responsive" /></a>
-									<div class="text">
-										<h3>Fur coat</h3>
-										<p class="price">$143</p>
-									</div>
 								</div>
-								<!-- /.product -->
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="product same-height">
-									<div class="flip-container">
-										<div class="flipper">
-											<div class="front">
-												<a href="detail.html"> <img src="../img/product1.jpg"
-													alt="" class="img-responsive" /></a>
+								<div class="container">
+									<div class="product-slider">
+										<ui:repeat var="product"
+											value="#{mBeanProduct.expensiveProducts}">
+											<div class="item">
+												<ui:include src="/WEB-INF/templates/product.xhtml"></ui:include>
+												<!-- /.product -->
 											</div>
-											<div class="back">
-												<a href="detail.html"> <img src="../img/product1_2.jpg"
-													alt="" class="img-responsive" /></a>
-											</div>
-										</div>
-									</div>
-									<a href="detail.html" class="invisible"> <img
-										src="/img/product1.jpg" alt="" class="img-responsive" /></a>
-									<div class="text">
-										<h3>Fur coat</h3>
-										<p class="price">$143</p>
-									</div>
-								</div>
-								<!-- /.product -->
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="product same-height">
-									<div class="flip-container">
-										<div class="flipper">
-											<div class="front">
-												<a href="detail.html"> <img src="../img/product3.jpg"
-													alt="" class="img-responsive" /></a>
-											</div>
-											<div class="back">
-												<a href="detail.html"> <img src="../img/product3_2.jpg"
-													alt="" class="img-responsive" /></a>
-											</div>
-										</div>
-									</div>
-									<a href="detail.html" class="invisible"> <img
-										src="img/product3.jpg" alt="" class="img-responsive" /></a>
-									<div class="text">
-										<h3>Fur coat</h3>
-										<p class="price">$143</p>
+										</ui:repeat>
 
 									</div>
 								</div>
-								<!-- /.product -->
 							</div>
-						</div>
+						<!-- 						</div> -->
 					</div>
 					<!-- /.col-md-9 -->
 
@@ -267,23 +217,6 @@
 								</div>
 							</div>
 						</h:panelGroup>
-					</div>
-					<div class="box">
-						<div class="box-header">
-							<h4>Coupon code</h4>
-						</div>
-						<p class="text-muted">If you have a coupon code, please enter
-							it in the box below.</p>
-						<div class="input-group">
-
-							<h:inputText class="form-control" />
-							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button">
-									<i class="fa fa-gift"></i>
-								</button>
-							</span>
-						</div>
-						<!-- /input-group -->
 					</div>
 				</div>
 				<!-- /.col-md-3 -->
