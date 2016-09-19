@@ -210,7 +210,8 @@ public class MBeanProduct implements Serializable {
         page(totalRows - ((totalRows % rowsPerPage != 0) ? totalRows % rowsPerPage : rowsPerPage));
     }
  
-    public void page(ActionEvent event) {        
+    public void page(ActionEvent event) {  
+    	log.info(((UICommand)event.getComponent()).getValue());
         page(((Integer) ((UICommand) event.getComponent()).getValue() - 1) * rowsPerPage);
     }
  

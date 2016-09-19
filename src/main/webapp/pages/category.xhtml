@@ -124,8 +124,8 @@
 				                             disabled="#{mBeanProduct.firstRow == 0}" >&laquo;</a>
                             </li>
                             <ui:repeat value="#{mBeanProduct.pages}" var="page">
-                            	<li jsf:class="active" rendered="#{page == mBeanProduct.currentPage}"><a jsf:action="#{mBeanProduct.page}">#{page}</a></li>
-                            	<li jsf:class="" rendered="#{page != mBeanProduct.currentPage}"><a jsf:action="#{mBeanProduct.page}"></a></li>
+                            	<li class="active" jsf:rendered="#{page == mBeanProduct.currentPage}"><a jsf:actionListener="#{mBeanProduct.page}" value="#{page}"/></li>
+                            	<li jsf:rendered="#{page != mBeanProduct.currentPage}"><a jsf:actionListener="#{mBeanProduct.page}" value="#{page}"/></li>
                              </ui:repeat>
                             <li>
                             <a jsf:action="#{mBeanProduct.pageLast}" disabled="#{mBeanProduct.firstRow + myBean.rowsPerPage &gt;= mBeanProduct.totalRows}">
