@@ -46,119 +46,87 @@
 					<div class="product-slider">
 						<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
 							<div class="item">
-								<div class="product">
-									<div class="flip-container">
-										<div class="flipper">
-											<div class="front">
-												<a href="#{mBeanCartProduct.article(product.idProduct)}"> <img
-													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-													alt="" class="img-responsive" />
-												</a>
-											</div>
-											<div class="back">
-												<a href="#{mBeanProduct.article(product.idProduct)}"> <img
-													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
-													alt="" class="img-responsive" />
-												</a>
-											</div>
-										</div>
-									</div>
-									<a href="#{mBeanProduct.article(product.idProduct)}" class="invisible"> <img
-										src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-										alt="" class="img-responsive" />
-									</a>
-									<div class="text">
-										<h3>
-											<a href="#{mBeanProduct.article(product.idProduct)}">#{product.name}</a>
-										</h3>
-										<p class="price">#{product.price}€</p>
-										<a jsf:action="#{mBeanCartManagement.addProductCart(product)}" class="btn btn-primary hotlist-btn">
-											<i class="fa fa-shopping-cart"></i><span class="hidden-sm">Ajouter au panier</span>
-										</a>										
-									</div>
-									<!-- /.text -->
-									<div class="ribbon new">
-										<div class="theribbon">NEW</div>
-										<div class="ribbon-background"></div>
-									</div>
-								</div>
+								<ui:include src="/WEB-INF/templates/product.xhtml"></ui:include>
 								<!-- /.product -->
 							</div>
 						</ui:repeat>
-						
+
 					</div>
 				</div>
 			</div>
 		</form>
-		       <!-- *** BLOG HOMEPAGE ***-->
+		<!-- *** BLOG HOMEPAGE ***-->
 
-        <div class="box text-center" data-animate="fadeInUp">
-            <div class="container">
-                <div class="col-md-12">
-                    <h3 class="text-uppercase">From our blog</h3>
+		<div class="box text-center" data-animate="fadeInUp">
+			<div class="container">
+				<div class="col-md-12">
+					<h3 class="text-uppercase">From our blog</h3>
 
-                    <p class="lead">
-                        What's new in the world of fashion? <a href="blog.html">Check
-                            our blog!</a>
-                    </p>
-                </div>
-            </div>
-        </div>
+					<p class="lead">
+						What's new in the world of fashion? <a href="blog.html">Check
+							our blog!</a>
+					</p>
+				</div>
+			</div>
+		</div>
 
-        <div class="container">
+		<div class="container">
 
-            <div class="col-md-12" data-animate="fadeInUp">
+			<div class="col-md-12" data-animate="fadeInUp">
 
-                <div id="blog-homepage" class="row">
-                    <div class="col-sm-6">
-                        <div class="post">
-                            <h4>
-                                <a href="post.html">Fashion now</a>
-                            </h4>
-                            <p class="author-category">
-                                By <a href="#">John Slim</a> in <a href="">Fashion and
-                                    style</a>
-                            </p>
-                            <hr></hr>
-                            <p class="intro">Pellentesque habitant morbi tristique
-                                senectus et netus et malesuada fames ac turpis egestas.
-                                Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor
-                                sit amet, ante. Donec eu libero sit amet quam egestas semper.
-                                Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-                            <p class="read-more">
-                                <a href="post.html" class="btn btn-primary">Continue
-                                    reading</a>
-                            </p>
-                        </div>
-                    </div>
+				<div id="blog-homepage" class="row">
+					<div class="col-sm-6">
+						<div class="post">
+							<h4>
+								<a href="post.html">FOIRE AUX VINS: LES PIEGES A EVITER</a>
+							</h4>
+							<p class="author-category">
+								Par <a href="#">Emmanuel Delmas</a> sur <a href=""> ITele</a>
+							</p>
+							<hr></hr>
+							<p class="intro">L'idée était de revenir aux fondamentaux,
+								faire reprendre conscience aux gens que le vin sincère et
+								'juste' est trop rarement proposé en Grande Distribution, que le
+								vin, pour le néophyte réclamait un véritable conseil. Que le
+								consommateur devait revenir à la source, auprès du vigneron
+								'jardinier', et retrouver le caviste de proximité, source de
+								conseil, et d'écoute.</p>
+							<p class="read-more">
+								<a href="pages/suiteArticle1.jsf" class="btn btn-primary">Lire
+									la suite</a>
+							</p>
+						</div>
+					</div>
 
-                    <div class="col-sm-6">
-                        <div class="post">
-                            <h4>
-                                <a href="post.html">Who is who - example blog post</a>
-                            </h4>
-                            <p class="author-category">
-                                By <a href="#">John Slim</a> in <a href="">About Minimal</a>
-                            </p>
-                            <hr></hr>
-                            <p class="intro">Pellentesque habitant morbi tristique
-                                senectus et netus et malesuada fames ac turpis egestas.
-                                Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor
-                                sit amet, ante. Donec eu libero sit amet quam egestas semper.
-                                Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-                            <p class="read-more">
-                                <a href="post.html" class="btn btn-primary">Continue
-                                    reading</a>
-                            </p>
-                        </div>
+					<div class="col-sm-6">
+						<div class="post">
+							<h4>
+								<a href="post.html">WEEK END DES GRANDS CRUS</a>
+							</h4>
+							<p class="author-category">
+								Par <a href="#">John Slim</a> à <a href="">l'office du
+									tourisme de Bordeaux</a>
+							</p>
+							<hr></hr>
+							<p class="intro">Le Week-end des Grands Crus, est un
+								rendez-vous immanquable pour les passionnés de grands vins de
+								Bordeaux ! <br/>L’Union des Grands Crus, organisatrice de
+								l’événement, est à l’origine du phénomène des « dégustations
+								primeurs ». Chaque année, au printemps des milliers de
+								journalistes et de professionnels du vin sillonnent ...</p>
+							<p class="read-more">
+								<a href="pages/suiteArticle2.jsf" class="btn btn-primary">Lire
+									la suite</a>
+							</p>
+						</div>
 
-                    </div>
+					</div>
 
-                </div>
-                <!-- /#blog-homepage -->
-            </div>
-        </div>
-    </ui:define>
+				</div>
+				<!-- /#blog-homepage -->
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>
 
 

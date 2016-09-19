@@ -8,6 +8,7 @@ package fr.afcepf.atod.mbeans.mbeanorder;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
+import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
 import fr.afcepf.atod.wine.entity.Customer;
@@ -75,7 +76,7 @@ public class MBeanCartManagement implements Serializable {
 		log.info("#\t" + product.getName());
 		if (!product.getName().equalsIgnoreCase("")
 				&& product.getPrice() >= 0
-				&& !product.getProductSuppliers().isEmpty()) {
+				&& product.getProductSuppliers() != null) {
 			try {
 				if (order == null || order.getPaidAt()!=null) {
 					order = new Order();
@@ -102,9 +103,9 @@ public class MBeanCartManagement implements Serializable {
                     2) In JSF 2.0+ you could instead use the flash scope for this or to just let
                 the POST take place by <f:ajax> submit instead of a normal submit.
                     3) Another method
-				 */
-				
-				page = "/pages/basket.jsf?faces-redirect=true";
+				 */								
+				page = UtilFindPath.findURLPath("basket.jsf");
+				return page;
 			} catch (WineException ex) {
 				errorAddProduct = "Product not available, stock empty";
 			}

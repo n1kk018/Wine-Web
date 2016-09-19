@@ -1671,3 +1671,7 @@ address {
   color: #fff;
   text-decoration: none;
 }
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
