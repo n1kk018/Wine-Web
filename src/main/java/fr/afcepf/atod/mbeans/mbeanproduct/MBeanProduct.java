@@ -85,7 +85,14 @@ public class MBeanProduct implements Serializable {
         pageRange = 5;
     }
 
-
+    @PostConstruct
+    public void initExpensive() {
+        try {
+            expensiveProducts = buProduct.findExpensive(500.0);
+        } catch (WineException e) {
+            e.printStackTrace();
+        }
+    }
 
     @PostConstruct
     public void initIndex() {
@@ -98,11 +105,7 @@ public class MBeanProduct implements Serializable {
                 e.printStackTrace();
             }
         }
-         try {
-            expensiveProducts = buProduct.findExpensive(500.0);
-        } catch (WineException e) {
-            e.printStackTrace();
-        }
+
         //Données Nav
         if (wineTypes == null) {
             try {
