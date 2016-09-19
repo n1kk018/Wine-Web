@@ -8,9 +8,9 @@
 				<h4>A propos de WineMania</h4>
 
 				<ul>
-					<li><a href="text.html">Qui sommes nous ? </a></li>
+					<li><a href="pages/quiSommesNous.jsf">Qui sommes nous ? </a></li>
 					<li><a href="pages/cgv.jsf">Conditions Générales de Vente</a></li>
-					<li><a href="mentionlegal.html">Mentions Légales</a></li>
+					<li><a href="pages/mentions.jsf">Mentions Légales</a></li>
 					<li><a href="pages/faq.jsf">Questions et Réponses </a></li>
 					<li><a href="pages/contact.jsf">Contactez-nous</a></li>
 				</ul>
@@ -83,19 +83,21 @@
 
 				<p class="text-muted"></p>
 
-				<form>
+				<h:form>
 					<div class="input-group">
 
-						<input type="text" class="form-control"  placeholder="Mon e-mail" /> <span
+						<h:inputText type="text" class="btn" placeholder="Mon e-mail" value="#{mBeanMail.mailTo}"/>
+						 <span
 							class="input-group-btn">
-
-							<button class="btn btn-default" type="button">S'inscire</button>
+							
+							 <h:commandButton class="btn btn-primary"
+								value="S'inscrire" action="#{mBeanMail.sendMail()}" />
 
 						</span>
 
 					</div>
 					<!-- /input-group -->
-				</form>
+				</h:form>
 
 				<hr />
 
