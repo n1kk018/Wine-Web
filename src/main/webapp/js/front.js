@@ -231,7 +231,4 @@ $.fn.alignElementsSameHeight = function() {
 	children.innerHeight(maxHeight);
 
     });
-
-
-
 }

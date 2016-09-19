@@ -1,3 +1,7 @@
+<!DOCTYPE html [
+    <!ENTITY laquo "&#171;">
+    <!ENTITY raquo "&#187;">
+]>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -5,220 +9,148 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	template="/WEB-INF/templates/commons.xhtml">
     <ui:define name="body">
+    
+    <form jsf:id="form1">
 		<div class="container">
-			<div class="col-md-12">
-				<ul class="breadcrumb">
-					<li><a href="#">Home</a></li>
-                                        <li>#{mBeanProduct.category(prodType)}</li>
-				</ul>
-			</div>
-			<div class="col-md-3">
-				<!-- *** MENUS AND FILTERS ***-->
-				<div class="panel panel-default sidebar-menu">
 
-					<div class="panel-heading">
-						<h3 class="panel-title">Categories</h3>
-					</div>
+                <div class="col-md-12">
 
-					<div class="panel-body">
-						<ul class="nav nav-pills nav-stacked category-menu">
-							<li><a href="category.html">Men <span
-									class="badge pull-right">42</span></a>
-								<ul>
-									<li><a href="category.html">T-shirts</a></li>
-									<li><a href="category.html">Shirts</a></li>
-									<li><a href="category.html">Pants</a></li>
-									<li><a href="category.html">Accessories</a></li>
-								</ul></li>
-							<li class="active"><a href="category.html">Ladies <span
-									class="badge pull-right">123</span></a>
-								<ul>
-									<li><a href="category.html">T-shirts</a></li>
-									<li><a href="category.html">Skirts</a></li>
-									<li><a href="category.html">Pants</a></li>
-									<li><a href="category.html">Accessories</a></li>
-								</ul></li>
-							<li><a href="category.html">Kids <span
-									class="badge pull-right">11</span></a>
-								<ul>
-									<li><a href="category.html">T-shirts</a></li>
-									<li><a href="category.html">Skirts</a></li>
-									<li><a href="category.html">Pants</a></li>
-									<li><a href="category.html">Accessories</a></li>
-								</ul></li>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a>
+                        </li>
+                        <li>Ladies</li>
+                    </ul>
 
-						</ul>
+                    <div class="box">
+                        <h1>Ladies</h1>
+                        <p>In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide.</p>
+                    </div>
 
-					</div>
-				</div>
+                    <div class="box info-bar">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4 products-showing">
+                                Affichage de<strong>#{mBeanProduct.rowsPerPage}</strong> sur <strong>#{mBeanProduct.totalRows}</strong> articles
+                            </div>
 
-				<div class="panel panel-default sidebar-menu">
+                            <div class="col-sm-12 col-md-8  products-number-sort">
+                                <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="products-number">
+                                                <strong>Show</strong>  
+                                                <a jsf:action="#{mBeanProduct.rowsPerPage}" class="btn btn-default btn-sm">4</a>  
+                                                <a jsf:action="#{mBeanProduct.rowsPerPage}" class="btn btn-default btn-sm btn-primary">8</a>  
+                                                <a jsf:action="#{mBeanProduct.rowsPerPage}" class="btn btn-default btn-sm">12</a> 
+                                                <a jsf:action="#{mBeanProduct.rowsPerPage}" class="btn btn-default btn-sm">Tous</a> articles
+                                                <!-- Set rows per page -->
+				            					<!-- <h:commandButton value="Set" action="#{mBeanProduct.pageFirst}" />-->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="products-sort-by">
+                                                <strong>Trié par</strong>
+                                                <h:selectOneMenu ><!-- valueChangeListener="" -->
+                                                	<f:selectItem itemValue="price" itemLabel="Prix" />
+   													<f:selectItem itemValue="name" itemLabel="Nom" />	
+   													<f:selectItem itemValue="sale" itemLabel="Promo" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="panel-heading">
-						<h3 class="panel-title">
-							Brands <a class="btn btn-xs btn-danger pull-right" href="#"><i
-								class="fa fa-times-circle"></i> Clear</a>
-						</h3>
-					</div>
-
-					<div class="panel-body">
-
-						<form>
-							<div class="form-group">
-								<div class="checkbox">
-									<label> <input type="checkbox" />Armani (10)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" />Versace (12)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" />Carlo Bruni (15)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" />Jack Honey (14)
-									</label>
-								</div>
-							</div>
-
-							<button class="btn btn-default btn-sm btn-primary">
-								<i class="fa fa-pencil"></i> Apply
-							</button>
-
-						</form>
-
-					</div>
-				</div>
-
-				<div class="panel panel-default sidebar-menu">
-
-					<div class="panel-heading">
-						<h3 class="panel-title">
-							Colours <a class="btn btn-xs btn-danger pull-right" href="#"><i
-								class="fa fa-times-circle"></i> Clear</a>
-						</h3>
-					</div>
-
-					<div class="panel-body">
-
-						<form>
-							<div class="form-group">
-								<div class="checkbox">
-									<label> <input type="checkbox" /> <span
-										class="colour white"></span> White (14)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" /> <span
-										class="colour blue"></span> Blue (10)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" /> <span
-										class="colour green"></span> Green (20)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" /> <span
-										class="colour yellow"></span> Yellow (13)
-									</label>
-								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" /> <span
-										class="colour red"></span> Red (10)
-									</label>
-								</div>
-							</div>
-
-							<button class="btn btn-default btn-sm btn-primary">
-								<i class="fa fa-pencil"></i> Apply
-							</button>
-						</form>
-					</div>
-				</div>
-				<!-- *** MENUS AND FILTERS END *** -->
-			</div>
-			<div class="col-md-9">
-				<div class="box info-bar">
-					<div class="row">
-						<div class="col-sm-12 col-md-4 products-showing">
-							Showing <strong>12</strong> of <strong>25</strong> products
-						</div>
-						<div class="col-sm-12 col-md-8  products-number-sort">
-							<div class="row">
-								<form class="form-inline">
-									<div class="col-md-6 col-sm-6">
-										<div class="products-number">
-											<strong>Show</strong> 
-											<a href="#"class="btn btn-default btn-sm btn-primary">12</a> 
-											<a href="#" class="btn btn-default btn-sm">24</a> 
-											<a href="#" class="btn btn-default btn-sm">All</a> products
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-6">
-										<div class="products-sort-by">
-											<strong>Sort by</strong> <select name="sort-by" class="form-control">
-												<option>Price</option>
-												<option>Name</option>
-												<option>Sales first</option>
-											</select>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div class="box">
-							<div class="row ajaxcontent">
-								<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
+                    <div class="box">
+                    <div class="row products">
+						<ui:repeat var="product" value="#{mBeanProduct.winesList}">
 									<div class="col-md-3 col-sm-6">
 										<div class="product">
 			                                <div class="flip-container">
-			                                    <div class="flipper">
+			                                    <div class="flipper block-center">
 			                                        <div class="front">
-			                                            <a href="detail.html">
+			                                            <a href="#{mBeanProduct.article(product.idProduct)}">
 			                                                <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg" alt="" class="img-responsive"/>
 			                                            </a>
 			                                        </div>
 			                                        <div class="back">
-			                                            <a href="detail.html">
+			                                            <a href="#{mBeanProduct.article(product.idProduct)}">
 			                                                <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg" alt="" class="img-responsive"/>
 			                                            </a>
 			                                        </div>
 			                                    </div>
 			                                </div>
-			                                <a href="detail.html" class="invisible">
+			                                <a href="#{mBeanProduct.article(product.idProduct)}" class="invisible">
 			                                    <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg" alt="" class="img-responsive"/>
 			                                </a>
 			                                <div class="text">
-			                                    <h3><a href="detail.html">#{product.name}</a></h3>
-			                                    <p class="price"><del>$280</del> #{product.price} €</p>
+			                                    <h3><a href="#{mBeanProduct.article(product.idProduct)}">#{product.name}</a></h3>
+			                                    <p class="price">
+			                                    	<h:panelGroup rendered="#{product.speEvent!=null}">
+			                                    		<del>#{product.price} €</del>
+			                                    		<h:outputText value="#{product.price - ((product.price/100)*product.speEvent.pourcentage)}">
+			                                    			<f:convertNumber pattern=" #0.00" />
+			                                    		</h:outputText> €
+			                                    	</h:panelGroup>
+			                                    	<h:panelGroup rendered="#{product.speEvent==null}">
+			                                    		<h:outputText value="#{product.price}">
+			                                    			<f:convertNumber pattern=" #0.00" />
+			                                    		</h:outputText> €
+			                                    	</h:panelGroup>
+			                                    </p>
 			                                    <p class="buttons">
 			                                        <a href="detail.html" class="btn btn-default">Voir les détails</a>
 			                                        <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
 			                                    </p>
 			                                </div>
-			                                <div class="ribbon new">
+			                                <!-- <div class="ribbon new">
 			                                    <div class="theribbon">NEW</div>
 			                                    <div class="ribbon-background"></div>
-			                                </div>
-			                                <div class="ribbon sale">
+			                                </div>-->
+			                                <h:panelGroup layout="block" class="ribbon sale" rendered="#{product.speEvent!=null}">
 			                                    <div class="theribbon">SALE</div>
 			                                    <div class="ribbon-background"></div>
-			                                </div>
+			                                </h:panelGroup>
 			                            </div>
 									</div>
 								</ui:repeat>
-							</div>
-							<div>
-								<div class="pagination"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /.col-md-9 -->
-		</div>
+
+                    </div>
+                    </div>
+                    <!-- /.products -->
+                    <div class="pages">
+                    				            
+                        <ul class="pagination">
+                            <li><a jsf:action="#{mBeanProduct.pageFirst()}"
+				                             disabled="#{mBeanProduct.firstRow == 0}" >&laquo;</a>
+                            </li>
+                            <ui:repeat value="#{mBeanProduct.pages}" var="page">
+                            	<li jsf:class="active" rendered="#{page == mBeanProduct.currentPage}"><a jsf:action="#{mBeanProduct.page}">#{page}</a></li>
+                            	<li jsf:class="" rendered="#{page != mBeanProduct.currentPage}"><a jsf:action="#{mBeanProduct.page}"></a></li>
+                             </ui:repeat>
+                            <li>
+                            <a jsf:action="#{mBeanProduct.pageLast}" disabled="#{mBeanProduct.firstRow + myBean.rowsPerPage &gt;= mBeanProduct.totalRows}">
+                            	&raquo;
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.col-md-9 -->
+            </div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</form> 
 	</ui:define>
 </ui:composition>

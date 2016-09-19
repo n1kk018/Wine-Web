@@ -21,27 +21,14 @@
                     <div class="box">
                         <h1>Mon compte</h1>
 
-                        <p class="lead">Not our registered customer yet?</p>
-                        <p>With registration with us new world of fashion, fantastic discounts and much more opens to you! The whole process will not take you more than a minute!</p>
-                        <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
-
+                        <p class="lead">Pas encore inscrit ?</p>
+                        <p>Votre compte vous permet de bénéficier 24/24h, 7/7j de promotions et d'avantages exclusifs, d'accéder à vos services et de gagner du temps lors de vos prochaines commandes. </p>
                         <hr/>
 
                         <form action="customer-orders.html" method="post">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password"/>
-                            </div>
+                           
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
+                            <a href="pages/registerNewAccount.jsf" class="btn btn-primary">Créer mon Compte</a>
                             </div>
                         </form>
                     </div>
@@ -51,9 +38,8 @@
                     <div class="box">
                         <h1>Login</h1>
 
-                        <p class="lead">Already our customer?</p>
-                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies
-                            mi vitae est. Mauris placerat eleifend leo.</p>
+                        <p class="lead">Vous avez déjà un compte ?</p>
+                        <p class="text-muted">Connetez-vous afin de passer votre commande, accéder à votre espace client, qui vous permet de suivre votre commande et gérer votre compte</p>
 
                         <hr/>
 
@@ -71,6 +57,7 @@
                             <div class="text-center">
                                  <h:commandButton action="#{mBeanCartManagement.connectedGoToCheckout1()}" value="Se connecter"  class="btn btn-primary"></h:commandButton>
                             </div>
+                            <a class="text-muted">Mot de passe oublié?</a>
                         </h:form>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
 						rendered="#{mBeanConnexion.userConnected.lastname == null}">
 						<li><a href="#" data-toggle="modal"
 							data-target="#login-modal">Se connecter</a></li>
-						<li><a href="register.html">Inscription</a></li>
+						<li><a href="pages/registerNewAccount.jsf">Inscription</a></li>
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{mBeanConnexion.userConnected.lastname != null}">
@@ -27,7 +27,7 @@
 						<li><a href="#" jsf:action="#{mBeanConnexion.disconnect()}">Se
 								deconnecter</a></li>
 					</h:panelGroup>
-					<li><a href="contact.html">Contact</a></li>
+					<li><a href="pages/contact.jsf">Contact</a></li>
 					<li><a href="#">Vus récemment</a></li>
 				</ul>
 			</form>
@@ -78,7 +78,7 @@
 					</p>
 					<p class="text-center text-muted">Pas encore inscrit ?</p>
 					<p class="text-center text-muted">
-						<a href="pages/register.jsf"><strong>Créez votre
+						<a href="pages/registerNewAccount.jsf"><strong>Créez votre
 								compte</strong></a> ! pour commander plus vite et accéder aux services
 						personnalisés, aux cadeaux, aux avantages sur-mesure ...!
 					</p>

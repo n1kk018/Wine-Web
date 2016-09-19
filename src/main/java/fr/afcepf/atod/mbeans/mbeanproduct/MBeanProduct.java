@@ -18,14 +18,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UICommand;
+import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -50,16 +52,35 @@ public class MBeanProduct implements Serializable {
     private List<Product> expensiveProducts;
     private String errorSearch;
     private List<Product> promotedWinesList;
+    //private List<Product> winesList;
     private List<ProductType> wineTypes;
-    private List<Product> wineProducts;
     private Map<ProductType, List<String>> appellations;
     private Map<ProductType, List<ProductVarietal>> varietals;
 
+    //Test
+    private List<ProductWine> winesList;
+    private ProductType currentProdType;
+    private Object currentSubCategory;
+
+    /**
+     * pagination stuff
+     */
+    private int totalRows;
+    private int firstRow;
+    private int rowsPerPage;
+    private int totalPages;
+    private int pageRange;
+    private Integer[] pages;
+    private int currentPage;
+
+    //Fin test
     public MBeanProduct() {
         super();
         nameProd = "";
         errorSearch = "";
         accessory = new ProductAccessories();
+        rowsPerPage = 8; // Default rows per page (max amount of rows to be displayed at once).
+        pageRange = 5;
     }
 
     @PostConstruct
@@ -87,73 +108,62 @@ public class MBeanProduct implements Serializable {
         }
     }
 
-    public String findByNameProduct() {
+    public String findByNameProduct() throws WineException {
         String str = null;
         if (!nameProd.equalsIgnoreCase("")) {
-            try {
-                buProduct.findByName(nameProd);
-            } catch (WineException ex) {
-                errorSearch = "Produits non trouves en base.";
-            }
-        } else {
-            errorSearch = "Produits non trouves en base.";
+            buProduct.findByName(nameProd);
         }
         return str;
     }
-    
-    public String article(Integer id) {
-    	String str = null;
-        if (id>0) {
-                try {
-                    currentProd = buProduct.findById(id);
-                } catch (WineException ex) {
-                   errorSearch = "Article non trouve dans la base.";
-                } 
-        	str = "pages/article.jsf";
-        } else {
-            errorSearch = "Article non trouve dans la base.";
-        }
-        return str;
-    }
-    
-    public String category(ProductType prodType)  {
+
+    public String article(Integer id) throws WineException {
         String str = null;
-        wineTypes = new ArrayList<>();
-    	if(!prodType.getType().equalsIgnoreCase("")) {
-            try {
-                wineTypes = buProduct.findProductsType(prodType.getType());
-            } catch (WineException ex) {
-                errorSearch = "Type de vin n'a pas ete trouve dans la base "
-                    + "de donnees.";
-            }
-            if (wineTypes.isEmpty()) {
-                errorSearch = "Type de vin n'a pas ete trouve dans la base "
-                    + "de donnees.";
-            } else {
-                str = "/pages/category.jsf?faces-redirect=true";
-            }
-        } else {
-            errorSearch = "Type de vin n'a pas ete trouve dans la base "
-                    + "de donnees.";
-        }    	
-    	return str;
+        if (id > 0) {
+            currentProd = buProduct.findById(id);
+            str = "pages/article.jsf";
+        }
+        return str;
     }
-    
+
+    public String category(ProductType type) {
+        currentProdType = type;
+        getWinesList();
+        return "pages/category.jsf";
+    }
+
     public String category(ProductType type, Object o) {
-    	String str = null;
-        wineProducts = new ArrayList<Product>();
-    	if (type.getType().equalsIgnoreCase("")) {
-                try {
-                    buProduct.categoryAccordingToObjectType(type,o);
-                } catch (WineException ex) {
-                    errorSearch = "Produits selon la categorie " + 
-                   type.getType() + " ne sont pas trouves en base";
-                }
-        } else {
-           errorSearch = "Produits selon la categorie " + 
-                   type.getType() + " ne sont pas trouves en base";
-        }    	
-    	return str;
+        currentProdType = type;
+        currentSubCategory = o;
+        getWinesList();
+        log.info(totalRows);
+        log.info(currentPage);
+        log.info(winesList);
+        return "pages/category.jsf";
+    }
+
+    private void loadList() {
+        try {
+            winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory,
+                    firstRow, rowsPerPage);
+            totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
+
+            // Set currentPage, totalPages and pages.
+            currentPage = (totalRows / rowsPerPage) - ((totalRows - firstRow) / rowsPerPage) + 1;
+            totalPages = (totalRows / rowsPerPage) + ((totalRows % rowsPerPage != 0) ? 1 : 0);
+            int pagesLength = Math.min(pageRange, totalPages);
+            pages = new Integer[pagesLength];
+
+            // firstPage must be greater than 0 and lesser than totalPages-pageLength.
+            int firstPage = Math.min(Math.max(0, currentPage - (pageRange / 2)), totalPages - pagesLength);
+
+            // Create pages (page numbers for page links).
+            for (int i = 0; i < pagesLength; i++) {
+                pages[i] = ++firstPage;
+            }
+        } catch (WineException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -179,6 +189,32 @@ public class MBeanProduct implements Serializable {
             errorSearch = "Define positive criteria...";
         }
         return str;
+    }
+
+    // Paging actions -----------------------------------------------------------------------------
+    public void pageFirst() {
+        page(0);
+    }
+
+    public void pageNext() {
+        page(firstRow + rowsPerPage);
+    }
+
+    public void pagePrevious() {
+        page(firstRow - rowsPerPage);
+    }
+
+    public void pageLast() {
+        page(totalRows - ((totalRows % rowsPerPage != 0) ? totalRows % rowsPerPage : rowsPerPage));
+    }
+
+    public void page(ActionEvent event) {
+        page(((Integer) ((UICommand) event.getComponent()).getValue() - 1) * rowsPerPage);
+    }
+
+    private void page(int firstRow) {
+        this.firstRow = firstRow;
+        loadList();
     }
 
     // ----------- Getters && Setters ----------------//
@@ -210,6 +246,13 @@ public class MBeanProduct implements Serializable {
         return wineTypes;
     }
 
+    /*public List<Product> getWinesList() {
+		return winesList;
+	}
+
+	public void setWinesList(List<Product> winesList) {
+		this.winesList = winesList;
+	}*/
     public void setWineTypes(List<ProductType> wineTypes) {
         this.wineTypes = wineTypes;
     }
@@ -226,19 +269,84 @@ public class MBeanProduct implements Serializable {
         return varietals;
     }
 
-	public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
-		this.varietals = varietals;
-	}
+    public void setVarietals(Map<ProductType, List<ProductVarietal>> varietals) {
+        this.varietals = varietals;
+    }
 
-	public ProductAccessories getAccessory() {
-		return accessory;
-	}
+    public ProductAccessories getAccessory() {
+        return accessory;
+    }
 
-	public void setAccessory(ProductAccessories accessory) {
-		this.accessory = accessory;
-	}
+    public void setAccessory(ProductAccessories accessory) {
+        this.accessory = accessory;
+    }
 
-	public Product getCurrentProd() {
-		return currentProd;
-	}
+    public Product getCurrentProd() {
+        return currentProd;
+    }
+
+    public List<ProductWine> getWinesList() {
+        loadList();
+        return winesList;
+    }
+
+    public void setWinesList(List<ProductWine> winesList) {
+        this.winesList = winesList;
+    }
+
+    public int getTotalRows() {
+        return totalRows;
+    }
+
+    public void setTotalRows(int totalRows) {
+        this.totalRows = totalRows;
+    }
+
+    public int getFirstRow() {
+        return firstRow;
+    }
+
+    public void setFirstRow(int firstRow) {
+        this.firstRow = firstRow;
+    }
+
+    public int getRowsPerPage() {
+        return rowsPerPage;
+    }
+
+    public void setRowsPerPage(int rowsPerPage) {
+        this.rowsPerPage = rowsPerPage;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getPageRange() {
+        return pageRange;
+    }
+
+    public void setPageRange(int pageRange) {
+        this.pageRange = pageRange;
+    }
+
+    public Integer[] getPages() {
+        return pages;
+    }
+
+    public void setPages(Integer[] pages) {
+        this.pages = pages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 }
