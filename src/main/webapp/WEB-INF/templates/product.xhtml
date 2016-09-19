@@ -47,20 +47,20 @@
 					<f:convertNumber pattern=" #0.00" />
 				</h:outputText> €
 			</h:panelGroup>
-		</p>
-		<p class="buttons">
-			<a href="/pages/article.jsf" class="btn btn-default">Voir les détails</a> 
-			<h:commandLink action="#{mBeanCartManagement.addProductCart(product)}" value="Ajouter au panier" 
-				styleClass="btn btn-primary"/>
-<!-- 			<a jsf:action="#{mBeanCartManagement.addProductCart(product)}" class="btn btn-primary"><i -->
-<!-- 				class="fa fa-shopping-cart"></i>Ajouter au panier</a>			 -->
-		
+		</p>		
+
+		<p class="buttons"> 
+			<a jsf:action="#{mBeanCartManagement.addProductCart}" class="btn btn-primary">
+				<f:param name="product"  value="${product.idProduct}" />
+				<i class="fa fa-shopping-cart"></i>Ajouter au panier
+			</a>
+
 		</p>
 	</div>
 	<!-- <div class="ribbon new">
-			                                    <div class="theribbon">NEW</div>
-			                                    <div class="ribbon-background"></div>
-			                                </div>-->
+           <div class="theribbon">NEW</div>
+           <div class="ribbon-background"></div>
+       </div>-->
 	<h:panelGroup layout="block" class="ribbon sale"
 		rendered="#{product.speEvent!=null}">
 		<div class="theribbon">SALE</div>

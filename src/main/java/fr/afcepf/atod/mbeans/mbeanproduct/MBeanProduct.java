@@ -141,7 +141,6 @@ public class MBeanProduct implements Serializable {
     public String getProductParam(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		return params.get("product");
-
 	}
 
 

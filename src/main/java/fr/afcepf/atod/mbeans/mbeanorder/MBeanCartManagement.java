@@ -5,9 +5,13 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
+import fr.afcepf.atod.business.product.api.IBuProduct;
+import fr.afcepf.atod.business.product.impl.BuProduct;
+import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
+import fr.afcepf.atod.util.UtilDefParam;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
@@ -28,6 +32,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import org.apache.log4j.Logger;
 
 @SessionScoped
@@ -45,7 +51,8 @@ public class MBeanCartManagement implements Serializable {
 
 	// global error adding product
 	private String errorAddProduct;
-
+	@ManagedProperty(value = "#{mBeanProduct}")
+	private MBeanProduct mBeanProduct;
 	private Order lastOrder = new Order();
 	@ManagedProperty(value = "#{buOrder}")
 	private IBuOrder buOrder;
@@ -70,10 +77,19 @@ public class MBeanCartManagement implements Serializable {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public String addProductCart(Product product) {
+	public String addProductCart() {
 		String page = null;
 		validOrder = false;
-		log.info("#\t" + product.getName());
+		String id = UtilDefParam.getProductParam(FacesContext.getCurrentInstance());
+		Product product = null;
+		try {
+			product = mBeanProduct.getBuProduct()
+					.findById(Integer.parseInt(id));
+		} catch (NumberFormatException e) {			
+			e.printStackTrace();
+		} catch (WineException e) {			
+			e.printStackTrace();
+		}
 		if (!product.getName().equalsIgnoreCase("")
 				&& product.getPrice() >= 0
 				&& product.getProductSuppliers() != null) {
@@ -118,6 +134,7 @@ public class MBeanCartManagement implements Serializable {
 		return page;
 	}
 
+
 	/**
 	 * supprimer une ligne de commande
 	 *
@@ -140,7 +157,10 @@ public class MBeanCartManagement implements Serializable {
 	 */
 	public double calculDiscount(OrderDetail orderDetail) {
 		double discount = 0.0;
-		if (orderDetail != null) {
+		if (orderDetail != null
+				&& orderDetail.getProductOrdered()
+				.getSpeEvent() != null) 
+		{
 			discount = orderDetail.getProductOrdered().getPrice()
 					* (orderDetail.getProductOrdered()
 							.getSpeEvent().getPourcentage() / 100);
@@ -386,6 +406,14 @@ public class MBeanCartManagement implements Serializable {
 
 	public void setValidOrder(boolean validOrder) {
 		this.validOrder = validOrder;
+	}
+
+	public MBeanProduct getmBeanProduct() {
+		return mBeanProduct;
+	}
+
+	public void setmBeanProduct(MBeanProduct mBeanProduct) {
+		this.mBeanProduct = mBeanProduct;
 	}
  
 }
