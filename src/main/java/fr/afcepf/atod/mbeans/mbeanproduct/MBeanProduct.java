@@ -439,4 +439,5 @@ public class MBeanProduct implements Serializable {
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
+    
 }
