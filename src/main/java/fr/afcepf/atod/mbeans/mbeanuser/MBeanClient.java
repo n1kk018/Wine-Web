@@ -28,7 +28,8 @@ import fr.afcepf.atod.wine.entity.User;
 @ManagedBean(name = "mBeanClient")
 @SessionScoped
 public class MBeanClient implements Serializable {
-/**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

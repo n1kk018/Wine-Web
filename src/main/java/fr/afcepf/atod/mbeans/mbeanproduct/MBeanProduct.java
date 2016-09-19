@@ -85,7 +85,6 @@ public class MBeanProduct implements Serializable {
         pageRange = 5;
     }
 
-    @PostConstruct
     public void initExpensive() {
         try {
             expensiveProducts = buProduct.findExpensive(500.0);
