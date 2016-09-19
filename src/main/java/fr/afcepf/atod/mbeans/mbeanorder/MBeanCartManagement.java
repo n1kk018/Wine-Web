@@ -5,8 +5,6 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
-import fr.afcepf.atod.business.product.api.IBuProduct;
-import fr.afcepf.atod.business.product.impl.BuProduct;
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
@@ -21,19 +19,15 @@ import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.PaymentInfo;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ShippingMethod;
-
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import org.apache.log4j.Logger;
 
 @SessionScoped
@@ -60,6 +54,9 @@ public class MBeanCartManagement implements Serializable {
 	private MBeanConnexion mBeanConnexion;
 	private boolean validOrder;
 	private Customer customer = new Customer();
+	
+	DecimalFormat df = new DecimalFormat ( ) ;
+	
 
 	public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
 		this.mBeanConnexion = mBeanConnexion;
@@ -156,16 +153,22 @@ public class MBeanCartManagement implements Serializable {
 	 * @return
 	 */
 	public double calculDiscount(OrderDetail orderDetail) {
+//		df.setMaximumFractionDigits ( 2 ) ; //arrondi à 2 chiffres apres la virgules 
 		double discount = 0.0;
+		double prix = 0.0;
+		double pourcentage = 0.0;
 		if (orderDetail != null
 				&& orderDetail.getProductOrdered()
-				.getSpeEvent() != null) 
+				.getSpeEvent()!= null) 
 		{
-			discount = orderDetail.getProductOrdered().getPrice()
-					* (orderDetail.getProductOrdered()
-							.getSpeEvent().getPourcentage() / 100);
+			prix = orderDetail.getProductOrdered().getPrice();
+			pourcentage = orderDetail.getProductOrdered()
+					.getSpeEvent().getPourcentage();
+			discount = prix/100 * pourcentage;
+//			Double.parseDouble(df.format(discount));
+			
 		}
-		return Math.round(discount * 100) / 100;
+		return discount ;
 	}
 
 	/**
@@ -179,7 +182,7 @@ public class MBeanCartManagement implements Serializable {
 			totalLine = orderDetail.getQuantite()
 					* (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
 		}
-		return Math.round(totalLine * 100) / 100;
+		return totalLine;
 	}
 
 	/**
@@ -193,7 +196,7 @@ public class MBeanCartManagement implements Serializable {
 			}
 		}
 
-		return Math.round(subTotal*100)/100;
+		return subTotal;
 	}
 
 	/**
@@ -238,7 +241,7 @@ public class MBeanCartManagement implements Serializable {
 		for (OrderDetail o : order.getOrdersDetail()) {
 			subtotal = subtotal + calculTotalLine(o);
 		}
-		return Math.round((subtotal + caclulShippingFree())*100)/100;
+		return subtotal + caclulShippingFree();
 	}
 
 
@@ -314,7 +317,7 @@ public class MBeanCartManagement implements Serializable {
 				order.setPaymentInfo(new PaymentInfo(1, "visa"));
 				buOrder.addNewOrder(order);
 				validOrder = true;
-				//getLastOrder(customer);				
+				getLastOrder(customer);				
 				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
 			} catch (WineException e) {
 				e.printStackTrace();
@@ -327,9 +330,8 @@ public class MBeanCartManagement implements Serializable {
 	 * recuperer le dernier commande de client qui viens de passer pour le recap confirmation
 	 * */
 	public Order getLastOrder(Customer customer){
-
 		customer = (Customer) mBeanConnexion.getUserConnected();
-		lastOrder = buOrder.getLastOrderByCustomer(customer);		
+		lastOrder = buOrder.getLastOrderByCustomer(customer);	
 		return lastOrder;
 	}    
 

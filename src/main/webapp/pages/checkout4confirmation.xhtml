@@ -33,10 +33,10 @@
 							<p>Chèr(e) client(e), votre commande a bien été prise en
 								compte, un mail de confirmation a été envoyé à votre adresse
 								email.</p>
-							<h4>
+							<h3>
 								Numéro de Commande : CMD
 								<h:outputLabel value="#{mBeanCartManagement.lastOrder.id}" />
-							</h4>
+							</h3>
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
@@ -64,12 +64,15 @@
 														</h:outputLabel></td>
 													<td><h:outputText
 															value="#{orderDetail.productOrdered.price}€">
+															 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
 														</h:outputText></td>
 													<td><h:outputText
 															value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
+															 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
 														</h:outputText></td>
 													<td><h:outputText id="totalLine"
 															value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
+															 <f:convertNumber minFractionDigits="2" maxIntegerDigits="2" />
 														</h:outputText></td>
 												</tr>
 											</ui:repeat>
@@ -80,6 +83,7 @@
 												<td>Sous total</td>
 												<th><h:outputText id="subTotal"
 														value="#{mBeanCartManagement.calculSubTotal()}€">
+														 <f:convertNumber minFractionDigits="2" />
 													</h:outputText></th>
 											</tr>
 											<tr>
@@ -89,6 +93,7 @@
 												<td>Frais de transport</td>
 												<th><h:outputText id="shipping"
 														value="#{mBeanCartManagement.order.ordersDetail.size()*1.5}€">
+														 <f:convertNumber minFractionDigits="2" />
 													</h:outputText></th>
 											</tr>
 											<tr class="total">
@@ -98,6 +103,7 @@
 												<td>Total</td>
 												<th><h:outputText id="total"
 														value="#{mBeanCartManagement.calculTotal() + mBeanCartManagement.order.ordersDetail.size()*1.5}€">
+													 <f:convertNumber minFractionDigits="2" />
 													</h:outputText></th>
 											</tr>
 										</h:panelGroup>

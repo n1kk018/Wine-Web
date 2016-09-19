@@ -25,7 +25,8 @@
 								<p class="text-muted">
 									Votre panier contient
 									<h:outputText id="txtTotalQuantity"
-										value="#{mBeanCartManagement.calculerNumTotalQantity()}" />
+										value="#{mBeanCartManagement.calculerNumTotalQantity()}">
+										</h:outputText>
 									produits.
 								</p>
 								<h:panelGroup
@@ -58,12 +59,15 @@
 																</input></td>
 															<td><h:outputText
 																	value="#{orderDetail.productOrdered.price}€">
+																	  <f:convertNumber pattern="#0.00" />
 																</h:outputText></td>
 															<td><h:outputText
 																	value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
+																	<f:convertNumber pattern="#0.00" />
 																</h:outputText></td>
 															<td><h:outputText id="totalLine"
 																	value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
+																<f:convertNumber pattern="#0.00" />
 																</h:outputText></td>
 															<td><h:commandLink
 																	action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
@@ -161,12 +165,14 @@
 												<td>Sous total</td>
 												<th><h:outputText id="subTotal"
 														value="#{mBeanCartManagement.calculSubTotal()}€">
+														 <f:convertNumber minFractionDigits="2" />
 													</h:outputText></th>
 											</tr>
 											<tr>
 												<td>Frais de transport</td>
 												<th><h:outputText id="shipping"
 														value="#{mBeanCartManagement.caclulShippingFree()}€">
+														 <f:convertNumber minFractionDigits="2" />
 													</h:outputText></th>
 											</tr>
 											<tr>
@@ -177,6 +183,7 @@
 												<td>Total</td>
 												<th><h:outputText id="total"
 														value="#{mBeanCartManagement.calculTotal()}€">
+														 <f:convertNumber minFractionDigits="2" />
 													</h:outputText></th>
 											</tr>
 										</tbody>
