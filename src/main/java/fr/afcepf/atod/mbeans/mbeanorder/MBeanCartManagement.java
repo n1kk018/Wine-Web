@@ -103,6 +103,8 @@ public class MBeanCartManagement implements Serializable {
         }
         return page;
     }
+    
+    
 
     /**
      * supprimer une ligne de commande

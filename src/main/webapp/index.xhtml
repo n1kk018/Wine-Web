@@ -46,54 +46,7 @@
 					<div class="product-slider">
 						<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
 							<div class="item">
-								<div class="product">
-									<div class="flip-container">
-										<div class="flipper">
-											<div class="front">
-												<a jsf:action="#{mBeanCartProduct.article}">
-													<f:param name="product"  value="${product.idProduct}" />
-													<img
-													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-													alt="" class="img-responsive" />
-												</a>
-											</div>
-											<div class="back">
-												<a jsf:action="#{mBeanProduct.article}"> 
-												<f:param name="product"  value="${product.idProduct}" />
-												<img
-													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
-													alt="" class="img-responsive" />
-												</a>
-											</div>
-										</div>
-									</div>
-									<a jsf:action="#{mBeanProduct.article}"
-										class="invisible"> 
-										<f:param name="product"  value="${product.idProduct}" />
-										<img
-										src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-										alt="" class="img-responsive" />
-									</a>
-									<div class="text">
-										<h3>
-											<a jsf:action="#{mBeanProduct.article}">
-											<f:param name="product" value="${product.idProduct}" />
-											#{product.name}
-											</a>
-										</h3>
-										<p class="price">#{product.price}€</p>
-										<a jsf:action="#{mBeanCartManagement.addProductCart(product)}"
-											class="btn btn-primary hotlist-btn"> <i
-											class="fa fa-shopping-cart"></i><span class="hidden-sm">Ajouter
-												au panier</span>
-										</a>
-									</div>
-									<!-- /.text -->
-									<div class="ribbon new">
-										<div class="theribbon">NEW</div>
-										<div class="ribbon-background"></div>
-									</div>
-								</div>
+								<ui:include src="/WEB-INF/templates/product.xhtml" />
 								<!-- /.product -->
 							</div>
 						</ui:repeat>
