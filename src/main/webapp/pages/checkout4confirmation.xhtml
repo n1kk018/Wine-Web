@@ -3,7 +3,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/WEB-INF/templates/commons.xhtml">
+	
 	<ui:define name="body">
+	
 		<div id="content">
 
 			<div class="container">
@@ -21,17 +23,20 @@
 						<h:form>
 							<h1>Confirmation</h1>
 							<ul class="nav nav-pills nav-justified">
-								<li class="disabled"><a><i
-										class="fa fa-map-marker"></i><br />Address</a></li>
-								<li class="disabled"><a ><i class="fa fa-truck"></i><br />Mode
+								<li class="disabled"><a><i class="fa fa-map-marker"></i><br />Address</a></li>
+								<li class="disabled"><a><i class="fa fa-truck"></i><br />Mode
 										de livraison</a></li>
 								<li class="disabled"><a><i class="fa fa-money"></i><br />Mode
 										de paiement </a></li>
 								<li class="active"><a><i class="fa fa-eye"></i><br />Confirmation</a></li>
 							</ul>
-							<p> Chèr(e) client(e), votre commande a bien été prise en
-								compte, un mail de confirmation a été envoyé à votre adresse email.</p>
-								<h4> Numéro de Commande : CMD<h:outputLabel value="#{mBeanCartManagement.lastOrder.id}"/></h4> 
+							<p>Chèr(e) client(e), votre commande a bien été prise en
+								compte, un mail de confirmation a été envoyé à votre adresse
+								email.</p>
+							<h4>
+								Numéro de Commande : CMD
+								<h:outputLabel value="#{mBeanCartManagement.lastOrder.id}" />
+							</h4>
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
@@ -69,21 +74,27 @@
 												</tr>
 											</ui:repeat>
 											<tr>
-											<td></td><td></td><td></td>
+												<td></td>
+												<td></td>
+												<td></td>
 												<td>Sous total</td>
 												<th><h:outputText id="subTotal"
 														value="#{mBeanCartManagement.calculSubTotal()}€">
 													</h:outputText></th>
 											</tr>
 											<tr>
-											<td></td><td></td><td></td>
+												<td></td>
+												<td></td>
+												<td></td>
 												<td>Frais de transport</td>
 												<th><h:outputText id="shipping"
 														value="#{mBeanCartManagement.order.ordersDetail.size()*1.5}€">
 													</h:outputText></th>
 											</tr>
 											<tr class="total">
-											<td></td><td></td><td></td>
+												<td></td>
+												<td></td>
+												<td></td>
 												<td>Total</td>
 												<th><h:outputText id="total"
 														value="#{mBeanCartManagement.calculTotal() + mBeanCartManagement.order.ordersDetail.size()*1.5}€">
@@ -92,12 +103,12 @@
 										</h:panelGroup>
 									</tbody>
 								</table>
-								
+
 							</div>
 							<!-- /.table-responsive -->
 
 						</h:form>
-					
+
 					</div>
 					<!-- /.box -->
 
