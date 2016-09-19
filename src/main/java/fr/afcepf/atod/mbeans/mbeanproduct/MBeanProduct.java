@@ -24,7 +24,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UICommand;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
@@ -108,6 +110,12 @@ public class MBeanProduct implements Serializable {
             }
         }
     }
+    
+    public String getProductParam(FacesContext fc){
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		return params.get("product");
+
+	}
 
     public String findByNameProduct() throws WineException {
         String str = null;
@@ -117,29 +125,50 @@ public class MBeanProduct implements Serializable {
         return str;
     }
     
-    public String article(Integer id) throws WineException {
+    public String article() throws WineException {
     	String str = null;
+    	FacesContext fc = FacesContext.getCurrentInstance();
+		Integer id = Integer.valueOf(getProductParam(fc));
         if (id>0) {
         	currentProd = buProduct.findById(id);
-        	str = "pages/article.jsf";
+        	String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
+        	log.info(referrer);
+        	str = "article.jsf?faces-redirect=true";
+        	if(!referrer.contains("/pages/")){
+        		str="pages/"+str;
+        	}
         }
         return str;
     }
     
     public String category(ProductType type){
+    	String str = null;
     	currentProdType = type;
     	getWinesList();
-    	return "pages/category.jsf";
+    	String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
+    	log.info(referrer);
+    	str = "category.jsf?faces-redirect=true";
+    	if(!referrer.contains("/pages/")){
+    		str="pages/"+str;
+    	}
+    	return str;
     }
     
     public String category(ProductType type, Object o){
+    	String str = null;
     	currentProdType = type;
     	currentSubCategory = o;
 		getWinesList();
 		log.info(totalRows);
 		log.info(currentPage);
 		log.info(winesList);
-    	return "pages/category.jsf";
+		String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
+    	log.info(referrer);
+    	str = "category.jsf?faces-redirect=true";
+    	if(!referrer.contains("/pages/")){
+    		str="pages/"+str;
+    	}
+    	return str;
     }
         
    private void  loadList() {

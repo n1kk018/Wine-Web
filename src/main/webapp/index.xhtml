@@ -50,28 +50,36 @@
 									<div class="flip-container">
 										<div class="flipper">
 											<div class="front">
-												<a href="#{mBeanCartProduct.article(product.idProduct)}">
+												<a jsf:action="#{mBeanCartProduct.article}">
+													<f:param name="product"  value="${product.idProduct}" />
 													<img
 													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
 													alt="" class="img-responsive" />
 												</a>
 											</div>
 											<div class="back">
-												<a href="#{mBeanProduct.article(product.idProduct)}"> <img
+												<a jsf:action="#{mBeanProduct.article}"> 
+												<f:param name="product"  value="${product.idProduct}" />
+												<img
 													src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
 													alt="" class="img-responsive" />
 												</a>
 											</div>
 										</div>
 									</div>
-									<a href="#{mBeanProduct.article(product.idProduct)}"
-										class="invisible"> <img
+									<a jsf:action="#{mBeanProduct.article}"
+										class="invisible"> 
+										<f:param name="product"  value="${product.idProduct}" />
+										<img
 										src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
 										alt="" class="img-responsive" />
 									</a>
 									<div class="text">
 										<h3>
-											<a href="#{mBeanProduct.article(product.idProduct)}">#{product.name}</a>
+											<a jsf:action="#{mBeanProduct.article}">
+											<f:param name="product" value="${product.idProduct}" />
+											#{product.name}
+											</a>
 										</h3>
 										<p class="price">#{product.price}€</p>
 										<a jsf:action="#{mBeanCartManagement.addProductCart(product)}"

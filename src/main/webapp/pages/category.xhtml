@@ -64,53 +64,7 @@
                     <div class="row products">
 						<ui:repeat var="product" value="#{mBeanProduct.winesList}">
 									<div class="col-md-3 col-sm-6">
-										<div class="product">
-			                                <div class="flip-container">
-			                                    <div class="flipper block-center">
-			                                        <div class="front">
-			                                            <a href="#{mBeanProduct.article(product.idProduct)}">
-			                                                <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg" alt="" class="img-responsive"/>
-			                                            </a>
-			                                        </div>
-			                                        <div class="back">
-			                                            <a href="#{mBeanProduct.article(product.idProduct)}">
-			                                                <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg" alt="" class="img-responsive"/>
-			                                            </a>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <a href="#{mBeanProduct.article(product.idProduct)}" class="invisible">
-			                                    <img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg" alt="" class="img-responsive"/>
-			                                </a>
-			                                <div class="text">
-			                                    <h3><a href="#{mBeanProduct.article(product.idProduct)}">#{product.name}</a></h3>
-			                                    <p class="price">
-			                                    	<h:panelGroup rendered="#{product.speEvent!=null}">
-			                                    		<del>#{product.price} €</del>
-			                                    		<h:outputText value="#{product.price - ((product.price/100)*product.speEvent.pourcentage)}">
-			                                    			<f:convertNumber pattern=" #0.00" />
-			                                    		</h:outputText> €
-			                                    	</h:panelGroup>
-			                                    	<h:panelGroup rendered="#{product.speEvent==null}">
-			                                    		<h:outputText value="#{product.price}">
-			                                    			<f:convertNumber pattern=" #0.00" />
-			                                    		</h:outputText> €
-			                                    	</h:panelGroup>
-			                                    </p>
-			                                    <p class="buttons">
-			                                        <a href="detail.html" class="btn btn-default">Voir les détails</a>
-			                                        <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
-			                                    </p>
-			                                </div>
-			                                <!-- <div class="ribbon new">
-			                                    <div class="theribbon">NEW</div>
-			                                    <div class="ribbon-background"></div>
-			                                </div>-->
-			                                <h:panelGroup layout="block" class="ribbon sale" rendered="#{product.speEvent!=null}">
-			                                    <div class="theribbon">SALE</div>
-			                                    <div class="ribbon-background"></div>
-			                                </h:panelGroup>
-			                            </div>
+										<ui:include src="/WEB-INF/templates/product.xhtml" />
 									</div>
 								</ui:repeat>
 
