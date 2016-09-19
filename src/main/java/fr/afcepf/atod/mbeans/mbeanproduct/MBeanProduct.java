@@ -7,6 +7,7 @@ package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
+import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductAccessories;
@@ -24,7 +25,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UICommand;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
@@ -73,7 +76,6 @@ public class MBeanProduct implements Serializable {
     private Integer[] pages;
     private int currentPage;
 
-    //Fin test
     public MBeanProduct() {
         super();
         nameProd = "";
@@ -83,17 +85,37 @@ public class MBeanProduct implements Serializable {
         pageRange = 5;
     }
 
+
+
     @PostConstruct
     public void initIndex() {
+
         if (promotedWinesList == null) {
             try {
                 promotedWinesList = buProduct.getPromotedProductsSelection();
-
             } catch (WineException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+         try {
+            expensiveProducts = buProduct.findExpensive(500.0);
+        } catch (WineException e) {
+            e.printStackTrace();
+        }
+        //Données Nav
+        if (wineTypes == null) {
+            try {
+                wineTypes = buProduct.getWineTypes();
+                appellations = buProduct.getAppellationsByType(wineTypes);
+                varietals = buProduct.getVarietalsByType(wineTypes);
+                log.info(appellations);
+            } catch (WineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         //Données Nav
         if (wineTypes == null) {
             try {
@@ -108,6 +130,11 @@ public class MBeanProduct implements Serializable {
         }
     }
 
+    public String getProductParam(FacesContext fc) {
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        return params.get("product");
+    }
+
     public String findByNameProduct() throws WineException {
         String str = null;
         if (!nameProd.equalsIgnoreCase("")) {
@@ -116,35 +143,59 @@ public class MBeanProduct implements Serializable {
         return str;
     }
 
-    public String article(Integer id) throws WineException {
+    public String article() throws WineException {
         String str = null;
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Integer id = Integer.valueOf(getProductParam(fc));
         if (id > 0) {
             currentProd = buProduct.findById(id);
-            str = "pages/article.jsf";
+            String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
+            log.info(referrer);
+            str = "article.jsf?faces-redirect=true";
+            if (!referrer.contains("/pages/")) {
+                str = "pages/" + str;
+            }
         }
         return str;
     }
 
     public String category(ProductType type) {
+        String str = null;
         currentProdType = type;
         getWinesList();
-        return "pages/category.jsf";
+        String referrer = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap().get("referer");
+        log.info(referrer);
+        str = "category.jsf?faces-redirect=true";
+        if (!referrer.contains("/pages/")) {
+            str = "pages/" + str;
+        }
+        return str;
     }
 
     public String category(ProductType type, Object o) {
+        String str = null;
         currentProdType = type;
         currentSubCategory = o;
         getWinesList();
         log.info(totalRows);
         log.info(currentPage);
         log.info(winesList);
-        return "pages/category.jsf";
+        /*String referrer = FacesContext.getCurrentInstance()
+				.getExternalContext()
+				.getRequestHeaderMap().get("referer");
+    	log.info(referrer);
+    	str = "?faces-redirect=true";
+    	if(!referrer.contains("/pages/")){
+    		str="pages/"+str;
+    	}*/
+        str = UtilFindPath.findURLPath("category.jsf");
+        return str;
+
     }
 
     private void loadList() {
         try {
-            winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory,
-                    firstRow, rowsPerPage);
+            winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow, rowsPerPage);
             totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
 
             // Set currentPage, totalPages and pages.
@@ -166,29 +217,18 @@ public class MBeanProduct implements Serializable {
         }
     }
 
-    /**
-     *
-     * @param min
-     * @return
-     */
-    public String findExpensiveProducts(double min) {
+    public String article(Integer id) throws WineException {
         String str = null;
-        expensiveProducts = new ArrayList<>();
-        if (min >= 0.0) {
-            try {
-                expensiveProducts = buProduct.findExpensive(min);
-            } catch (WineException ex) {
-                errorSearch = "Research not found in the Database.";
-            }
-            if (!expensiveProducts.isEmpty()) {
-
-            } else {
-                errorSearch = "Research not found in the Database.";
-            }
-        } else {
-            errorSearch = "Define positive criteria...";
+        if (id > 0) {
+            currentProd = buProduct.findById(id);
+            str = "pages/article.jsf";
         }
         return str;
+    }
+
+    private void page(int firstRow) {
+        this.firstRow = firstRow;
+        loadList();
     }
 
     // Paging actions -----------------------------------------------------------------------------
@@ -209,12 +249,33 @@ public class MBeanProduct implements Serializable {
     }
 
     public void page(ActionEvent event) {
+        log.info(((UICommand) event.getComponent()).getValue());
         page(((Integer) ((UICommand) event.getComponent()).getValue() - 1) * rowsPerPage);
     }
 
-    private void page(int firstRow) {
-        this.firstRow = firstRow;
-        loadList();
+    /**
+     *
+     * @param min
+     * @return
+     */
+    public List<Product> findExpensiveProducts(double min) {
+        String str = null;
+        expensiveProducts = new ArrayList<>();
+        if (min >= 0.0) {
+            try {
+                expensiveProducts = buProduct.findExpensive(min);
+            } catch (WineException ex) {
+                errorSearch = "Research not found in the Database.";
+            }
+            if (!expensiveProducts.isEmpty()) {
+
+            } else {
+                errorSearch = "Research not found in the Database.";
+            }
+        } else {
+            errorSearch = "Define positive criteria...";
+        }
+        return expensiveProducts;
     }
 
     // ----------- Getters && Setters ----------------//
@@ -246,13 +307,6 @@ public class MBeanProduct implements Serializable {
         return wineTypes;
     }
 
-    /*public List<Product> getWinesList() {
-		return winesList;
-	}
-
-	public void setWinesList(List<Product> winesList) {
-		this.winesList = winesList;
-	}*/
     public void setWineTypes(List<ProductType> wineTypes) {
         this.wineTypes = wineTypes;
     }
@@ -285,11 +339,23 @@ public class MBeanProduct implements Serializable {
         return currentProd;
     }
 
+    public List<Product> getExpensiveProducts() {
+        return expensiveProducts;
+    }
+
     public List<ProductWine> getWinesList() {
         loadList();
         return winesList;
     }
 
+    public void setExpensiveProducts(List<Product> expensiveProducts) {
+        this.expensiveProducts = expensiveProducts;
+    }
+
+    //	public void getWinesBy(Integer num, Integer page){
+    //		this.winesList = buProduct.getWinesBy(4, 1);
+    //		RequestContext.getCurrentInstance().update("ajaxcontent");
+    //	}
     public void setWinesList(List<ProductWine> winesList) {
         this.winesList = winesList;
     }
@@ -349,4 +415,5 @@ public class MBeanProduct implements Serializable {
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
+
 }
