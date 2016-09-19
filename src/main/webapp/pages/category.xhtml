@@ -120,8 +120,7 @@
                     <div class="pages">
                     				            
                         <ul class="pagination">
-                            <li><a jsf:action="#{mBeanProduct.pageFirst()}"
-				                             disabled="#{mBeanProduct.firstRow == 0}" >&laquo;</a>
+                            <li><a jsf:action="#{mBeanProduct.pageFirst()}" disabled="#{mBeanProduct.firstRow == 0}" >&laquo;</a>
                             </li>
                             <ui:repeat value="#{mBeanProduct.pages}" var="page">
                             	<li class="active" jsf:rendered="#{page == mBeanProduct.currentPage}"><a jsf:actionListener="#{mBeanProduct.page}" value="#{page}"/></li>
