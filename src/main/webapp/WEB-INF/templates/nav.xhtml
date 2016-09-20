@@ -19,8 +19,7 @@
 					<span class="sr-only">Toggle search</span> <i class="fa fa-search"></i>
 				</button>
 				<a class="btn btn-default navbar-toggle" href="pages/basket.jsf"> <i
-					class="fa fa-shopping-cart"></i> <span class="hidden-xs">0
-						items in cart</span>
+					class="fa fa-shopping-cart"></i> <span class="hidden-xs">0 items in cart</span>
 				</a>
 			</div>
 		</div>
@@ -60,9 +59,15 @@
 											</div>
 											<div class="col-sm-3">
 												<ul>
-													<li><a jsf:action="#{mBeanProduct.category(topCategory,0)}">moins de 50€</a></li>
-													<li><a jsf:action="#{mBeanProduct.category(topCategory,50)}">en dessous de 100€</a></li>
-													<li><a jsf:action="#{mBeanProduct.category(topCategory,100)}">au delà de 100€</a></li>
+													<ui:repeat value="#{mBeanProduct.pricesRepartition[topCategory].entrySet().toArray()}" var="entry">
+													   <li jsf:rendered="#{entry.value gt 0}">
+														   <a jsf:action="#{mBeanProduct.category(topCategory,entry.key)}">
+														   		<h:outputLabel rendered="#{entry.key == 0}" value="moins de 50€"/>
+														   		<h:outputLabel rendered="#{entry.key == 50}" value="en dessous de 100€"/>
+														   		<h:outputLabel rendered="#{entry.key == 100}" value="au delà de 100€"/>
+														   	</a>
+													   </li>
+													</ui:repeat>
 												</ul>
 											</div>
 										</div>

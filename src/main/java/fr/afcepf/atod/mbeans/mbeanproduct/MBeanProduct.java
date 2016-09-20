@@ -59,6 +59,7 @@ public class MBeanProduct implements Serializable {
     private List<ProductWine> threeSimilarProductsList;
     private Map<ProductType, List<String>> appellations;
     private Map<ProductType, List<ProductVarietal>> varietals;
+    private Map<ProductType, Map<Integer,Integer>> pricesRepartition;
     private List<ProductWine> winesList;
 	private ProductType currentProdType;
     private Object currentSubCategory;
@@ -111,6 +112,7 @@ public class MBeanProduct implements Serializable {
 				wineTypes = buProduct.getWineTypes();
 				appellations = buProduct.getAppellationsByType(wineTypes);
 				varietals = buProduct.getVarietalsByType(wineTypes);
+				pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
 				log.info(appellations);
 			} catch (WineException e) {
 				// TODO Auto-generated catch block
@@ -447,6 +449,11 @@ public class MBeanProduct implements Serializable {
 	public List<ProductWine> getThreeSimilarProductsList() {
 		return threeSimilarProductsList;
 	}
+
+	public Map<ProductType, Map<Integer, Integer>> getPricesRepartition() {
+		return pricesRepartition;
+	}
+	
 	
 	
 }
