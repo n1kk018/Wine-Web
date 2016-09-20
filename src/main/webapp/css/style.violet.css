@@ -467,8 +467,6 @@ h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin-bottom: 30px;
-  margin-top: 55px;
   /* entire container, keeps perspective */
   /* flip speed goes here */
   /* hide back of pane during swap */
