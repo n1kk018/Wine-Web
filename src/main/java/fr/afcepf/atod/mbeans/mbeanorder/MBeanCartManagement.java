@@ -58,10 +58,6 @@ public class MBeanCartManagement implements Serializable {
 	DecimalFormat df = new DecimalFormat ( ) ;
 	
 
-	public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
-		this.mBeanConnexion = mBeanConnexion;
-	}
-
 	public MBeanCartManagement() {
 		super();
 		errorAddProduct = "";
@@ -418,4 +414,8 @@ public class MBeanCartManagement implements Serializable {
 		this.mBeanProduct = mBeanProduct;
 	}
  
+	public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
+		this.mBeanConnexion = mBeanConnexion;
+	}
+
 }
