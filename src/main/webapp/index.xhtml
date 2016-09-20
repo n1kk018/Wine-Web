@@ -9,23 +9,23 @@
 			<div class="col-md-12">
 				<div id="main-slider">
 					<div class="item">
-						<img src="img/main-slider1.jpg" alt="" class="img-responsive" />
+						<img class="img-responsive" src="img/main-slider6.jpg" alt="" />
 					</div>
 					<div class="item">
+						<img src="img/main-slider1.jpg" alt="" class="img-responsive" />
+					</div>
+					<!-- <div class="item">
 						<img class="img-responsive" src="img/main-slider2.jpg" alt="" />
 					</div>
 					<div class="item">
 						<img class="img-responsive" src="img/main-slider3.jpg" alt="" />
-					</div>
+					</div>-->
 					<div class="item">
 						<img class="img-responsive" src="img/main-slider5.jpg" alt="" />
 					</div>
-					<div class="item">
-						<img class="img-responsive" src="img/main-slider6.jpg" alt="" />
-					</div>
-					<div class="item">
+					<!-- <div class="item">
 						<img class="img-responsive" src="img/main-slider7.jpeg" alt="" />
-					</div>
+					</div>-->
 					<div class="item">
 						<img class="img-responsive" src="img/main-slider8.jpg" alt="" />
 					</div>
@@ -38,7 +38,7 @@
 				<div class="box">
 					<div class="container">
 						<div class="col-md-12">
-							<h2>Les Affaires de la semaine</h2>
+							<h2>Les bonnes affaires du moment</h2>
 						</div>
 					</div>
 				</div>
@@ -47,10 +47,8 @@
 						<ui:repeat var="product" value="#{mBeanProduct.promotedWinesList}">
 							<div class="item">
 								<ui:include src="/WEB-INF/templates/product.xhtml" />
-								<!-- /.product -->
 							</div>
 						</ui:repeat>
-
 					</div>
 				</div>
 			</div>
@@ -63,7 +61,7 @@
 					<h3 class="text-uppercase">Depuis notre blog</h3>
 
 					<p class="lead">
-						Quoi de neuf dans le milieu du vin? <a href="blog.html">Visitez notre blog!</a>
+						Quoi de neuf dans l'univers du vin? <a href="blog.html">Consultez notre blog!</a>
 					</p>
 				</div>
 			</div>

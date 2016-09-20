@@ -1,23 +1,23 @@
-<div class="product" 
+<div class="product same-height" 
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 	<div class="flip-container">
-		<div class="flipper block-center">
+		<div class="flipper">
 			<div class="front">
 				<a jsf:action="#{mBeanProduct.article}"> 
 				<f:param name="product"  value="${product.idProduct}" />
 				<img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-					alt="" class="img-responsive" />
+					alt="" class="img-responsive center-block" />
 				</a>
 			</div>
 			<div class="back">
 				<a jsf:action="#{mBeanProduct.article}"> 
 				<f:param name="product"  value="${product.idProduct}" />
 				<img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
-					alt="" class="img-responsive" />
+					alt="" class="img-responsive center-block" />
 				</a>
 			</div>
 		</div>
@@ -25,7 +25,7 @@
 	<a jsf:action="#{mBeanProduct.article}" class="invisible">
 		<f:param name="product"  value="${product.idProduct}" />
 		<img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
-		alt="" class="img-responsive" />
+		alt="" class="img-responsive center-block" />
 	</a>
 	<div class="text">
 		<h3>
