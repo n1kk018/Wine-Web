@@ -148,7 +148,8 @@ public class MBeanProduct implements Serializable {
     	FacesContext fc = FacesContext.getCurrentInstance();
 		Integer id = Integer.valueOf(getProductParam(fc));
         if (id>0) {
-        	if(winesList.size()>3)
+        	currentProd = buProduct.findById(id);
+        	if(winesList!=null && winesList.size()>3)
         	{
         		threeSimilarProductsList = new ArrayList<ProductWine>();
         		for (Product product : winesList) {
@@ -157,13 +158,14 @@ public class MBeanProduct implements Serializable {
         			}
     			}
         	} else {
-        		threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3);
-    			Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
-    			if(count < 3){
-    				threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count));
-    			}
+        		if(currentProdType!=null){
+	        		threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3);
+	    			Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
+	    			if(count < 3){
+	    				threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count));
+	    			}
+        		}
         	}
-        	currentProd = buProduct.findById(id);
         	str = UtilFindPath.findURLPath("article.jsf");
         }
         return str;
