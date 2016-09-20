@@ -160,7 +160,7 @@ public class MBeanCartManagement implements Serializable {
 			prix = orderDetail.getProductOrdered().getPrice();
 			pourcentage = orderDetail.getProductOrdered()
 					.getSpeEvent().getPourcentage();
-			discount = prix/100 * pourcentage;
+			discount = (double)Math.round((prix/100.0 * pourcentage)*100d)/100d;
 //			Double.parseDouble(df.format(discount));
 			
 		}
@@ -178,7 +178,7 @@ public class MBeanCartManagement implements Serializable {
 			totalLine = orderDetail.getQuantite()
 					* (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
 		}
-		return totalLine;
+		return (double)Math.round(totalLine*100d)/100d;
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class MBeanCartManagement implements Serializable {
 			}
 		}
 
-		return subTotal;
+		return (double)Math.round(subTotal*100d)/100d;
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class MBeanCartManagement implements Serializable {
 		if (calculerNumTotalQantity() != 0.0) {
 			shipping = calculerNumTotalQantity() * 1.5;
 		}
-		return shipping;
+		return (double)Math.round(shipping*100d)/100d;
 	}
 
 	/**
@@ -237,7 +237,7 @@ public class MBeanCartManagement implements Serializable {
 		for (OrderDetail o : order.getOrdersDetail()) {
 			subtotal = subtotal + calculTotalLine(o);
 		}
-		return subtotal + caclulShippingFree();
+		return (double)Math.round((subtotal + caclulShippingFree())*100d)/100d;
 	}
 
 
