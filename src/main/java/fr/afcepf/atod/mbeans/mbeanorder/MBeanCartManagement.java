@@ -7,6 +7,7 @@ package fr.afcepf.atod.mbeans.mbeanorder;
 
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -54,6 +55,8 @@ public class MBeanCartManagement implements Serializable {
 	private MBeanConnexion mBeanConnexion;
 	private boolean validOrder;
 	private Customer customer = new Customer();
+	@ManagedProperty(value="#{mBeanMail}")
+	private MBeanMail mBeanMail;
 	
 	DecimalFormat df = new DecimalFormat ( ) ;
 	
@@ -327,7 +330,8 @@ public class MBeanCartManagement implements Serializable {
 	 * */
 	public Order getLastOrder(Customer customer){
 		customer = (Customer) mBeanConnexion.getUserConnected();
-		lastOrder = buOrder.getLastOrderByCustomer(customer);	
+		lastOrder = buOrder.getLastOrderByCustomer(customer);
+		mBeanMail.sendFacture(lastOrder);
 		return lastOrder;
 	}    
 
@@ -417,5 +421,15 @@ public class MBeanCartManagement implements Serializable {
 	public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
 		this.mBeanConnexion = mBeanConnexion;
 	}
+
+	public MBeanMail getmBeanMail() {
+		return mBeanMail;
+	}
+
+	public void setmBeanMail(MBeanMail mBeanMail) {
+		this.mBeanMail = mBeanMail;
+	}
+	
+	
 
 }
