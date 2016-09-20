@@ -84,43 +84,42 @@
 								<!-- /.table-responsive -->
 
 
-                                <div class="box-footer">
-                                    <div class="pull-left">
-                                        <a href="index.jsf" class="btn btn-default"><i
-                                                class="fa fa-chevron-left"></i> Continue shopping</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <button class="btn btn-default">
-                                            <i class="fa fa-refresh"></i> Update basket
-                                        </button>
-                                        <h:commandButton
-                                            action="#{mBeanCartManagement.validePanier()}"
-                                            value="Valider et payer ma commande" class="btn btn-primary"></h:commandButton>
-                                    </div>
-                                </div>
-                            </h:panelGroup>
-                        </form>
+								<div class="box-footer">
+									<div class="pull-left">
+										<a href="index.jsf" class="btn btn-default"><i
+											class="fa fa-chevron-left"></i> Continue shopping</a>
+									</div>
+									<div class="pull-right">
+										<button class="btn btn-default">
+											<i class="fa fa-refresh"></i> Update basket
+										</button>
+										<h:commandButton
+											action="#{mBeanCartManagement.validePanier()}"
+											value="Valider et payer ma commande" class="btn btn-primary"></h:commandButton>
+									</div>
+								</div>
+							</h:panelGroup>
 
-                        <!-- panel empty -->
-                        <h:panelGroup
-                            rendered="#{mBeanCartManagement.order.ordersDetail.size() == 0 }">
-                            <h3>Votre panier est vide pour le moment. Remplissez le de
-                                bonnes bouteilles et de bons produits...</h3>
-                            <div class="box-footer">
-                                <div class="pull-left">
-                                    <a href="index.jsf" class="btn btn-default"><i
-                                            class="fa fa-chevron-left"></i> Continuer mon shopping</a>
-                                </div>
-                                <div class="pull-right">
-                                    <button class="btn btn-default">
-                                        <i class="fa fa-refresh"></i> Actualiser mon panier
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        Valider et payer ma commande <i class="fa fa-chevron-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </h:panelGroup>
+							<!-- panel empty -->
+							<h:panelGroup
+								rendered="#{mBeanCartManagement.order.ordersDetail.size() == 0 }">
+								<h3>Votre panier est vide pour le moment. Remplissez le de
+									bonnes bouteilles et de bons produits...</h3>
+								<div class="box-footer">
+									<div class="pull-left">
+										<a href="index.jsf" class="btn btn-default"><i
+											class="fa fa-chevron-left"></i> Continuer mon shopping</a>
+									</div>
+									<div class="pull-right">
+										<button class="btn btn-default">
+											<i class="fa fa-refresh"></i> Actualiser mon panier
+										</button>
+										<button type="submit" class="btn btn-primary">
+											Valider et payer ma commande <i class="fa fa-chevron-right"></i>
+										</button>
+									</div>
+								</div>
+							</h:panelGroup>
 
 						</div>
 						 <!-- <form jsf:id="formselection">-->
