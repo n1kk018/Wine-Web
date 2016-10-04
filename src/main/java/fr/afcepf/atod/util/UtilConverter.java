@@ -17,10 +17,6 @@ import java.util.Set;
  */
 
 public final class UtilConverter {
-
-    private UtilConverter() {
-        super();
-    }
     /**
      * from a set to a list
      * @param set

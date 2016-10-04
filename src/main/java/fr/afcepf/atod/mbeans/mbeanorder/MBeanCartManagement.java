@@ -37,8 +37,7 @@ public class MBeanCartManagement implements Serializable {
 
 	private static final long serialVersionUID = -2317461571703883416L;
 	// temporary
-	private static Logger log
-	= Logger.getLogger(MBeanCartManagement.class);
+	private static Logger log = Logger.getLogger(MBeanCartManagement.class);
 	// create a new command if necessary or 
 	private Order order = SingletonSessionOrderTemp.getInstance().getOrder();
 	// set transforme en list

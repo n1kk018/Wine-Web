@@ -7,6 +7,8 @@ package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
+import fr.afcepf.atod.util.BreadCrumb;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineErrorCode;
 import fr.afcepf.atod.vin.data.exception.WineException;
@@ -47,6 +49,8 @@ public class MBeanProduct implements Serializable {
 
 	@ManagedProperty(value = "#{buProduct}")
 	private IBuProduct buProduct;
+	@ManagedProperty(value="#{breadCrumb}")
+    private BreadCrumb breadCrumb;
 
     private ProductAccessories accessory;
     private Product currentProd;
@@ -167,6 +171,7 @@ public class MBeanProduct implements Serializable {
         		}
         	}
         	str = UtilFindPath.findURLPath("article.jsf");
+        	//breadCrumb.AddItem("Article", str);
         }
         return str;
 	}
@@ -251,7 +256,6 @@ public class MBeanProduct implements Serializable {
 	 * @return
 	 */
 	public List<Product> findExpensiveProducts(double min) {
-		String str = null;
 		expensiveProducts = new ArrayList<>();
 		if (min >= 0.0) {
 			try {
@@ -456,6 +460,18 @@ public class MBeanProduct implements Serializable {
 		return pricesRepartition;
 	}
 	
-	
+	/**
+     * @return the breadCrumb
+     */
+    public BreadCrumb getBreadCrumb() {
+        return breadCrumb;
+    }
+
+    /**
+     * @param paramBreadCrumb the breadCrumb to set
+     */
+    public void setBreadCrumb(BreadCrumb paramBreadCrumb) {
+        breadCrumb = paramBreadCrumb;
+    }
 	
 }

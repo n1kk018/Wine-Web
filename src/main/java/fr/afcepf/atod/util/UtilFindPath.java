@@ -3,10 +3,6 @@ package fr.afcepf.atod.util;
 import javax.faces.context.FacesContext;
 
 public final class UtilFindPath {
-	private UtilFindPath() {
-		
-	}
-	
 	public static String findURLPath(String pageURL) {
 		String str 		= "";
 		String referrer = FacesContext.getCurrentInstance()
