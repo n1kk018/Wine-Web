@@ -37,6 +37,10 @@
         <param-name>facelets.SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
     </context-param>
+        <context-param>  
+        <param-name>primefaces.THEME</param-name>  
+        <param-value>pepper-grinder</param-value>  
+    </context-param>  
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/index.jsf</location>

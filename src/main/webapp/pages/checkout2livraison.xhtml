@@ -2,18 +2,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	template="/WEB-INF/templates/commons.xhtml">
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:define name="breadcrumb">
+    	<p:breadCrumb>
+			<p:menuitem value="Index" url="index.jsf" />
+			<p:menuitem value="Panier" url="basket.jsf"/>
+			<p:menuitem value="Livraison - Mode de livraison" />
+		</p:breadCrumb>
+    </ui:define>
 	<ui:define name="body">
 			<div class="container">
-				<div class="col-md-12">
-					<ul class="breadcrumb">
-						<li><a href="index.jsf">Acceuil</a></li>
-						<li>Mode de livraison</li>
-					</ul>
-				</div>
-
 				<div class="col-md-9" id="checkout">
-
 					<div class="box">
 						<form jsf="h:form" id="Form">
 							<h1>Mode de livraison</h1>

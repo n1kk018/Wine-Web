@@ -2,19 +2,21 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	template="/WEB-INF/templates/commons.xhtml">
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:define name="breadcrumb">
+    	<p:breadCrumb>
+			<p:menuitem value="Index" url="index.jsf" />
+			<p:menuitem value="Panier" url="basket.jsf"/>
+			<p:menuitem value="Livraison - Vérification adresse" />
+		</p:breadCrumb>
+    </ui:define>
 	<ui:define name="body">
-		<div id="content">
 			<div class="container">
-				<div class="col-md-12">
-					<ul class="breadcrumb">
-						<li><a href="index.jsf">Accueil</a></li>
-						<li>Livraison - vérification d'adresse</li>
-					</ul>
-				</div>
 				<div class="col-md-9" id="checkout">
 					<div class="box">
-						<form jsf="h:form" id="Form">
+						<form jsf:id="Form">
 							<h3>Adresse de livraison :</h3>
 							<ul class="nav nav-pills nav-justified">
 								<li class="active"><a href="#"><i
@@ -338,6 +340,5 @@
 				<!-- /.col-md-3 -->
 			</div>
 			<!-- /.container -->
-		</div>
 	</ui:define>
 </ui:composition>

@@ -6,7 +6,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">    
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">    
 	<!-- <f:metadata>
 		<f:event listener="#{mBeanConnexion.initPath()}" type="preRenderView"></f:event>
 	</f:metadata>   -->
@@ -22,7 +23,7 @@
 		<title>WineMania - <ui:insert name="pageTitle">Vente du vin en ligne</ui:insert>
 		</title>
 		<meta name="keywords" content="" />
-		<!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css' />-->
+		<!-- ><link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css' />-->
 		<link href="css/font-awesome.css" rel="stylesheet" />
 		<link href="css/bootstrap.min.css" rel="stylesheet" />
 		<link href="css/animate.min.css" rel="stylesheet" />
@@ -45,6 +46,17 @@
 			</div>
 			<div>
 				<div id="content">
+					<div class="container" >
+						<div class="col-md-12 bcWrapper">
+					    	<form jsf:action="javascript:void(0);" jsf:id="formBc">
+							    <ui:insert name="breadcrumb">
+						    		<p:breadCrumb>
+										<p:menuitem value="Index" url="index.jsf" />
+									</p:breadCrumb>	    	
+							    </ui:insert>
+						    </form>
+					    </div>
+				    </div>
 					<ui:insert name="body"></ui:insert>
 				</div>
 			</div>

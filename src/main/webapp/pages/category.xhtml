@@ -7,24 +7,22 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	template="/WEB-INF/templates/commons.xhtml">
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:define name="breadcrumb">
+    	<p:breadCrumb>
+			<p:menuitem value="Index" url="index.jsf" />
+			<p:menuitem value="Catalogue"  />
+		</p:breadCrumb>
+    </ui:define>
 	<ui:define name="body">
-
 		<form jsf:id="form1">
 			<div class="container">
-
 				<div class="col-md-12">
-
-					<ul class="breadcrumb">
-						<li><a href="index.jsf">Accueil</a></li>
-						<li>Catégories</li>
-					</ul>
-
 					<div class="box">
 						<h2>#{mBeanProduct.currentProdType.type}</h2>
 						<p>#{mBeanProduct.subSelectionTypeLabel}</p>
 					</div>
-
 					<div class="box info-bar">
 						<div class="row">
 							<div class="col-sm-12 col-md-4 products-showing">
@@ -76,17 +74,15 @@
 					<!-- /.products -->
 					<div class="pages">
 						<ul class="pagination">
-							<li><a jsf:action="#{mBeanProduct.pageFirst()}"
-								disabled="#{mBeanProduct.firstRow == 0}">&laquo;</a></li>
+							<li><a jsf:action="#{mBeanProduct.pageFirst()}" jsf:disabled="#{mBeanProduct.firstRow == 0}">&laquo;</a></li>
 							<ui:repeat value="#{mBeanProduct.pages}" var="page">
 								<li class="active"
 									jsf:rendered="#{page == mBeanProduct.currentPage}"><a
-									jsf:actionListener="#{mBeanProduct.page}" value="#{page}" /></li>
+									jsf:actionListener="#{mBeanProduct.page}" jsf:value="#{page}" /></li>
 								<li jsf:rendered="#{page != mBeanProduct.currentPage}"><a
-									jsf:actionListener="#{mBeanProduct.page}" value="#{page}" /></li>
+									jsf:actionListener="#{mBeanProduct.page}" jsf:value="#{page}" /></li>
 							</ui:repeat>
-							<li><a jsf:action="#{mBeanProduct.pageLast}"
-								disabled="#{mBeanProduct.firstRow + myBean.rowsPerPage &gt;= mBeanProduct.totalRows}">
+							<li><a jsf:action="#{mBeanProduct.pageLast}" jsf:disabled="#{mBeanProduct.firstRow + myBean.rowsPerPage >= mBeanProduct.totalRows}">
 									&raquo; </a></li>
 						</ul>
 					</div>

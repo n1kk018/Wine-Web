@@ -7,7 +7,6 @@ package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
-import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
 import fr.afcepf.atod.util.BreadCrumb;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineErrorCode;
@@ -31,10 +30,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -49,8 +46,6 @@ public class MBeanProduct implements Serializable {
 
 	@ManagedProperty(value = "#{buProduct}")
 	private IBuProduct buProduct;
-	@ManagedProperty(value="#{breadCrumb}")
-    private BreadCrumb breadCrumb;
 
     private ProductAccessories accessory;
     private Product currentProd;
@@ -171,28 +166,25 @@ public class MBeanProduct implements Serializable {
         		}
         	}
         	str = UtilFindPath.findURLPath("article.jsf");
-        	//breadCrumb.AddItem("Article", str);
         }
         return str;
 	}
     
     public String category(ProductType type){
-    	String str = null;
-    	currentProdType = type;
-    	currentSubCategory = null;
-    	getWinesList();
-    	str = UtilFindPath.findURLPath("category.jsf");
-    	return str;
+        return initCategoryPage(type, null);
     }
     
     public String category(ProductType type, Object o){
-    	String str = null;
-    	currentProdType = type;
-    	currentSubCategory = o;
-		getWinesList();
-    	str = UtilFindPath.findURLPath("category.jsf");
-    	return str;
-    			
+    	return initCategoryPage(type, o);	
+    }
+    
+    private String initCategoryPage(ProductType type, Object o) {
+        String str = null;
+        currentProdType = type;
+        currentSubCategory = o;
+        getWinesList();
+        str = UtilFindPath.findURLPath("category.jsf");
+        return str; 
     }
         
 	private void loadList() {
@@ -458,20 +450,5 @@ public class MBeanProduct implements Serializable {
 
 	public Map<ProductType, Map<Integer, Integer>> getPricesRepartition() {
 		return pricesRepartition;
-	}
-	
-	/**
-     * @return the breadCrumb
-     */
-    public BreadCrumb getBreadCrumb() {
-        return breadCrumb;
-    }
-
-    /**
-     * @param paramBreadCrumb the breadCrumb to set
-     */
-    public void setBreadCrumb(BreadCrumb paramBreadCrumb) {
-        breadCrumb = paramBreadCrumb;
-    }
-	
+	}	
 }
