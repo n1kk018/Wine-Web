@@ -182,6 +182,7 @@ public class MBeanProduct implements Serializable {
         String str = null;
         currentProdType = type;
         currentSubCategory = o;
+        firstRow = 0;
         getWinesList();
         str = UtilFindPath.findURLPath("category.jsf");
         return str; 
