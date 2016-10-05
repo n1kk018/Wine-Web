@@ -7,7 +7,6 @@ package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
-import fr.afcepf.atod.util.BreadCrumb;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineErrorCode;
 import fr.afcepf.atod.vin.data.exception.WineException;
