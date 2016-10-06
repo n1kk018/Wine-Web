@@ -46,14 +46,18 @@
 									<div class="col-md-6 col-sm-6"></div>
 									<div class="col-md-6 col-sm-6">
 										<div class="products-sort-by">
-											<strong>Trié par</strong>
-											<h:selectOneMenu  valueChangeListener="#{mBeanProduct.sortSelectionBy}" onchange="submit()">
-												<f:selectItem itemValue="price_asc" itemLabel="Prix les moins chers" />
-												<f:selectItem itemValue="price_desc" itemLabel="Prix les plus chers" />
-												<f:selectItem itemValue="name_asc" itemLabel="Par ordre alphabétique" />
-												<f:selectItem itemValue="name_desc" itemLabel="Par ordre alphabétique inversé" />
-												<f:selectItem itemValue="sale_desc" itemLabel="Les promotions d'abord" />
-											</h:selectOneMenu>
+											<div class="col-md-3 col-sm-3 text-right">
+												<strong>Trié par</strong>
+											</div>
+											<div class="col-md-9 col-sm-9 pull-right">
+												<h:selectOneMenu class="form-control " valueChangeListener="#{mBeanProduct.sortSelectionBy}" onchange="submit()">
+													<f:selectItem itemValue="price_asc" itemLabel="Prix les moins chers" />
+													<f:selectItem itemValue="price_desc" itemLabel="Prix les plus chers" />
+													<f:selectItem itemValue="name_asc" itemLabel="Par ordre alphabétique" />
+													<f:selectItem itemValue="name_desc" itemLabel="Par ordre alphabétique inversé" />
+													<f:selectItem itemValue="speEvent_desc" itemLabel="Les promotions d'abord" />
+												</h:selectOneMenu>
+											</div>
 										</div>
 									</div>
 								</div>
