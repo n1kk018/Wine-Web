@@ -12,17 +12,15 @@
 	<ui:define name="breadcrumb">
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
-			<p:menuitem value="Catalogue"  />
+			<p:menuitem value="Notre sélection" />
+			<p:menuitem value="#{mBeanProduct.currentProdType.type}" />
+			<p:menuitem value="#{mBeanProduct.subSelectionTypeLabel}" rendered="#{mBeanProduct.subSelectionTypeLabel!=''}" />
 		</p:breadCrumb>
     </ui:define>
 	<ui:define name="body">
 		<form jsf:id="form1">
 			<div class="container">
 				<div class="col-md-12">
-					<div class="box">
-						<h2>#{mBeanProduct.currentProdType.type}</h2>
-						<p>#{mBeanProduct.subSelectionTypeLabel}</p>
-					</div>
 					<div class="box info-bar">
 						<div class="row">
 							<div class="col-sm-12 col-md-4 products-showing">
@@ -45,16 +43,18 @@
 											
 										</div>
 									</div>-->
-									<div class="col-md-9 col-sm-9"></div>
-									<div class="col-md-3 col-sm-3">
-										<!-- <div class="products-sort-by">
+									<div class="col-md-6 col-sm-6"></div>
+									<div class="col-md-6 col-sm-6">
+										<div class="products-sort-by">
 											<strong>Trié par</strong>
-											<h:selectOneMenu>
-												<f:selectItem itemValue="price" itemLabel="Prix" />
-												<f:selectItem itemValue="name" itemLabel="Nom" />
-												<f:selectItem itemValue="sale" itemLabel="Promo" />
+											<h:selectOneMenu  valueChangeListener="#{mBeanProduct.sortSelectionBy}" onchange="submit()">
+												<f:selectItem itemValue="price_asc" itemLabel="Prix les moins chers" />
+												<f:selectItem itemValue="price_desc" itemLabel="Prix les plus chers" />
+												<f:selectItem itemValue="name_asc" itemLabel="Par ordre alphabétique" />
+												<f:selectItem itemValue="name_desc" itemLabel="Par ordre alphabétique inversé" />
+												<f:selectItem itemValue="sale_desc" itemLabel="Les promotions d'abord" />
 											</h:selectOneMenu>
-										</div>-->
+										</div>
 									</div>
 								</div>
 							</div>
@@ -74,7 +74,7 @@
 					<!-- /.products -->
 					<div class="pages">
 						<ul class="pagination">
-							<li><a jsf:action="#{mBeanProduct.pageFirst()}" jsf:disabled="#{mBeanProduct.firstRow == 0}">&laquo;</a></li>
+							<li><a jsf:action="#{mBeanProduct.pageFirst}" jsf:disabled="#{mBeanProduct.firstRow == 0}">&laquo;</a></li>
 							<ui:repeat value="#{mBeanProduct.pages}" var="page">
 								<li class="active"
 									jsf:rendered="#{page == mBeanProduct.currentPage}"><a
@@ -82,7 +82,7 @@
 								<li jsf:rendered="#{page != mBeanProduct.currentPage}"><a
 									jsf:actionListener="#{mBeanProduct.page}" jsf:value="#{page}" /></li>
 							</ui:repeat>
-							<li><a jsf:action="#{mBeanProduct.pageLast}" jsf:disabled="#{mBeanProduct.firstRow + myBean.rowsPerPage >= mBeanProduct.totalRows}">
+							<li><a jsf:action="#{mBeanProduct.pageLast}" jsf:disabled="#{mBeanProduct.firstRow + mBeanProduct.rowsPerPage >= mBeanProduct.totalRows}">
 									&raquo; </a></li>
 						</ul>
 					</div>

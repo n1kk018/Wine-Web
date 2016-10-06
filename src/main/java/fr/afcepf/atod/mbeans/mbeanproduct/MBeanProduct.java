@@ -27,8 +27,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UICommand;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
 
@@ -62,6 +64,7 @@ public class MBeanProduct implements Serializable {
 	private ProductType currentProdType;
     private Object currentSubCategory;
     private String subSelectionTypeLabel;
+    private String currentSortStr;
  
     /**
      * pagination stuff
@@ -157,10 +160,10 @@ public class MBeanProduct implements Serializable {
     			}
         	} else {
         		if(currentProdType!=null){
-	        		threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3);
+	        		threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3, "price_desc");
 	    			Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
 	    			if(count < 3){
-	    				threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count));
+	    				threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count, "price_desc"));
 	    			}
         		}
         	}
@@ -182,6 +185,7 @@ public class MBeanProduct implements Serializable {
         currentProdType = type;
         currentSubCategory = o;
         firstRow = 0;
+        currentSortStr = "price_asc";
         getWinesList();
         str = UtilFindPath.findURLPath("category.jsf");
         return str; 
@@ -189,7 +193,7 @@ public class MBeanProduct implements Serializable {
         
 	private void loadList() {
 		try {
-			winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow, rowsPerPage);
+			winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow, rowsPerPage, currentSortStr);
 			totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
 
 			// Set currentPage, totalPages and pages.
@@ -216,6 +220,10 @@ public class MBeanProduct implements Serializable {
     private void page(int firstRow) {
         this.firstRow = firstRow;
         loadList();
+    }
+    
+    public void sortSelectionBy(ValueChangeEvent event) {
+        currentSortStr = (String) ((HtmlSelectOneMenu) event.getComponent()).getValue();
     }
     
  // Paging actions -----------------------------------------------------------------------------
@@ -450,5 +458,9 @@ public class MBeanProduct implements Serializable {
 
 	public Map<ProductType, Map<Integer, Integer>> getPricesRepartition() {
 		return pricesRepartition;
-	}	
+	}
+
+    public String getCurrentSortStr() {
+        return currentSortStr;
+    }	
 }
