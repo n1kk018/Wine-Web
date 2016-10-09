@@ -38,16 +38,8 @@
                                     src="img/wine_pictures/#{mBeanProduct.currentProd.apiId}/#{mBeanProduct.currentProd.apiId}_front.jpg"
                                     alt="" class="img-responsive center-block" />
                             </a>
-                            <h:panelGroup layout="block" class="ribbon sale"
-                                          rendered="#{product.speEvent!=null}">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </h:panelGroup>
-                            <!-- 
-                            <div class="ribbon new">
-                                    <div class="theribbon">NEW</div>
-                                    <div class="ribbon-background"></div>
-                            </div>-->
+                            <ui:include src="/WEB-INF/templates/ribbon_sale.xhtml" />
+                            <ui:include src="/WEB-INF/templates/ribbon_new.xhtml" />
                         </div>
                         <!-- /.product -->
                     </div>

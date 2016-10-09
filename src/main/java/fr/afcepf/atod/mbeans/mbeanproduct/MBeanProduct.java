@@ -6,6 +6,7 @@
 package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
+import fr.afcepf.atod.i18n.LocaleBean;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineErrorCode;
@@ -20,6 +21,7 @@ import fr.afcepf.atod.wine.entity.ProductWine;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -30,6 +32,7 @@ import javax.faces.component.UICommand;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
@@ -46,8 +49,7 @@ public class MBeanProduct implements Serializable {
 	private Logger log = Logger.getLogger(MBeanConnexion.class);
 
 	@ManagedProperty(value = "#{buProduct}")
-	private IBuProduct buProduct;
-
+	private IBuProduct buProduct;	
     private ProductAccessories accessory;
     private Product currentProd;
     private String nameProd;
@@ -85,36 +87,17 @@ public class MBeanProduct implements Serializable {
         accessory = new ProductAccessories();
         rowsPerPage = 8; // Default rows per page (max amount of rows to be displayed at once).
         pageRange = 5;
+        log.info("========================MBeanProduct=======================");
     }
-
-    /*@PostConstruct
-    public void initExpensive() {
-    	try {
-			expensiveProducts = buProduct.findExpensive(500.0);
-		} catch (WineException e) {			
-			e.printStackTrace();
-		}
-    }*/
     
 	@PostConstruct
 	public void initIndex() {
+	    log.info("================postConstruct==============");
+	  //Données Nav
+        loadNavData();
 		if (promotedWinesList == null ) {
 			try {
 				promotedWinesList = buProduct.getPromotedProductsSelection();
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		//Données Nav
-		if (wineTypes == null) {
-			try {
-				wineTypes = buProduct.getWineTypes();
-				appellations = buProduct.getAppellationsByType(wineTypes);
-				varietals = buProduct.getVarietalsByType(wineTypes);
-				pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
-				log.info(appellations);
 			} catch (WineException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -127,14 +110,36 @@ public class MBeanProduct implements Serializable {
 				e.printStackTrace();
 			}
 		}
+		 
     }
+	
+	public void loadNavData() 
+	{
+	    if (wineTypes == null) {
+	        log.info("================NavData loading==============");
+            try {
+                Locale.setDefault(FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+                wineTypes = buProduct.getWineTypes();
+                appellations = buProduct.getAppellationsByType(wineTypes);
+                varietals = buProduct.getVarietalsByType(wineTypes);
+                pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
+            } catch (WineException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+	    }
+	}
+	
+	public void preRenderNavDataTest(ComponentSystemEvent event)
+	{
+	    log.info("================preRender==============");
+	    loadNavData();
+	}
     
     public String getProductParam(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		return params.get("product");
 	}
-
-
 
     public String findByNameProduct() throws WineException {
         String str = null;
@@ -462,5 +467,6 @@ public class MBeanProduct implements Serializable {
 
     public String getCurrentSortStr() {
         return currentSortStr;
-    }	
+    }
+    
 }

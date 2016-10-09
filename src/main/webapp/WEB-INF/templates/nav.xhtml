@@ -62,9 +62,9 @@
 													<ui:repeat value="#{mBeanProduct.pricesRepartition[topCategory].entrySet().toArray()}" var="entry">
 													   <li jsf:rendered="#{entry.value gt 0}">
 														   <a jsf:action="#{mBeanProduct.category(topCategory,entry.key)}">
-														   		<h:outputLabel rendered="#{entry.key == 0}" value="moins de 50€"/>
-														   		<h:outputLabel rendered="#{entry.key == 50}" value="en dessous de 100€"/>
-														   		<h:outputLabel rendered="#{entry.key == 100}" value="au delà de 100€"/>
+														   		<h:outputLabel rendered="#{entry.key == 0}" value="#{lang['lessthan']} 50€"/>
+														   		<h:outputLabel rendered="#{entry.key == 50}" value="#{lang['under']} 100€"/>
+														   		<h:outputLabel rendered="#{entry.key == 100}" value="#{lang['morethan']} 100€"/>
 														   	</a>
 													   </li>
 													</ui:repeat>

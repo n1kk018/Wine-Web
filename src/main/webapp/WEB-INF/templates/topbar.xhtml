@@ -6,31 +6,32 @@
 	<div class="container">
 		<div class="col-md-6 offer" data-animate="fadeInDown">
 			<a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offre
-				spéciale aujourd'hui ! </a> <a href="#">Economisez 10% sur une sélection d'articles</a>
+				spéciale aujourd'hui ! </a> <a href="#">Economisez 10% sur une sélection d'articles #{localeBean.locale}</a>
 		</div>
 		<div class="col-md-6" data-animate="fadeInDown">
-			<form jsf:id="maform" jsf:prependId="false">
+		      <form jsf:id="maform" jsf:prependId="false">
 				<ul class="menu">
-					<h:panelGroup
-						rendered="#{mBeanConnexion.userConnected.lastname == null}">
-						<li><a href="#" data-toggle="modal"
-							data-target="#login-modal">#{lang['signin']}</a></li>
-						<li><a href="pages/registerNewAccount.jsf">#{lang['signup']}</a></li>
-					</h:panelGroup>
-					<h:panelGroup
-						rendered="#{mBeanConnexion.userConnected.lastname != null}">
-						<li><a href="#">Bonjour #{mBeanConnexion.userConnected.firstname}</a></li>
-						<!--<li><button jsf:action="#{mBeanConnexion.disconnect()}">Log out </button>
-                            </li>-->
-						<li><a href="#" jsf:action="#{mBeanConnexion.disconnect()}">Se
-								deconnecter</a></li>
-					</h:panelGroup>
-					<li><h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
-					    <f:selectItem itemValue="fr" itemLabel="Francais" />
-                        <f:selectItem itemValue="en" itemLabel="English" />
+						<h:panelGroup
+							rendered="#{mBeanConnexion.userConnected.lastname == null}">
+							<li><a href="#" data-toggle="modal"
+								data-target="#login-modal">#{lang['signin']}</a></li>
+							<li><a href="pages/registerNewAccount.jsf">#{lang['signup']}</a></li>
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{mBeanConnexion.userConnected.lastname != null}">
+							<li><a href="#">Bonjour #{mBeanConnexion.userConnected.firstname}</a></li>
+							<!--<li><button jsf:action="#{mBeanConnexion.disconnect()}">Log out </button>
+	                            </li>-->
+							<li><a href="#" jsf:action="#{mBeanConnexion.disconnect()}">Se
+									deconnecter</a></li>
+						</h:panelGroup>
+						<li><h:selectOneMenu value="#{localeBean.language}">
+                        <f:selectItem itemValue="fr_FR" itemLabel="Francais" />
+                        <f:selectItem itemValue="en_US" itemLabel="English" />
+                        <f:ajax event="change" />
                     </h:selectOneMenu></li>
 				</ul>
-			</form>
+				</form>
 		</div>
 	</div>
 	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog"

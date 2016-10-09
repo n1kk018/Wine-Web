@@ -57,13 +57,6 @@
 
 		</p>
 	</div>
-	<!-- <div class="ribbon new">
-           <div class="theribbon">NEW</div>
-           <div class="ribbon-background"></div>
-       </div>-->
-	<h:panelGroup layout="block" class="ribbon sale"
-		rendered="#{product.speEvent!=null}">
-		<div class="theribbon">SALE</div>
-		<div class="ribbon-background"></div>
-	</h:panelGroup>
+	<ui:include src="/WEB-INF/templates/ribbon_sale.xhtml" />
+    <ui:include src="/WEB-INF/templates/ribbon_new.xhtml" />
 </div>

@@ -8,6 +8,7 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+	<f:event listener="#{mBeanProduct.preRenderNavDataTest}" type="preRenderView" />
 	<f:view locale="#{localeBean.locale}">
 		<head jsf:id="head">
 			<base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/" />
