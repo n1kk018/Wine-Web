@@ -20,15 +20,15 @@
 				<div class="container">
 					<div class="col-md-9" id="basket">
 						<div class="box">
-							<h1>Mon panier</h1>
+							<h1>#{lang['mon_panier']}</h1>
 							<h:panelGroup
 								rendered="#{mBeanCartManagement.order.ordersDetail.size() != 0}">
 								<p class="text-muted">
-									Votre panier contient
+									#{lang['message_summary']}
 									<h:outputText id="txtTotalQuantity"
 										value="#{mBeanCartManagement.calculerNumTotalQantity()}">
 										</h:outputText>
-									produit(s).
+									#{lang['produits']}
 								</p>
 								<h:panelGroup
 									rendered="#{mBeanCartManagement.validOrder == false}">
@@ -36,11 +36,11 @@
 										<table class="table">
 											<thead>
 												<tr>
-													<th>Produit</th>
-													<th>Quantite</th>
-													<th>Prix Unitaire</th>
-													<th>Reduction</th>
-													<th colspan="2">Totale</th>
+													<th>#{lang['produit']}</th>
+													<th>#{lang['quantite']}</th>
+													<th>#{lang['prix_unitaire']}</th>
+													<th>#{lang['reduction']}</th>
+													<th colspan="2">#{lang['totale']}</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -54,7 +54,7 @@
 																	src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg"
 																	alt="#{orderDetail.productOrdered.name}" />
 															</a></td>
-															<td><input jsf:id="quantityProduct" type="number" min="0"
+															<td><input jsf:id="quantityProduct" type="number"
 																jsf:value="#{orderDetail.quantite}" class="form-control">
 															<f:ajax event="change" execute="@form" render="@form" />
 																</input></td>
@@ -87,15 +87,15 @@
 								<div class="box-footer">
 									<div class="pull-left">
 										<a href="index.jsf" class="btn btn-default"><i
-											class="fa fa-chevron-left"></i> Continue shopping</a>
+											class="fa fa-chevron-left"></i>#{lang['continuer']}</a>
 									</div>
 									<div class="pull-right">
 										<button class="btn btn-default">
-											<i class="fa fa-refresh"></i> Update basket
+											<i class="fa fa-refresh"></i>#{lang['maj_caddie']}
 										</button>
 										<h:commandButton
 											action="#{mBeanCartManagement.validePanier()}"
-											value="Valider et payer ma commande" class="btn btn-primary"></h:commandButton>
+											value="#{lang['valider_commande']}" class="btn btn-primary"></h:commandButton>
 									</div>
 								</div>
 							</h:panelGroup>
@@ -103,19 +103,18 @@
 							<!-- panel empty -->
 							<h:panelGroup
 								rendered="#{mBeanCartManagement.order.ordersDetail.size() == 0 }">
-								<h3>Votre panier est vide pour le moment. Remplissez le de
-									bonnes bouteilles et de bons produits...</h3>
+								<h3>#{lang['message_vide']}</h3>
 								<div class="box-footer">
 									<div class="pull-left">
 										<a href="index.jsf" class="btn btn-default"><i
-											class="fa fa-chevron-left"></i> Continuer mon shopping</a>
+											class="fa fa-chevron-left"></i>#{lang['continue_shopping']}</a>
 									</div>
 									<div class="pull-right">
-										<button class="btn btn-default">
-											<i class="fa fa-refresh"></i> Actualiser mon panier
+										<button class="btn btn-default">#{lang['maj_panier']}
+											<i class="fa fa-refresh"></i>
 										</button>
 										<button type="submit" class="btn btn-primary">
-											Valider et payer ma commande <i class="fa fa-chevron-right"></i>
+											#{lang['valider_commande']}<i class="fa fa-chevron-right"></i>
 										</button>
 									</div>
 								</div>

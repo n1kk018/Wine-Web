@@ -10,20 +10,20 @@
 					<div class="panel panel-default sidebar-menu">
 
 						<div class="panel-heading">
-							<h3 class="panel-title">Customer section</h3>
+							<h3 class="panel-title">#{lang['espace_client']}</h3>
 						</div>
 
 						<div class="panel-body">
 
 							<ul class="nav nav-pills nav-stacked">
 								<li class="active"><a href="customer-orders.html"><i
-										class="fa fa-list"></i> My orders</a></li>
+										class="fa fa-list"></i> #{lang['mes_commandes']}</a></li>
 								<li><a href="customer-wishlist.html"><i
-										class="fa fa-heart"></i> My wishlist</a></li>
+										class="fa fa-heart"></i> #{lang['liste_commande']}</a></li>
 								<li><a href="customer-account.html"><i
-										class="fa fa-user"></i> My account</a></li>
+										class="fa fa-user"></i> #{lang['mon_compte']}</a></li>
 								<li><a href="index.html"><i class="fa fa-sign-out"></i>
-										Logout</a></li>
+										#{lang['deconnexion']}</a></li>
 							</ul>
 						</div>
 
@@ -35,13 +35,12 @@
 
 				<div class="col-md-9" id="customer-orders">
 					<div class="box">
-						<h1>My orders</h1>
+						<h1>#{lang['mes_commandes']}</h1>
 
-						<p class="lead">Your orders on one place.</p>
+						<p class="lead">#{lang['message_commande']}</p>
 						<p class="text-muted">
-							If you have any questions, please feel free to <a
-								href="contact.html">contact us</a>, our customer service center
-							is working for you 24/7.
+							#{lang['question_commande_1']} <a
+								href="contact.html">#{lang['question_commande_2']}</a>, #{lang['question_commande_3']}
 						</p>
 
 						<hr/>
@@ -49,55 +48,55 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th>Order</th>
-										<th>Date</th>
-										<th>Total</th>
-										<th>Status</th>
-										<th>Action</th>
+										<th>#{lang['commande']}</th>
+										<th>#{lang['date']}</th>
+										<th>#{lang['totale']}</th>
+										<th>#{lang['statut']}</th>
+										<th>#{lang['action']}</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<th># 1735</th>
-										<td>22/06/2013</td>
+										<td>18/06/2016</td>
 										<td>$ 150.00</td>
-										<td><span class="label label-info">Being prepared</span>
+										<td><span class="label label-info">#{lang['en_cours']}</span>
 										</td>
 										<td><a href="customer-order.html"
-											class="btn btn-primary btn-sm">View</a></td>
+											class="btn btn-primary btn-sm">#{lang['vue']}</a></td>
 									</tr>
 									<tr>
-										<th># 1735</th>
-										<td>22/06/2013</td>
+										<th># 1736</th>
+										<td>18/06/2016</td>
 										<td>$ 150.00</td>
-										<td><span class="label label-info">Being prepared</span>
+										<td><span class="label label-info">#{lang['en_cours']}</span>
 										</td>
 										<td><a href="customer-order.html"
-											class="btn btn-primary btn-sm">View</a></td>
+											class="btn btn-primary btn-sm">#{lang['vue']}</a></td>
 									</tr>
 									<tr>
-										<th># 1735</th>
-										<td>22/06/2013</td>
+										<th># 1737</th>
+										<td>19/06/2016</td>
 										<td>$ 150.00</td>
-										<td><span class="label label-success">Received</span></td>
+										<td><span class="label label-success">#{lang['recu']}</span></td>
 										<td><a href="customer-order.html"
-											class="btn btn-primary btn-sm">View</a></td>
+											class="btn btn-primary btn-sm">#{lang['vue']}</a></td>
 									</tr>
 									<tr>
-										<th># 1735</th>
-										<td>22/06/2013</td>
+										<th># 1738</th>
+										<td>19/06/2016</td>
 										<td>$ 150.00</td>
-										<td><span class="label label-danger">Cancelled</span></td>
+										<td><span class="label label-danger">#{lang['annule']}</span></td>
 										<td><a href="customer-order.html"
-											class="btn btn-primary btn-sm">View</a></td>
+											class="btn btn-primary btn-sm">#{lang['vue']}</a></td>
 									</tr>
 									<tr>
-										<th># 1735</th>
-										<td>22/06/2013</td>
+										<th># 1739</th>
+										<td>20/06/2016</td>
 										<td>$ 150.00</td>
-										<td><span class="label label-warning">On hold</span></td>
+										<td><span class="label label-warning">#{lang['en_attente']}</span></td>
 										<td><a href="customer-order.html"
-											class="btn btn-primary btn-sm">View</a></td>
+											class="btn btn-primary btn-sm">#{lang['vue']}</a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -107,10 +106,6 @@
 
 			</div>
 			<!-- /.container -->
-
-
-
-
 
 	</ui:define>
 </ui:composition>

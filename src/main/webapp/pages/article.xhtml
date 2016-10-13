@@ -46,7 +46,7 @@
                     <div class="col-sm-9">
                         <div class="box same-height">
                             <h1 class="text-center">#{mBeanProduct.currentProd.name}</h1>
-                            <p class="goToDescription"><a href="#details" class="scroll-to">Scroller vers les détails du produit</a>
+                            <p class="goToDescription"><a href="#details" class="scroll-to">#{lang['scroller_details_produit']}</a>
                             </p>
                             <div class="row">
                                 <div class="col-sm-4">
@@ -60,7 +60,7 @@
                                         <p class="text-center buttons">
                                             <a jsf:action="#{mBeanCartManagement.addProductCart}" class="btn btn-primary">
                                                 <f:param name="product"  value="${mBeanProduct.currentProd.idProduct}" />
-                                                <i class="fa fa-shopping-cart"></i>Ajouter au panier
+                                                <i class="fa fa-shopping-cart"></i>#{lang['ajout_panier']}
                                             </a>
                                         </p>
                                     </form>
@@ -78,11 +78,11 @@
                     </div>
                 </div>
                 <div class="box" id="details">
-                    <h4>Appelation</h4>
+                    <h4>#{lang['appellation']}</h4>
                     <p>#{mBeanProduct.currentProd.appellation}</p>
-                    <h4>Cépage</h4>
+                    <h4>#{lang['cepage']}</h4>
                     <p>#{mBeanProduct.currentProd.productVarietal.description}</p>
-                    <h4>Description</h4>
+                    <h4>#{lang['description']}</h4>
                     <ul>
                         <ui:repeat var="text" value="#{mBeanProduct.currentProd.description.split('\\|')}">
                             <li>#{text}</li>
@@ -90,7 +90,7 @@
                     </ul>
                     <hr />
                     <div class="social">
-                        <h4>Montrez-le à vos amis!</h4>
+                        <h4>#{lang['montrer_a_amis']}</h4>
                         <p>
                             <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
                             <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>

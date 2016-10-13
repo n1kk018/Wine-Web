@@ -17,15 +17,13 @@
 				<div class="col-md-9" id="checkout">
 					<div class="box">
 						<form jsf:id="form1">
-							<h1>Mode de livraison</h1>
+							<h1>#{lang['mode_de_livraison']}</h1>
 							<ul class="nav nav-pills nav-justified">
 								<li class="disabled"><a href=""><i
-										class="fa fa-map-marker"></i><br />Adresse</a></li>
-								<li class="active"><a href=""><i class="fa fa-truck"></i><br />Mode
-										de livraison</a></li>
-								<li class="disabled"><a href=""><i class="fa fa-money"></i><br />Mode
-										de paiement </a></li>
-								<li class="disabled"><a href=""><i class="fa fa-eye"></i><br />Confirmation</a></li>
+										class="fa fa-map-marker"></i><br />#{lang['adresse']}</a></li>
+								<li class="active"><a href=""><i class="fa fa-truck"></i><br />#{lang['mode_de_livraison']}</a></li>
+								<li class="disabled"><a href=""><i class="fa fa-money"></i><br />#{lang['mode_de_paiement']} </a></li>
+								<li class="disabled"><a href=""><i class="fa fa-eye"></i><br />#{lang['confirmation']}</a></li>
 							</ul>
 
 							<div class="content">
@@ -35,8 +33,7 @@
 											<div class="media-left media-middle">
 												<img class="media-object" src="img/logocolissimo.png" />
 											</div>
-											<p>Livré en 2 jours ouvrés si vous commandez avant 14h du
-												lundi au vendredi</p>
+											<p>#{lang['msg_delai_livraison_1']}</p>
 
 											<div class="box-footer text-center">
 
@@ -52,8 +49,7 @@
 												<img class="media-object" src="img/logochronopost.png" />
 											</div>
 
-											<p>Livré avant 13h le jour suivant si vous commandez
-												avant 12h du lundi au vendredi</p>
+											<p>#{lang['msg_delai_livraison_2']}</p>
 
 											<div class="box-footer text-center">
 
@@ -71,12 +67,12 @@
 							<div class="box-footer">
 								<div class="pull-left">
 									<a href="pages/checkout1adress.jsf" class="btn btn-default"><i
-										class="fa fa-chevron-left"></i>Retourne à la page avant</a>
+										class="fa fa-chevron-left"></i>#{lang['rediriger']}</a>
 								</div>
 								<div class="pull-right">
 									<h:commandButton
 										action="#{mBeanCartManagement.validerLivraison()}"
-										value="Valider et aller à la page de Paiement"
+										value="#{lang['valider_payer']}"
 										class="btn btn-primary"></h:commandButton>
 								</div>
 							</div>
