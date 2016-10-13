@@ -22,3 +22,8 @@
 	margin-top:0;
 	color: rgb(188,54,4);
 }
+
+.btn, .btn-default, .navbar-toggle, #zozo {
+	height: 34px;
+	margin-right: 13px;
+}

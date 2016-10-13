@@ -28,7 +28,7 @@
 									<h:outputText id="txtTotalQuantity"
 										value="#{mBeanCartManagement.calculerNumTotalQantity()}">
 										</h:outputText>
-									produits.
+									produit(s).
 								</p>
 								<h:panelGroup
 									rendered="#{mBeanCartManagement.validOrder == false}">
@@ -54,7 +54,7 @@
 																	src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg"
 																	alt="#{orderDetail.productOrdered.name}" />
 															</a></td>
-															<td><input jsf:id="quantityProduct" type="number"
+															<td><input jsf:id="quantityProduct" type="number" min="0"
 																jsf:value="#{orderDetail.quantite}" class="form-control">
 															<f:ajax event="change" execute="@form" render="@form" />
 																</input></td>
