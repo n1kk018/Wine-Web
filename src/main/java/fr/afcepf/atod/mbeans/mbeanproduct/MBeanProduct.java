@@ -159,7 +159,7 @@ public class MBeanProduct implements Serializable {
         	{
         		threeSimilarProductsList = new ArrayList<ProductWine>();
         		for (Product product : winesList) {
-        			if(threeSimilarProductsList.size() < 3 && product.getIdProduct()!=id){
+        			if(threeSimilarProductsList.size() < 3 && product.getId()!=id){
         				threeSimilarProductsList.add((ProductWine)product);
         			}
     			}

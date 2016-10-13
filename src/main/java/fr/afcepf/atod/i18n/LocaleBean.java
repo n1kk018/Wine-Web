@@ -51,6 +51,8 @@ public class LocaleBean implements Serializable{
 
     public void setLanguage(String language) {
         mBeanProduct.setWineTypes(null);
+        mBeanProduct.setAppellations(null);
+        mBeanProduct.setVarietals(null);
         if(language.contains("en"))
             locale = Locale.US;
         else
