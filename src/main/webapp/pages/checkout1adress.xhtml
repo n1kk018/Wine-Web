@@ -17,26 +17,24 @@
 				<div class="col-md-9" id="checkout">
 					<div class="box">
 						<form jsf:id="Form">
-							<h3>Adresse de livraison :</h3>
+							<h3>#{lang['adresse_de_livraison']} :</h3>
 							<ul class="nav nav-pills nav-justified">
 								<li class="active"><a href="#"><i
-										class="fa fa-map-marker"></i><br />Address</a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-truck"></i><br />Mode
-										de livraison</a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-money"></i><br />Mode
-										de paiement </a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />Confirmation</a></li>
+										class="fa fa-map-marker"></i><br />#{lang['adresse']}</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-truck"></i><br />#{lang['mode_de_livraison']}</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-money"></i><br />#{lang['mode_de_paiement']}</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />#{lang['confirmation']}</a></li>
 							</ul>
 							<div class="content">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<h3>Adress de Livraison</h3>
+											<h3>#{lang['adresse_de_livraison']}</h3>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<h3>Adress de facturation</h3>
+											<h3>>#{lang['adresse_de_facturation']}</h3>
 										</div>
 									</div>
 								</div>
@@ -85,7 +83,7 @@
 											</p>
 											<button data-target="#modiflivraison" data-toggle="collapse"
 												class="btn btn-primary" type="button">
-												Modifier adresse livraison<i class="fa fa-chevron-bottom"></i>
+												#{lang['modifier_adresse_livraison']}<i class="fa fa-chevron-bottom"></i>
 											</button>
 										</div>
 										<div class="col-md-6">
@@ -130,7 +128,7 @@
 											</p>
 											<button data-target="#modiffacturation"
 												data-toggle="collapse" class="btn btn-primary" type="button">
-												Modifier adresse facturation<i class="fa fa-chevron-bottom"></i>
+												#{lang['modifier_adresse_facturation']}<i class="fa fa-chevron-bottom"></i>
 											</button>
 										</div>
 									</div>
@@ -139,18 +137,18 @@
 								<!-- /.row -->
 								<div id="modiflivraison" class="collapse clearfix">
 									<div class="row">
-										<h3>Merci de saisir votre nouvelle adresse de livraison</h3>
+										<h3>#{lang['demande_adresse_livraison']}</h3>
 									</div>
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="number">Numero </label> <input type="text"
+												<label for="number">#{lang['numero']}</label> <input type="text"
 													class="form-control" id="number" />
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="street">Rue</label> <input type="text"
+												<label for="street">#{lang['rue']}</label> <input type="text"
 													class="form-control" id="street" />
 											</div>
 										</div>
@@ -161,19 +159,19 @@
 									<div class="row">
 										<div class="col-sm-6 col-md-3">
 											<div class="form-group">
-												<label for="city">Ville</label> <input type="text"
+												<label for="city">#{lang['ville']}</label> <input type="text"
 													class="form-control" id="city" />
 											</div>
 										</div>
 										<div class="col-sm-6 col-md-3">
 											<div class="form-group">
-												<label for="Code postal">Code postal</label> <input
+												<label for="Code postal">#{lang['cp']}</label> <input
 													type="text" class="form-control" id="Code postal" />
 											</div>
 										</div>
 										<div class="col-sm-6 col-md-3">
 											<div class="form-group">
-												<label for="country">Pays</label> <input type="text"
+												<label for="country">#{lang['pays']}</label> <input type="text"
 													class="form-control" id="county" />
 											</div>
 										</div>
@@ -182,13 +180,13 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="phone">Télephone</label> <input type="text"
+												<label for="phone">#{lang['telephone']}</label> <input type="text"
 													class="form-control" id="phone" />
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="email">Email</label> <input type="text"
+												<label for="email">#{lang['email']}</label> <input type="text"
 													class="form-control" id="email" />
 											</div>
 										</div>
@@ -199,12 +197,12 @@
 								<!-- /.row -->
 								<div id="modiffacturation" class="collapse clearfix">
 									<div class="row">
-										<h3>Votre nouvelle adresse de Facturation</h3>
+										<h3>#{lang['demande_adresse_facturation']}</h3>
 									</div>
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="form-group">
-												<label for="number">Numero </label>
+												<label for="number">#{lang['numero']} </label>
 												<h:inputText
 													value="#{mBeanConnexion.userConnected.adress.number}"
 													class="form-control" id="number" />
@@ -212,7 +210,7 @@
 										</div>
 										<div class="col-sm-10">
 											<div class="form-group">
-												<label for="street">Rue</label>
+												<label for="street">#{lang['rue']}</label>
 												<h:inputText
 													value="#{mBeanConnexion.userConnected.adress.street}"
 													class="form-control" id="street" />
@@ -225,7 +223,7 @@
 									<div class="row">
 										<div class=" col-md-3">
 											<div class="form-group">
-												<label for="Code postal">Code postal</label>
+												<label for="Code postal">#{lang['cp']}</label>
 												<h:inputText
 													value="#{mBeanConnexion.userConnected.adress.city.zipcode}"
 													class="form-control" />
@@ -233,7 +231,7 @@
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="city">Ville</label>
+												<label for="city">#{lang['ville']}</label>
 												<h:inputText
 													value="#{mBeanConnexion.userConnected.adress.city.name}"
 													class="form-control" id="city" />
@@ -242,7 +240,7 @@
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="country">Pays</label>
+												<label for="country">#{lang['pays']}</label>
 												<h:inputText value="France" class="form-control" id="county" />
 											</div>
 										</div>
@@ -251,13 +249,13 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="phone">Télephone</label> <input type="text"
+												<label for="phone">#{lang['telephone']}</label> <input type="text"
 													class="form-control" id="phone" />
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="email">Email</label> <input type="text"
+												<label for="email">#{lang['email']}</label> <input type="text"
 													class="form-control" id="email" />
 											</div>
 										</div>
@@ -266,7 +264,7 @@
 									<div class="row">
 
 										<a data-target="#modiffacturation" data-toggle="collapse"
-											class="btn btn-default">Annuler</a>
+											class="btn btn-default">#{lang['annuler']}</a>
 
 									</div>
 								</div>
@@ -277,7 +275,7 @@
 							<div class="box-footer">
 								<div class="pull-left">
 									<a href="pages/basket.jsf" class="btn btn-default"><i
-										class="fa fa-chevron-left"></i>Retourner au panier</a>
+										class="fa fa-chevron-left"></i>#{lang['retourner_panier']}</a>
 								</div>
 
 								<div class="pull-right">

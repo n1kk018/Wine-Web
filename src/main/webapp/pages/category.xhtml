@@ -24,7 +24,7 @@
 					<div class="box info-bar">
 						<div class="row">
 							<div class="col-sm-12 col-md-4 products-showing">
-								Affichage de <strong>#{mBeanProduct.winesList.size()}</strong> articles sur un total de <strong>#{mBeanProduct.totalRows}</strong>
+								#{lang['affichage_produit_msg_1']} <strong>#{mBeanProduct.winesList.size()}</strong> #{lang['affichage_produit_msg_2']} <strong>#{mBeanProduct.totalRows}</strong>
 							</div>
 
 							<div class="col-sm-12 col-md-8  products-number-sort">
@@ -47,7 +47,7 @@
 									<div class="col-md-6 col-sm-6">
 										<div class="products-sort-by">
 											<div class="col-md-3 col-sm-3 text-right">
-												<strong>Trié par</strong>
+												<strong>#{lang['trie_par']}</strong>
 											</div>
 											<div class="col-md-9 col-sm-9 pull-right">
 												<h:selectOneMenu class="form-control " valueChangeListener="#{mBeanProduct.sortSelectionBy}" onchange="submit()">

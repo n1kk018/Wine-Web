@@ -5,24 +5,24 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3 col-sm-6">
-				<h4>A propos de OnWine</h4>
+				<h4>#{lang['about']}</h4>
 
 				<ul>
-					<li><a href="pages/quiSommesNous.jsf">Qui sommes nous ? </a></li>
-					<li><a href="pages/cgv.jsf">Conditions Générales de Vente</a></li>
-					<li><a href="pages/mentions.jsf">Mentions Légales</a></li>
-					<li><a href="pages/faq.jsf">Questions et Réponses </a></li>
-					<li><a href="pages/contact.jsf">Contactez-nous</a></li>
+					<li><a href="pages/quiSommesNous.jsf">#{lang['qui_sommes_nous']}</a></li>
+					<li><a href="pages/cgv.jsf">#{lang['conditions']}</a></li>
+					<li><a href="pages/mentions.jsf">#{lang['mentions']}</a></li>
+					<li><a href="pages/faq.jsf">#{lang['question_contact_3']}</a></li>
+					<li><a href="pages/contact.jsf">#{lang['contactez_nous']}</a></li>
 				</ul>
 
 				<hr />
 
-				<h4>Espace client</h4>
+				<h4>#{lang['espace_client']}</h4>
 
 				<ul>
-					<li><a href="#" data-toggle="modal" data-target="#login-modal">Se connecter</a>
+					<li><a href="#" data-toggle="modal" data-target="#login-modal">#{lang['signin']}</a>
 					</li>
-					<li><a href="pages/registerNewAccount.jsf">S'inscrire</a></li>
+					<li><a href="pages/registerNewAccount.jsf">#{lang['inscrire']}</a></li>
 				</ul>
 
 				<hr class="hidden-md hidden-lg hidden-sm" />
@@ -32,9 +32,9 @@
 
 			<div class="col-md-3 col-sm-6">
 
-				<h4>Nos vins</h4>
+				<h4>#{lang['nos_vins']}</h4>
 
-				<h5>Vin Rouge</h5>
+				<h5>#{lang['vin_rouge']}</h5>
 
 				<ul>
 					<li><a href="category.html">Loire</a></li>
@@ -42,7 +42,7 @@
 					<li><a href="category.html">Autres</a></li>
 				</ul>
 
-				<h5>Vin Blanc</h5>
+				<h5>#{lang['vin_blanc']}</h5>
 				<ul>
 					<li><a href="category.html">Alsace</a></li>
 					<li><a href="category.html">Loire</a></li>
@@ -56,7 +56,7 @@
 			<!-- /.col-md-3 -->
 
 			<div class="col-md-3 col-sm-6">
-				<h4> Nos vins </h4>
+				<h4>#{lang['nos_vins']}</h4>
 				<h5>Rosé</h5>
 				<ul>
 					<li><a href="category.html">Provence</a></li>
@@ -78,7 +78,7 @@
 
 			<div class="col-md-3 col-sm-6">
 
-				<h4>Inscrivez vous à notre NEWSLETTER</h4>
+				<h4>#{lang['inscrivez_newsletter']}</h4>
 
 				<p class="text-muted"></p>
 
@@ -90,7 +90,7 @@
 							class="input-group-btn">
 							
 							 <h:commandButton class="btn btn-primary"
-								value="S'inscrire" action="#{mBeanMail.sendMail()}" />
+								value="#{lang['inscrire']}" action="#{mBeanMail.sendMail()}" />
 
 						</span>
 
@@ -100,7 +100,7 @@
 
 				<hr />
 
-				<h4>Nous suivre</h4>
+				<h4>#{lang['nous_suivre']}</h4>
 
 				<p class="social">
 					<a href="#" class="facebook external" data-animate-hover="shake"><i
