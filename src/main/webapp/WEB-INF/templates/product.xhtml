@@ -8,14 +8,14 @@
 		<div class="flipper">
 			<div class="front">
 				<a jsf:action="#{mBeanProduct.article}"> 
-				<f:param name="product"  value="${product.idProduct}" />
+				<f:param name="product"  value="${product.id}" />
 				<img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
 					alt="" class="img-responsive center-block" />
 				</a>
 			</div>
 			<div class="back">
 				<a jsf:action="#{mBeanProduct.article}"> 
-				<f:param name="product"  value="${product.idProduct}" />
+				<f:param name="product"  value="${product.id}" />
 				<img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_back.jpg"
 					alt="" class="img-responsive center-block" />
 				</a>
@@ -23,14 +23,14 @@
 		</div>
 	</div>
 	<a jsf:action="#{mBeanProduct.article}" class="invisible">
-		<f:param name="product"  value="${product.idProduct}" />
+		<f:param name="product"  value="${product.id}" />
 		<img src="img/wine_pictures/#{product.apiId}/#{product.apiId}_front.jpg"
 		alt="" class="img-responsive center-block" />
 	</a>
 	<div class="text">
 		<h3>
 			<a jsf:action="#{mBeanProduct.article}">
-				<f:param name="product"  value="${product.idProduct}" />
+				<f:param name="product"  value="${product.id}" />
 				#{product.name}
 			</a>
 		</h3>
@@ -51,7 +51,7 @@
 
 		<p class="buttons"> 
 			<a jsf:action="#{mBeanCartManagement.addProductCart}" class="btn btn-primary">
-				<f:param name="product"  value="${product.idProduct}" />
+				<f:param name="product"  value="${product.id}" />
 				<i class="fa fa-shopping-cart"></i>#{lang['ajout_panier']}
 			</a>
 
