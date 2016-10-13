@@ -9,13 +9,13 @@
 				<div class="col-md-6">
 					<div class="box">
 						<div class="text-center">
-							<p class="lead">Vos informations d'identification</p>
+							<p class="lead">#{lang['identification']}</p>
 						</div>
 						<hr />
 
 						<h:form>
 							<div class="form-group">
-								<label>Civilité</label>
+								<label>#{lang['civilite']}</label>
 								<div class="btn-group">
 									<h:selectOneMenu class="form-control"
 										value="#{mBeanClient.user.civility}" required="true">
@@ -24,17 +24,17 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label>Nom *</label>
+								<label>#{lang['nom']} *</label>
 								<h:inputText class="form-control"
 									value="#{mBeanClient.user.lastname}" required="true" />
 							</div>
 							<div class="form-group">
-								<label>Prenom *</label>
+								<label>#{lang['prenom']} *</label>
 								<h:inputText value="#{mBeanClient.user.firstname}"
 									class="form-control" required="true" />
 							</div>
 							<div class="form-group">
-								<label>Date de naissance</label>
+								<label>#{lang['date_de_naissance']}</label>
 								<h:inputText value="#{mBeanClient.user.birthdate}"
 									class="form-control" required="true" />
 							</div>
@@ -42,17 +42,17 @@
 							<f:event listener="#{mBeanClient.validateMail}"
 								type="postValidate" />
 							<div class="form-group">
-								<label for="mail1">Email*</label>
+								<label for="mail1">#{lang['email']} *</label>
 								<h:inputSecret id="mail1" value="#{mBeanClient.user.mail}"
-									required="true" requiredMessage="Entrez votre adresse mail"
+									required="true" requiredMessage="#{lang['enter_mail']}"
 									class="form-control" />
 								<h:message for="mail1" style="color: red;" />
 							</div>
 
 							<div class="form-group">
-								<label for="confirmedMail">Confirmer email *</label>
+								<label for="confirmedMail">#{lang['confirmer_email']} *</label>
 								<h:inputSecret id="confirmedMail" required="true"
-									requiredMessage="Merci de confirmez votre mail"
+									requiredMessage="#{lang['reenter_mail']}"
 									class="form-control" />
 								<h:message for="confirmedMail" style="color: red;" />
 							</div>
@@ -60,16 +60,16 @@
 							<f:event listener="#{mBeanClient.validatePassword}"
 								type="postValidate" />
 							<div class="form-group">
-								<label for="pwd">Mot de passe *</label>
+								<label for="pwd">#{lang['mot_de_passe']} *</label>
 								<h:inputSecret id="pwd" value="#{mBeanClient.user.password}"
-									required="true" requiredMessage="Entrez votre mot de passe"
+									required="true" requiredMessage="#{lang['enter_mdp']}"
 									class="form-control" />
 								<h:message for="pwd" style="color: red;" />
 							</div>
 							<div class="form-group">
-								<label for="confirmedPwd">Confirmer le mot de passe *</label>
+								<label for="confirmedPwd">#{lang['confirmer_mot_de_passe']} *</label>
 								<h:inputSecret id="confirmedPwd" required="true"
-									requiredMessage="Merci de confirmez votre mot de passe"
+									requiredMessage="#{lang['reenter_mdp']}"
 									class="form-control" />
 								<h:message for="confirmedPwd" style="color: red;" />
 							</div>
@@ -80,26 +80,26 @@
 				<div class="col-md-6">
 					<div class="box">
 						<div class="text-center">
-							<p class="lead">Vos coordonnées</p>
+							<p class="lead">#{lang['coordonnee']}</p>
 						</div>
 						<hr />
 							<h:form>
 								<div class="form-group">
-									<label>Numéro *</label>
+									<label>#{lang['numero']} *</label>
 									<h:inputText class="form-control"
 										value="#{mBeanClient.adress.number}" required="true" />
 								</div>
 								<div class="form-group">
-									<label>Rue *</label>
+									<label>#{lang['rue']} *</label>
 									<h:inputText class="form-control"
 										value="#{mBeanClient.adress.street}" required="true" />
 								</div>
 								<div class="form-group">
-									<label>Complément d'adresse</label>
+									<label>#{lang['complement_adresse']}</label>
 									<h:inputText class="form-control" required="false" />
 								</div>
 								<div class="form-group">
-									<label>Ville * </label>
+									<label>#{lang['ville']} * </label>
 									<div class="btn-group">
 										<h:selectOneMenu class="form-control"
 											value="#{mBeanClient.user.adress.id}">
@@ -107,18 +107,16 @@
 										</h:selectOneMenu>
 									</div>
 								</div>
-								<p class="text-muted">Un numéro de téléphone permettra à
-									notre Service Clients de vous contacter en cas de problème avec
-									votre commande</p>
+								<p class="text-muted">#{lang['message_contact_tel']}</p>
 								<div class="form-group">
-									<label>Numéro de téléphone *</label>
+									<label>#{lang['numero_de_telephone']} *</label>
 									<h:inputText value="#{mBeanClient.user.phonenumber}"
 										class="form-control" required="true" />
 								</div>
 
 								<div class="text-center">
 									<h:commandButton action="#{mBeanClient.addCustomer()}"
-										value="Créer mon compte" class="btn btn-primary"></h:commandButton>
+										value="#{lang['creation_compte_1']}" class="btn btn-primary"></h:commandButton>
 								</div>
 							</h:form>
 					</div>

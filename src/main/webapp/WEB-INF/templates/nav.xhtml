@@ -27,7 +27,7 @@
 		<form jsf:if="form1">
 		<div class="navbar-collapse collapse" id="navigation">
 			<ul class="nav navbar-nav navbar-left">
-					<li class="dropdown yamm-fw open"><a href="index.jsf">Accueil</a></li>
+					<li class="dropdown yamm-fw open"><a href="index.jsf">#{lang['home']}</a></li>
 					<ui:repeat var="topCategory" value="#{mBeanProduct.wineTypes}">
 						<li class="dropdown yamm-fw">
 							<a jsf:action="#{mBeanProduct.category(topCategory)}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">#{topCategory.type}<b class="caret"></b></a>
@@ -36,13 +36,13 @@
 									<div class="yamm-content">
 										<div class="row">
 											<div class="col-sm-6">
-												<h5>Cépages</h5>
+												<h5>#{lang['cepage']}</h5>
 											</div>
 											<div class="col-sm-3">
-												<h5>Appelations</h5>
+												<h5>#{lang['appellation']}</h5>
 											</div>
 											<div class="col-sm-3">
-												<h5>Prix</h5>
+												<h5>#{lang['prix']}</h5>
 											</div>
 											<ui:repeat var="varietal" varStatus="loop" value="#{mBeanProduct.varietals[topCategory]}">
 										    	<h:outputText value="&lt;div class='col-sm-3'&gt;&lt;ul&gt;" escape="false" rendered="#{loop.index % 5 == 0}" />

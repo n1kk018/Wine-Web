@@ -17,31 +17,27 @@
 				<div class="col-md-12" id="checkout">
 					<div class="box">
 						<h:form>
-							<h1>Confirmation</h1>
+							<h1>#{lang['confirmation']}</h1>
 							<ul class="nav nav-pills nav-justified">
-								<li class="disabled"><a><i class="fa fa-map-marker"></i><br />Addresse</a></li>
-								<li class="disabled"><a><i class="fa fa-truck"></i><br />Mode
-										de livraison</a></li>
-								<li class="disabled"><a><i class="fa fa-money"></i><br />Mode
-										de paiement </a></li>
-								<li class="active"><a><i class="fa fa-eye"></i><br />Confirmation</a></li>
+								<li class="disabled"><a><i class="fa fa-map-marker"></i><br />#{lang['adresse']}</a></li>
+								<li class="disabled"><a><i class="fa fa-truck"></i><br />#{lang['mode_de_livraison']}</a></li>
+								<li class="disabled"><a><i class="fa fa-money"></i><br />#{lang['mode_de_paiement']}</a></li>
+								<li class="active"><a><i class="fa fa-eye"></i><br />#{lang['confirmation']}</a></li>
 							</ul>
-							<p>Chèr(e) client(e), votre commande a bien été prise en
-								compte, un mail de confirmation a été envoyé à votre adresse
-								email.</p>
+							<p>#{lang['message_de_confirmation']}</p>
 							<h3>
-								Numéro de Commande : CMD
+								#{lang['numero_de_commande']} : CMD
 								<h:outputLabel value="#{mBeanCartManagement.lastOrder.id}" />
 							</h3>
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Produit</th>
-											<th>Quantite</th>
-											<th>Prix Unitaire</th>
-											<th>Reduction</th>
-											<th colspan="2">Totale</th>
+											<th>#{lang['produit']}</th>
+											<th>#{lang['quantite']}</th>
+											<th>#{lang['prix_unitaire']}</th>
+											<th>#{lang['reduction']}</th>
+											<th colspan="2">#{lang['totale']}</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -76,7 +72,7 @@
 												<td></td>
 												<td></td>
 												<td></td>
-												<td>Sous total</td>
+												<td>#{lang['sous_total']}</td>
 												<th><h:outputText id="subTotal"
 														value="#{mBeanCartManagement.calculSubTotal()}€">
 														 <f:convertNumber minFractionDigits="2" />
@@ -86,7 +82,7 @@
 												<td></td>
 												<td></td>
 												<td></td>
-												<td>Frais de transport</td>
+												<td>#{lang['frais_de_transport']}</td>
 												<th><h:outputText id="shipping"
 														value="#{mBeanCartManagement.order.ordersDetail.size()*1.5}€">
 														 <f:convertNumber minFractionDigits="2" />
@@ -96,7 +92,7 @@
 												<td></td>
 												<td></td>
 												<td></td>
-												<td>Total</td>
+												<td>#{lang['totale']}</td>
 												<th><h:outputText id="total"
 														value="#{mBeanCartManagement.calculTotal() + mBeanCartManagement.order.ordersDetail.size()*1.5}€">
 													 <f:convertNumber minFractionDigits="2" />

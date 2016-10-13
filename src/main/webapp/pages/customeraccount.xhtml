@@ -10,23 +10,23 @@
                     <div class="panel panel-default sidebar-menu">
 
                         <div class="panel-heading">
-                            <h3 class="panel-title">Customer section</h3>
+                            <h3 class="panel-title">#{lang['espace_client']}</h3>
                         </div>
 
                         <div class="panel-body">
 
                             <ul class="nav nav-pills nav-stacked">
                                 <li class="active">
-                                    <a href="customer-orders.html"><i class="fa fa-list"></i> My orders</a>
+                                    <a href="customer-orders.html"><i class="fa fa-list"></i> #{lang['mes_commandes']}</a>
                                 </li>
                                 <li>
-                                    <a href="customer-wishlist.html"><i class="fa fa-heart"></i> My wishlist</a>
+                                    <a href="customer-wishlist.html"><i class="fa fa-heart"></i> #{lang['liste_commande']}</a>
                                 </li>
                                 <li>
-                                    <a href="customer-account.html"><i class="fa fa-user"></i> My account</a>
+                                    <a href="customer-account.html"><i class="fa fa-user"></i> #{lang['mon_compte']}</a>
                                 </li>
                                 <li>
-                                    <a href="index.html"><i class="fa fa-sign-out"></i> Logout</a>
+                                    <a href="index.html"><i class="fa fa-sign-out"></i> #{lang['deconnexion']}</a>
                                 </li>
                             </ul>
                         </div>
@@ -39,17 +39,17 @@
 
                 <div class="col-md-9">
                     <div class="box">
-                        <h1>My account</h1>
-                        <p class="lead">Change your personal details or your password here.</p>
+                        <h1>#{lang['mon_compte']}</h1>
+                        <p class="lead">#{lang['changer_info_compte']}</p>
                         <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
 
-                        <h3>Change password</h3>
+                        <h3>#{lang['changer_mdp']}</h3>
 
                         <form>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="password_old">Old password</label>
+                                        <label for="password_old">#{lang['ancien_mdp']}</label>
                                         <input type="password" class="form-control" id="password_old"/>
                                     </div>
                                 </div>
@@ -57,13 +57,13 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="password_1">New password</label>
+                                        <label for="password_1">#{lang['nouveau_mot_de_passe']}</label>
                                         <input type="password" class="form-control" id="password_1"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="password_2">Retype new password</label>
+                                        <label for="password_2">#{lang['retaper_mot_de_passe']}</label>
                                         <input type="password" class="form-control" id="password_2"/>
                                     </div>
                                 </div>
@@ -71,24 +71,24 @@
                             <!-- /.row -->
 
                             <div class="col-sm-12 text-center">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> #{lang['enregistrer_new_password']}</button>
                             </div>
                         </form>
 
                         <hr/>
 
-                        <h3>Personal details</h3>
+                        <h3>#{lang['details_personnels']}</h3>
                         <form>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="firstname">Firstname</label>
+                                        <label for="firstname">#{lang['prenom']}</label>
                                         <input type="text" class="form-control" id="firstname"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="lastname">Lastname</label>
+                                        <label for="lastname">#{lang['nom']}</label>
                                         <input type="text" class="form-control" id="lastname"/>
                                     </div>
                                 </div>
@@ -98,13 +98,13 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="company">Company</label>
+                                        <label for="company">#{lang['compagnie']}</label>
                                         <input type="text" class="form-control" id="company"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="street">Street</label>
+                                        <label for="street">#{lang['rue']}</label>
                                         <input type="text" class="form-control" id="street"/>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
                             <div class="row">
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group">
-                                        <label for="city">Company</label>
+                                        <label for="city">#{lang['ville']}</label>
                                         <input type="text" class="form-control" id="city"/>
                                     </div>
                                 </div>
@@ -126,31 +126,31 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group">
-                                        <label for="state">State</label>
+                                        <label for="state">#{lang['etat']}</label>
                                         <select class="form-control" id="state"></select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group">
-                                        <label for="country">Country</label>
+                                        <label for="country">#{lang['pays']}</label>
                                         <select class="form-control" id="country"></select>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="phone">Telephone</label>
+                                        <label for="phone">#{lang['telephone']}</label>
                                         <input type="text" class="form-control" id="phone"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="email">Email</label>
+                                        <label for="email">#{lang['email']}</label>
                                         <input type="text" class="form-control" id="email"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save changes</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> #{lang['sauvegarde_modifications']}</button>
 
                                 </div>
                             </div>
@@ -161,10 +161,6 @@
             </div>
             <!-- /.container -->
 
-	
-	
-	
-	
 	
 	</ui:define>
 </ui:composition>
