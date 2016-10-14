@@ -8,7 +8,9 @@ import java.util.Locale;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.orm.hibernate3.SpringSessionContext;
@@ -51,8 +53,11 @@ public class LocaleBean implements Serializable{
 
     public void setLanguage(String language) {
         mBeanProduct.setWineTypes(null);
-        mBeanProduct.setAppellations(null);
-        mBeanProduct.setVarietals(null);
+        /*if(mBeanProduct.getCurrentProd()!=null){
+            FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+            .put("product", mBeanProduct.getCurrentProd().getId().toString());
+            mBeanProduct.setCurrentProd(null);
+        }*/
         if(language.contains("en"))
             locale = Locale.US;
         else
@@ -60,6 +65,8 @@ public class LocaleBean implements Serializable{
         FacesContext.getCurrentInstance().getApplication().setDefaultLocale(locale);
         this.language = locale.toString();
         try {
+            /*ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());*/
            FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
         } catch (IOException paramE) {
             // TODO Auto-generated catch block

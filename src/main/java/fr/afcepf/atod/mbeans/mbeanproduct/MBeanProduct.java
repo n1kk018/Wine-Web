@@ -120,9 +120,9 @@ public class MBeanProduct implements Serializable {
             try {
                 Locale.setDefault(FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
                 wineTypes = buProduct.getWineTypes();
-                appellations = buProduct.getAppellationsByType(wineTypes);
                 varietals = buProduct.getVarietalsByType(wineTypes);
                 pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
+                appellations = buProduct.getAppellationsByType(wineTypes);
             } catch (WineException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -468,5 +468,11 @@ public class MBeanProduct implements Serializable {
     public String getCurrentSortStr() {
         return currentSortStr;
     }
+
+    public void setCurrentProd(Product paramCurrentProd) {
+        currentProd = paramCurrentProd;
+    }
+    
+    
     
 }
