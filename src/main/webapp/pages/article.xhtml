@@ -39,7 +39,7 @@
                                     alt="" class="img-responsive center-block" />
                             </a>
                             <ui:include src="/WEB-INF/templates/ribbon_sale.xhtml" />
-                            <ui:include src="/WEB-INF/templates/ribbon_new.xhtml" />
+                            <!-- <ui:include src="/WEB-INF/templates/ribbon_new.xhtml" /> -->
                         </div>
                         <!-- /.product -->
                     </div>
@@ -84,8 +84,8 @@
                     <p>#{mBeanProduct.currentProd.productVarietal.description}</p>
                     <h4>#{lang['description']}</h4>
                     <ul>
-                        <ui:repeat var="text" value="#{mBeanProduct.currentProd.description.split('\\|')}">
-                            <li>#{text}</li>
+                        <ui:repeat var="feature" value="#{mBeanProduct.currentProd.getFeatures().toArray()}">
+                            <li>#{feature.label}</li>
                         </ui:repeat>
                     </ul>
                     <hr />

@@ -119,7 +119,6 @@ public class MBeanProduct implements Serializable {
 	        log.info("================NavData loading==============");
             try {
                 Locale.setDefault(FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-                
                 wineTypes = buProduct.getWineTypes();
                 varietals = buProduct.getVarietalsByType(wineTypes);
                 pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
@@ -469,5 +468,11 @@ public class MBeanProduct implements Serializable {
     public String getCurrentSortStr() {
         return currentSortStr;
     }
+
+    public void setCurrentProd(Product paramCurrentProd) {
+        currentProd = paramCurrentProd;
+    }
+    
+    
     
 }
