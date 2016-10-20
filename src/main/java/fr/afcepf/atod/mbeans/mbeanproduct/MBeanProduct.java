@@ -142,44 +142,68 @@ public class MBeanProduct implements Serializable {
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         String currency = (String) sessionMap.get("currency");
 	    log.info(currency);
-        if(currency!=null) {
+        
 	        if (promotedWinesList != null ) {
+	            prepareConversionField(promotedWinesList);
 	            for (Product product : promotedWinesList) {
-                    convertCurrencyInObj(product,currency);
+	                if(currency!=null) {
+	                    convertCurrencyInObj(product,currency);
+	                }
                 } 
 	        }
 	        if(expensiveProducts != null) {
-	            for (Product product : expensiveProducts) {
-	                convertCurrencyInObj(product,currency);
-                } 
+	            prepareConversionField(expensiveProducts);
+	            if(currency!=null) {
+    	            for (Product product : expensiveProducts) {
+    	                convertCurrencyInObj(product,currency);
+                    }
+	            }
 	        }
 	        if(threeSimilarProductsList != null) {
-	            for (Product product : threeSimilarProductsList) {
-                    convertCurrencyInObj(product,currency);
-                }
+	            prepareConversionField2(threeSimilarProductsList);
+	            if(currency!=null) {
+    	            for (Product product : threeSimilarProductsList) {
+                        convertCurrencyInObj(product,currency);
+                    }
+	            }
 	        }
 	        if(winesList != null) {
-	            for (Product product : winesList) {
-                    convertCurrencyInObj(product,currency);
-                }
+	            prepareConversionField2(winesList);
+	            if(currency!=null) {
+    	            for (Product product : winesList) {
+                        convertCurrencyInObj(product,currency);
+                    }
+	            }
 	        }
 	        if(currentProd != null) {
-	            convertCurrencyInObj(currentProd,currency);
+	            currentProd.setConvertedPrice(currentProd.getPrice());
+	            if(currency!=null) {
+	                convertCurrencyInObj(currentProd,currency);
+	            }
 	        }
-	    }
+
 	}
 	
 	private void convertCurrencyInObj(Product prod, String currency) {
 	    ICurrencyConverter client = (ICurrencyConverter) (new CurrencyConverterService()).getCurrencyConverterPort();
         try {
-           Double newPrice = client.convert(prod.getPrice(), "EUR", currency);
-           prod.setPrice(newPrice);
-            
+           prod.setConvertedPrice(client.convert(prod.getPrice(), "EUR", currency));
         } catch (CurrenciesWSException_Exception paramE) {
-            // TODO Auto-generated catch block
             paramE.printStackTrace();
         }
 	}
+	
+	private void prepareConversionField(List<Product> list) {
+	    for (Product product : list) {
+            product.setConvertedPrice(product.getPrice());
+        }
+	}
+	
+	private void prepareConversionField2(List<ProductWine> list) {
+        for (Product product : list) {
+            product.setConvertedPrice(product.getPrice());
+        }
+    }
     
     public String getProductParam(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();

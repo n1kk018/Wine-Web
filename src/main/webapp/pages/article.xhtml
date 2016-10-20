@@ -65,15 +65,15 @@
                                 <div class="col-sm-4">
                                     <p class="price">
                                         <h:panelGroup rendered="#{mBeanProduct.currentProd.speEvent!=null}">
-							                <del class="itemPrice">#{mBeanProduct.currentProd.price}</del>&nbsp;
+							                <del class="itemPrice">#{mBeanProduct.currentProd.convertedPrice}</del>&nbsp;
 							                <h:outputText class="itemPrice"
-							                    value="#{mBeanProduct.currentProd.price - ((mBeanProduct.currentProd.price/100)*mBeanProduct.currentProd.speEvent.pourcentage)}">
+							                    value="#{mBeanProduct.currentProd.convertedPrice - ((mBeanProduct.currentProd.convertedPrice/100)*mBeanProduct.currentProd.speEvent.pourcentage)}">
 							                    <f:convertNumber pattern=" #0.00" />
 							                </h:outputText>
 							                <span class="flaticon-euro-currency-symbol currency-symbol"></span>
 							            </h:panelGroup>
 							            <h:panelGroup rendered="#{mBeanProduct.currentProd.speEvent==null}">
-							                <h:outputText value="#{mBeanProduct.currentProd.price}" class="itemPrice">
+							                <h:outputText value="#{mBeanProduct.currentProd.convertedPrice}" class="itemPrice">
 							                    <f:convertNumber pattern=" #0.00" />
 							                </h:outputText> 
 							                <span class="flaticon-euro-currency-symbol currency-symbol"></span>
