@@ -23,6 +23,18 @@
 	color: rgb(188,54,4);
 }
 
+.itemPrice {
+	display: inline-block;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-size: 13px;
+  font-style: normal;
+   margin-left: 5px;
+}
+
 .btn, .btn-default, .navbar-toggle, #zozo {
 	height: 34px;
 	margin-right: 13px;

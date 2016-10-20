@@ -8,6 +8,9 @@ $(function() {
 	productDetailGallery(4000);
 	carousels();
 	utils();
+	$('#currency').on('change', function() {
+		convertPrices(this.value); 
+	});
 	//demo();
 });
 
@@ -21,6 +24,31 @@ $(window).resize(function() {
 		$(this).alignElementsSameHeight();
 	}, 150);
 });
+
+function convertPrices(trgtCurrency) {
+	srcCurrency = lastCurrency;
+	lastCurrency = trgtCurrency;
+	$.ajaxSetup({
+		  contentType: "application/json; charset=utf-8"
+	});
+	$.each($('p.price .itemPrice'), function(i, o) {
+		var element = $(this);
+		var amount = $(this).text();
+		amount = amount.trim();
+		$.ajax({
+	        type:"GET",
+	        url : "http://localhost:8080/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
+	        dataType: 'json',
+	        crossDomain: true,
+	        async: false,
+	        data: {"amount":amount.replace(",","."),"src":srcCurrency,"trgt":trgtCurrency}
+	        
+	    }).success(function(response) {
+            element.text(response.amount);
+            element.next("span.currency-symbol").removeClass().addClass("currency-symbol "+response.currency_class);
+        });
+	});
+}
 
 /* product detail gallery */
 
