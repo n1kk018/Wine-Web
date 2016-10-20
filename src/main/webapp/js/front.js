@@ -8,6 +8,9 @@ $(function() {
 	productDetailGallery(4000);
 	carousels();
 	utils();
+	if(lastCurrency!="EUR") {
+		switchCurrencyClass();
+	}
 	$('#currency').on('change', function() {
 		convertPrices(this.value); 
 	});
@@ -25,10 +28,30 @@ $(window).resize(function() {
 	}, 150);
 });
 
+function switchCurrencyClass() {
+	var tableau = {
+			"EUR" : "flaticon-euro-currency-symbol",
+	        "GBP" : "flaticon-pound-symbol-variant",
+	        "USD" : "flaticon-dollar-currency-symbol-2",
+	        "JPY" : "flaticon-yen-currency-symbol",
+	        "BGN" : "flaticon-bulgaria-lev",
+	        "DKK" : "flaticon-denmark-krone-currency-symbol",
+	        "EEK" : "flaticon-estonia-kroon-currency-symbol",
+	        "HUF" : "flaticon-hungary-forint-currency-symbol",
+	        "LVL" : "flaticon-latvia-lat",
+	        "LTL" : "flaticon-lithuania-litas-currency-symbol",
+	        "PLN" : "flaticon-poland-zloty-currency-symbol",
+	        "CZK" : "flaticon-czech-republic-koruna-currency-symbol",
+	        "SKK" : "flaticon-denmark-krone-currency-symbol",
+	        "SEK" : "flaticon-sweden-krona-currency-symbol"
+	};
+	$("span.currency-symbol").removeClass().addClass("currency-symbol "+tableau[lastCurrency]);
+}
+
 function convertPrices(trgtCurrency) {
 	srcCurrency = lastCurrency;
 	lastCurrency = trgtCurrency;
-	rc([{'trgt':trgtCurrency}]);
+	rc([{name:'trgt', value:trgtCurrency}]);
 	$.ajaxSetup({
 		  contentType: "application/json; charset=utf-8"
 	});
