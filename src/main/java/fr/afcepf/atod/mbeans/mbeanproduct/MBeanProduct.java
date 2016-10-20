@@ -17,6 +17,9 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
 import fr.afcepf.atod.wine.entity.ProductVintage;
 import fr.afcepf.atod.wine.entity.ProductWine;
+import fr.afcepf.atod.ws.currency.soap.CurrenciesWSException_Exception;
+import fr.afcepf.atod.ws.currency.soap.CurrencyConverterService;
+import fr.afcepf.atod.ws.currency.soap.ICurrencyConverter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UICommand;
 import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
@@ -134,6 +138,47 @@ public class MBeanProduct implements Serializable {
 	{
 	    log.info("================preRender==============");
 	    loadNavData();
+	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        String currency = (String) sessionMap.get("currency");
+	    log.info(currency);
+        if(currency!=null) {
+	        if (promotedWinesList != null ) {
+	            for (Product product : promotedWinesList) {
+                    convertCurrencyInObj(product,currency);
+                } 
+	        }
+	        if(expensiveProducts != null) {
+	            for (Product product : expensiveProducts) {
+	                convertCurrencyInObj(product,currency);
+                } 
+	        }
+	        if(threeSimilarProductsList != null) {
+	            for (Product product : threeSimilarProductsList) {
+                    convertCurrencyInObj(product,currency);
+                }
+	        }
+	        if(winesList != null) {
+	            for (Product product : winesList) {
+                    convertCurrencyInObj(product,currency);
+                }
+	        }
+	        if(currentProd != null) {
+	            convertCurrencyInObj(currentProd,currency);
+	        }
+	    }
+	}
+	
+	private void convertCurrencyInObj(Product prod, String currency) {
+	    ICurrencyConverter client = (ICurrencyConverter) (new CurrencyConverterService()).getCurrencyConverterPort();
+        try {
+           Double newPrice = client.convert(prod.getPrice(), "EUR", currency);
+           prod.setPrice(newPrice);
+            
+        } catch (CurrenciesWSException_Exception paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
 	}
     
     public String getProductParam(FacesContext fc){

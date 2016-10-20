@@ -96,8 +96,13 @@ public class LocaleBean implements Serializable{
     public void execute()
     {
         log.info("========================Execute in LocaleBean=======================");
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        currency=params.get("trgt"); 
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map map = context.getExternalContext().getRequestParameterMap();
+        currency = (String) map.get("trgt");
+        log.info(currency);
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        sessionMap.put("currency", currency);
     }
 
     public MBeanProduct getmBeanProduct() {

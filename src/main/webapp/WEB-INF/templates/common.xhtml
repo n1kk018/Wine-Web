@@ -74,7 +74,7 @@
 		<!-- *** SCRIPTS TO INCLUDE *** -->
 		<script type="text/javascript">
             baseUrl = '#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/';
-            lastCurrency = 'EUR';
+            lastCurrency = '#{localeBean.currency}';
         </script>
 		<script src="js/jquery-1.11.0.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
