@@ -1,3 +1,6 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+]>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -54,8 +57,28 @@
                                        	<img src="img/wine_pictures/#{mBeanProduct.currentProd.apiId}/#{mBeanProduct.currentProd.images.split('\\|')[0]}" alt="" class="img-responsive center-block"/>
                                     </a>
                                 </div>
+                                <div layout="block" class="ribbon sale"
+								    jsf:rendered="#{mBeanProduct.currentProd.speEvent!=null}">
+								    <div class="theribbon">#{lang['sale']}</div>
+								    <div class="ribbon-background"></div>
+								</div>
                                 <div class="col-sm-4">
-                                    <p class="price itemPrice">#{mBeanProduct.currentProd.price} €</p>
+                                    <p class="price">
+                                        <h:panelGroup rendered="#{mBeanProduct.currentProd.speEvent!=null}">
+							                <del class="itemPrice">#{mBeanProduct.currentProd.price}</del>&nbsp;
+							                <h:outputText class="itemPrice"
+							                    value="#{mBeanProduct.currentProd.price - ((mBeanProduct.currentProd.price/100)*mBeanProduct.currentProd.speEvent.pourcentage)}">
+							                    <f:convertNumber pattern=" #0.00" />
+							                </h:outputText>
+							                <span class="flaticon-euro-currency-symbol currency-symbol"></span>
+							            </h:panelGroup>
+							            <h:panelGroup rendered="#{mBeanProduct.currentProd.speEvent==null}">
+							                <h:outputText value="#{mBeanProduct.currentProd.price}" class="itemPrice">
+							                    <f:convertNumber pattern=" #0.00" />
+							                </h:outputText> 
+							                <span class="flaticon-euro-currency-symbol currency-symbol"></span>
+							            </h:panelGroup>
+                                    </p>
                                     <form jsf:id="formArticle">
                                         <p class="text-center buttons">
                                             <a jsf:action="#{mBeanCartManagement.addProductCart}" class="btn btn-primary">

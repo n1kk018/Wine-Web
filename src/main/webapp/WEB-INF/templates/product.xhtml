@@ -39,18 +39,18 @@
 		</h3>
 		<p class="price">
 			<h:panelGroup rendered="#{product.speEvent!=null}">
-				<del><span>#{product.price}</span></del>&nbsp;
+				<del class="itemPrice">#{product.price}</del>&nbsp;
 				<h:outputText class="itemPrice"
 					value="#{product.price - ((product.price/100)*product.speEvent.pourcentage)}">
 					<f:convertNumber pattern=" #0.00" />
 				</h:outputText>
-				<span class="flaticon-euro-currency-symbol"></span>
+				<span class="flaticon-euro-currency-symbol currency-symbol"></span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{product.speEvent==null}">
 				<h:outputText value="#{product.price}" class="itemPrice">
 					<f:convertNumber pattern=" #0.00" />
 				</h:outputText> 
-				<span class="flaticon-euro-currency-symbol"></span>
+				<span class="flaticon-euro-currency-symbol currency-symbol"></span>
 			</h:panelGroup>
 		</p>
 		<p class="buttons"> 

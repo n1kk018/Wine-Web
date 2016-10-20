@@ -30,26 +30,24 @@ function convertPrices(trgtCurrency) {
 	lastCurrency = trgtCurrency;
 	$.ajaxSetup({
 		  contentType: "application/json; charset=utf-8"
-		});
-	$.each($('.itemPrice'), function(i, o) {
+	});
+	$.each($('p.price .itemPrice'), function(i, o) {
 		var element = $(this);
-		var amount = $(this).html().replace(" €","");
+		var amount = $(this).text();
 		amount = amount.trim();
 		$.ajax({
 	        type:"GET",
 	        url : "http://localhost:8080/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
-	        dataType: 'text',
+	        dataType: 'json',
 	        crossDomain: true,
 	        async: false,
-	        data: {"amount":amount.replace(",","."),"src":srcCurrency,"trgt":trgtCurrency},
-	        success : function(response) {
-	            element.text(response);
-	        },
-	        error: function(response) {
-	        	element.text(response);
-	        }
-	    });
-	});   
+	        data: {"amount":amount.replace(",","."),"src":srcCurrency,"trgt":trgtCurrency}
+	        
+	    }).success(function(response) {
+            element.text(response.amount);
+            element.next("span.currency-symbol").removeClass().addClass("currency-symbol "+response.currency_class);
+        });
+	});
 }
 
 /* product detail gallery */
