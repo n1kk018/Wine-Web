@@ -12,8 +12,10 @@
 			<a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">#{lang['offre_speciale']}</a> <a href="#">#{lang['economisez']}</a>
 		</div>
 		<div class="col-md-6" data-animate="fadeInDown">
-		      <form jsf:id="maform" jsf:prependId="false">
+				<form jsf:id="rcfrom" jsf:prependId="false">
 		        <p:remoteCommand name="rc" actionListener="#{localeBean.execute}" />
+		        </form>
+		      <form jsf:id="maform" jsf:prependId="false">
 				<ul class="menu">
 						<h:panelGroup
 							rendered="#{mBeanConnexion.userConnected.lastname == null}">
@@ -33,7 +35,7 @@
 	                        <f:selectItem itemValue="en_US" itemLabel="English" />
 	                        <f:ajax event="change" />
                         </h:selectOneMenu></li>
-                    <li><select id="currency">
+                    <li><select id="currency" onchange="rc()">
                         <option value="EUR" class="flaticon-euro-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Euro</option>
                         <option value="GBP" class="flaticon-pound-symbol-variant"> &nbsp;&nbsp;&nbsp;&nbsp;Livre Sterling</option>
                         <option value="USD" class="flaticon-dollar-currency-symbol-2"> &nbsp;&nbsp;&nbsp;&nbsp;Dollar U.S.</option>

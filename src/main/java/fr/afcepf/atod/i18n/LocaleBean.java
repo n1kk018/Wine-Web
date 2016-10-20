@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -37,7 +38,6 @@ public class LocaleBean implements Serializable{
     private MBeanProduct mBeanProduct;
     private String language;
     private String currency = "EUR";
-    private String beforeCurrency;
     private Logger log = Logger.getLogger(LocaleBean.class);
     
     public LocaleBean() {
@@ -77,26 +77,27 @@ public class LocaleBean implements Serializable{
         }
     }
     
+   
+    
+    /**
+     * @return the currency
+     */
     public String getCurrency() {
         return currency;
     }
 
+    /**
+     * @param paramCurrency the currency to set
+     */
     public void setCurrency(String paramCurrency) {
-        beforeCurrency = currency;
         currency = paramCurrency;
-        try {
-           FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
-        } catch (IOException paramE) {
-            // TODO Auto-generated catch block
-            paramE.printStackTrace();
-        }
     }
-    
-    public String execute()
+
+    public void execute()
     {
-        String previousCurrency = currency; 
-        log.info(previousCurrency);
-        return previousCurrency;
+        log.info("========================Execute in LocaleBean=======================");
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        currency=params.get("trgt"); 
     }
 
     public MBeanProduct getmBeanProduct() {

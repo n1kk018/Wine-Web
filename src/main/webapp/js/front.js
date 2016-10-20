@@ -28,6 +28,7 @@ $(window).resize(function() {
 function convertPrices(trgtCurrency) {
 	srcCurrency = lastCurrency;
 	lastCurrency = trgtCurrency;
+	rc([{'trgt':trgtCurrency}]);
 	$.ajaxSetup({
 		  contentType: "application/json; charset=utf-8"
 	});
