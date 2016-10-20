@@ -1,14 +1,19 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+]>
 <div xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" id="top">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" id="top">
 	<div class="container">
 		<div class="col-md-6 offer" data-animate="fadeInDown">
 			<a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">#{lang['offre_speciale']}</a> <a href="#">#{lang['economisez']}</a>
 		</div>
 		<div class="col-md-6" data-animate="fadeInDown">
 		      <form jsf:id="maform" jsf:prependId="false">
+		        <p:remoteCommand name="rc" actionListener="#{localeBean.execute}" />
 				<ul class="menu">
 						<h:panelGroup
 							rendered="#{mBeanConnexion.userConnected.lastname == null}">
@@ -24,10 +29,26 @@
 							<li><a href="#" jsf:action="#{mBeanConnexion.disconnect()}">#{lang['signout']}</a></li>
 						</h:panelGroup>
 						<li><h:selectOneMenu value="#{localeBean.language}">
-                        <f:selectItem itemValue="fr_FR" itemLabel="Francais" />
-                        <f:selectItem itemValue="en_US" itemLabel="English" />
-                        <f:ajax event="change" />
-                    </h:selectOneMenu></li>
+	                        <f:selectItem itemValue="fr_FR" itemLabel="Francais" />
+	                        <f:selectItem itemValue="en_US" itemLabel="English" />
+	                        <f:ajax event="change" />
+                        </h:selectOneMenu></li>
+                    <li><select id="currency">
+                        <option value="EUR" class="flaticon-euro-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Euro</option>
+                        <option value="GBP" class="flaticon-pound-symbol-variant"> &nbsp;&nbsp;&nbsp;&nbsp;Livre Sterling</option>
+                        <option value="USD" class="flaticon-dollar-currency-symbol-2"> &nbsp;&nbsp;&nbsp;&nbsp;Dollar U.S.</option>
+                        <option value="JPY" class="flaticon-yen-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Yen japonais</option>
+                        <option value="BGN" class="flaticon-bulgaria-lev"> &nbsp;&nbsp;&nbsp;&nbsp;Lev bulgare</option>
+                        <option value="DKK" class="flaticon-denmark-krone-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Couronne danoise</option>
+                        <option value="EEK" class="flaticon-estonia-kroon-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Couronne estonienne</option>
+                        <option value="HUF" class="flaticon-hungary-forint-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Forint hongrois</option>
+                        <option value="LVL" class="flaticon-latvia-lat"> &nbsp;&nbsp;&nbsp;&nbsp;Lats letton</option>
+                        <option value="LTL" class="flaticon-lithuania-litas-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Litas lithuanien</option>
+                        <option value="PLN" class="flaticon-poland-zloty-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Zloty polonais</option>
+                        <option value="CZK" class="flaticon-czech-republic-koruna-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Couronne tchèque</option>
+                        <option value="SKK" class="flaticon-denmark-krone-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Couronne slovaque</option>
+                        <option value="SEK" class="flaticon-sweden-krona-currency-symbol"> &nbsp;&nbsp;&nbsp;&nbsp;Couronne suédoise</option>
+                    </select></li>
 				</ul>
 				</form>
 		</div>

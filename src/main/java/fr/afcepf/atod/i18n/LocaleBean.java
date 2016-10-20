@@ -36,10 +36,13 @@ public class LocaleBean implements Serializable{
     @ManagedProperty(value = "#{mBeanProduct}")
     private MBeanProduct mBeanProduct;
     private String language;
-    private Logger log = Logger.getLogger(MBeanConnexion.class);
+    private String currency = "EUR";
+    private String beforeCurrency;
+    private Logger log = Logger.getLogger(LocaleBean.class);
     
     public LocaleBean() {
         super();
+        
         log.info("========================LocaleBean=======================");
     }
     
@@ -72,6 +75,28 @@ public class LocaleBean implements Serializable{
             // TODO Auto-generated catch block
             paramE.printStackTrace();
         }
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String paramCurrency) {
+        beforeCurrency = currency;
+        currency = paramCurrency;
+        try {
+           FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+        } catch (IOException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
+    }
+    
+    public String execute()
+    {
+        String previousCurrency = currency; 
+        log.info(previousCurrency);
+        return previousCurrency;
     }
 
     public MBeanProduct getmBeanProduct() {

@@ -22,3 +22,15 @@
 	margin-top:0;
 	color: rgb(188,54,4);
 }
+
+.itemPrice {
+	display: inline-block;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-size: 13px;
+  font-style: normal;
+   margin-left: 5px;
+}
