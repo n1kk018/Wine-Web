@@ -54,7 +54,7 @@
 																	src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg"
 																	alt="#{orderDetail.productOrdered.name}" />
 															</a></td>
-															<td><input jsf:id="quantityProduct" type="number"
+															<td><input jsf:id="quantityProduct" min="1" type="number"
 																jsf:value="#{orderDetail.quantite}" class="form-control">
 															<f:ajax event="change" execute="@form" render="@form" />
 																</input></td>
