@@ -9,7 +9,7 @@
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
 			<p:menuitem value="Panier" url="basket.jsf"/>
-			<p:menuitem value="Livraison - Vérification adresse" />
+			<p:menuitem value="Livraison et Facturation - Vérification adresse" />
 		</p:breadCrumb>
     </ui:define>
 	<ui:define name="body">
@@ -21,9 +21,11 @@
 							<ul class="nav nav-pills nav-justified">
 								<li class="active"><a href="#"><i
 										class="fa fa-map-marker"></i><br />#{lang['adresse']}</a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-truck"></i><br />#{lang['mode_de_livraison']}</a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-money"></i><br />#{lang['mode_de_paiement']}</a></li>
-								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />#{lang['confirmation']}</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-truck"></i><br />Mode
+										de livraison</a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-money"></i><br />Mode
+										de paiement </a></li>
+								<li class="disabled"><a href="#"><i class="fa fa-eye"></i><br />Confirmation</a></li>
 							</ul>
 							<div class="content">
 								<div class="row">
@@ -137,18 +139,18 @@
 								<!-- /.row -->
 								<div id="modiflivraison" class="collapse clearfix">
 									<div class="row">
-										<h3>#{lang['demande_adresse_livraison']}</h3>
+										<h3>Merci de saisir votre nouvelle adresse de livraison</h3>
 									</div>
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="number">#{lang['numero']}</label> <input type="text"
+												<label for="number">Numero </label> <input type="text"
 													class="form-control" id="number" />
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="street">#{lang['rue']}</label> <input type="text"
+												<label for="street">Rue</label> <input type="text"
 													class="form-control" id="street" />
 											</div>
 										</div>
@@ -159,7 +161,7 @@
 									<div class="row">
 										<div class="col-sm-6 col-md-3">
 											<div class="form-group">
-												<label for="city">#{lang['ville']}</label> <input type="text"
+												<label for="city">Ville</label> <input type="text"
 													class="form-control" id="city" />
 											</div>
 										</div>

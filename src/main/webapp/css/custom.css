@@ -34,3 +34,8 @@
   font-style: normal;
    margin-left: 5px;
 }
+
+.btn, .btn-default, .navbar-toggle, #zozo {
+	height: 34px;
+	margin-right: 13px;
+}

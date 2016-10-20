@@ -9,7 +9,7 @@
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
 			<p:menuitem value="Panier" url="basket.jsf"/>
-			<p:menuitem value="Livraison - Vérification adresse" />
+			<p:menuitem value="Facturation - Mode de paiement" />
 		</p:breadCrumb>
     </ui:define>
 	<ui:define name="body">
@@ -56,10 +56,10 @@
 													<label>#{lang['date_expiration']}</label>
 												</div>
 												<div class="col-xs-2">
-												<input type="number" value="1" class="form-control" />
+												<input type="number" value="11" min="1" max="12" class="form-control" />
 												</div>
 												<div class="col-xs-2">
-													<input type="number" value="2016" class="form-control" />
+													<input type="number" value="2016" min="2016" class="form-control" />
 												</div>
 											</div>
 											<!-- /.row -->
@@ -70,7 +70,7 @@
 													<label>#{lang['cryptogramme']}</label>
 												</div>
 												<div class="col-xs-2">
-													<input type="text" value="1" class="form-control" />
+													<input type="text" value="1" max="999" class="form-control" />
 												</div>
 											</div>
 											<br />
