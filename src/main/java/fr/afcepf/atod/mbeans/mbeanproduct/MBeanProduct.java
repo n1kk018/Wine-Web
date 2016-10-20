@@ -541,7 +541,4 @@ public class MBeanProduct implements Serializable {
     public void setCurrentProd(Product paramCurrentProd) {
         currentProd = paramCurrentProd;
     }
-    
-    
-    
 }
