@@ -12,7 +12,7 @@
 	<ui:define name="breadcrumb">
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
-			<p:menuitem value="Panier"  />
+			<p:menuitem value="#{lang['basket']}"  />
 		</p:breadCrumb>
     </ui:define>
 	<ui:define name="body">
@@ -59,17 +59,17 @@
 															<f:ajax event="change" execute="@form" render="@form" />
 																</input></td>
 															<td style="text-align: center;"><h:outputText
-																	value="#{orderDetail.productOrdered.price}€">
+																	value="#{orderDetail.productOrdered.price}" class="itemPrice">
 																	  <f:convertNumber pattern="#0.00" />
-																</h:outputText></td>
+																</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></td>
 															<td style="text-align: center;"><h:outputText
-																	value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
+																	value="#{mBeanCartManagement.calculDiscount(orderDetail)}" class="itemPrice">
 																	<f:convertNumber pattern="#0.00" />
-																</h:outputText></td>
-															<td style="text-align: center;"><h:outputText id="totalLine"
-																	value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
+																</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></td>
+															<td style="text-align: center;"><h:outputText id="totalLine" class="itemPrice"
+																	value="#{mBeanCartManagement.calculTotalLine(orderDetail)}">
 																<f:convertNumber pattern="#0.00" />
-																</h:outputText></td>
+																</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></td>
 															<td><h:commandLink
 																	action="#{mBeanCartManagement.removeProductCart(orderDetail)}">
 																	<i class="fa fa-trash-o"></i>

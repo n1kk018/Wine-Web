@@ -6,10 +6,8 @@
 package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
-import fr.afcepf.atod.i18n.LocaleBean;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.util.UtilFindPath;
-import fr.afcepf.atod.vin.data.exception.WineErrorCode;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductAccessories;
@@ -17,9 +15,9 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
 import fr.afcepf.atod.wine.entity.ProductVintage;
 import fr.afcepf.atod.wine.entity.ProductWine;
-import fr.afcepf.atod.ws.currency.soap.CurrenciesWSException_Exception;
-import fr.afcepf.atod.ws.currency.soap.CurrencyConverterService;
-import fr.afcepf.atod.ws.currency.soap.ICurrencyConverter;
+import fr.afcepf.atod.onwine.ws.soap.CurrenciesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.CurrencyConverterService;
+import fr.afcepf.atod.onwine.ws.soap.ICurrencyConverter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,11 +60,11 @@ public class MBeanProduct implements Serializable {
     private List<Product> promotedWinesList;
     private List<ProductType> wineTypes;
     private List<Product> expensiveProducts;
-    private List<ProductWine> threeSimilarProductsList;
+    private List<Product> threeSimilarProductsList;
     private Map<ProductType, List<String>> appellations;
     private Map<ProductType, List<ProductVarietal>> varietals;
     private Map<ProductType, Map<Integer,Integer>> pricesRepartition;
-    private List<ProductWine> winesList;
+    private List<Product> winesList;
 	private ProductType currentProdType;
     private Object currentSubCategory;
     private String subSelectionTypeLabel;
@@ -160,7 +158,7 @@ public class MBeanProduct implements Serializable {
 	            }
 	        }
 	        if(threeSimilarProductsList != null) {
-	            prepareConversionField2(threeSimilarProductsList);
+	            prepareConversionField(threeSimilarProductsList);
 	            if(currency!=null) {
     	            for (Product product : threeSimilarProductsList) {
                         convertCurrencyInObj(product,currency);
@@ -168,12 +166,12 @@ public class MBeanProduct implements Serializable {
 	            }
 	        }
 	        if(winesList != null) {
-	            prepareConversionField2(winesList);
-	            if(currency!=null) {
-    	            for (Product product : winesList) {
+	            prepareConversionField(winesList);
+                if(currency!=null) {
+                    for (Product product : winesList) {
                         convertCurrencyInObj(product,currency);
                     }
-	            }
+                }
 	        }
 	        if(currentProd != null) {
 	            currentProd.setConvertedPrice(currentProd.getPrice());
@@ -187,24 +185,22 @@ public class MBeanProduct implements Serializable {
 	private void convertCurrencyInObj(Product prod, String currency) {
 	    ICurrencyConverter client = (ICurrencyConverter) (new CurrencyConverterService()).getCurrencyConverterPort();
         try {
+            log.info("=============================Conversion=========================");
+            log.info(prod.getPrice());
            prod.setConvertedPrice(client.convert(prod.getPrice(), "EUR", currency));
+           log.info(prod.getConvertedPrice());
         } catch (CurrenciesWSException_Exception paramE) {
             paramE.printStackTrace();
         }
 	}
-	
+		
 	private void prepareConversionField(List<Product> list) {
+	    log.info("=============================Conversion=========================");
 	    for (Product product : list) {
             product.setConvertedPrice(product.getPrice());
         }
 	}
-	
-	private void prepareConversionField2(List<ProductWine> list) {
-        for (Product product : list) {
-            product.setConvertedPrice(product.getPrice());
-        }
-    }
-    
+	    
     public String getProductParam(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		return params.get("product");
@@ -226,7 +222,7 @@ public class MBeanProduct implements Serializable {
         	currentProd = buProduct.findById(id);
         	if(winesList!=null && winesList.size()>3)
         	{
-        		threeSimilarProductsList = new ArrayList<ProductWine>();
+        		threeSimilarProductsList = new ArrayList<Product>();
         		for (Product product : winesList) {
         			if(threeSimilarProductsList.size() < 3 && product.getId()!=id){
         				threeSimilarProductsList.add((ProductWine)product);
@@ -448,9 +444,18 @@ public class MBeanProduct implements Serializable {
 	}
 
 	
-    public List<ProductWine> getWinesList() {
+    public List<Product> getWinesList() {
 		loadList();
 		setSubSelectionTypeLabel(currentSubCategory);
+		prepareConversionField(winesList);
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        String currency = (String) sessionMap.get("currency");
+         if(currency!=null) {
+             for (Product product : winesList) {
+                 convertCurrencyInObj(product,currency);
+             }
+         }
         return winesList;
 	}
 
@@ -458,7 +463,7 @@ public class MBeanProduct implements Serializable {
 		this.expensiveProducts = expensiveProducts;
 	}
 	
-	public void setWinesList(List<ProductWine> winesList) {
+	public void setWinesList(List<Product> winesList) {
 		this.winesList = winesList;
 	}
 	
@@ -526,7 +531,7 @@ public class MBeanProduct implements Serializable {
 		return currentSubCategory;
 	}
 
-	public List<ProductWine> getThreeSimilarProductsList() {
+	public List<Product> getThreeSimilarProductsList() {
 		return threeSimilarProductsList;
 	}
 

@@ -8,6 +8,7 @@ $(function() {
 	productDetailGallery(4000);
 	carousels();
 	utils();
+	$('#currency option[value='+lastCurrency+']').prop('selected','selected');
 	if(lastCurrency!="EUR") {
 		switchCurrencyClass();
 	}
@@ -55,7 +56,7 @@ function convertPrices(trgtCurrency) {
 	$.ajaxSetup({
 		  contentType: "application/json; charset=utf-8"
 	});
-	$.each($('p.price .itemPrice'), function(i, o) {
+	$.each($('.itemPrice'), function(i, o) {
 		var element = $(this);
 		var amount = $(this).text();
 		amount = amount.trim();

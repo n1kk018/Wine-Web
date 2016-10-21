@@ -12,7 +12,7 @@
 	<ui:define name="breadcrumb">
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
-			<p:menuitem value="Notre sélection" />
+			<p:menuitem value="#{lang['our_selection']}" />
 			<p:menuitem value="#{mBeanProduct.currentProdType.type}" />
 			<p:menuitem value="#{mBeanProduct.subSelectionTypeLabel}" rendered="#{mBeanProduct.subSelectionTypeLabel!=''}" />
 		</p:breadCrumb>
@@ -37,11 +37,11 @@
 											</div>
 											<div class="col-md-9 col-sm-9 pull-right">
 												<h:selectOneMenu class="form-control " valueChangeListener="#{mBeanProduct.sortSelectionBy}" onchange="submit()">
-													<f:selectItem itemValue="price_asc" itemLabel="Prix les moins chers" />
-													<f:selectItem itemValue="price_desc" itemLabel="Prix les plus chers" />
-													<f:selectItem itemValue="name_asc" itemLabel="Par ordre alphabétique" />
-													<f:selectItem itemValue="name_desc" itemLabel="Par ordre alphabétique inversé" />
-													<f:selectItem itemValue="speEvent_desc" itemLabel="Les promotions d'abord" />
+													<f:selectItem itemValue="price_asc" itemLabel="#{lang['cheapest']}" />
+													<f:selectItem itemValue="price_desc" itemLabel="#{lang['more_expensive']}" />
+													<f:selectItem itemValue="name_asc" itemLabel="#{lang['alphabetical']}" />
+													<f:selectItem itemValue="name_desc" itemLabel="#{lang['reverse_alpha']}" />
+													<f:selectItem itemValue="speEvent_desc" itemLabel="#{lang['sales_first']}" />
 												</h:selectOneMenu>
 											</div>
 										</div>
