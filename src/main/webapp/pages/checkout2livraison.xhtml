@@ -37,8 +37,9 @@
 
 											<div class="box-footer text-center">
 
-												<input type="radio" name="delivery" value=""
-													checked="checked" />
+												<h:selectOneRadio value="delivery">
+   			<f:selectItem itemValue="Red" itemLabel="" />
+   		</h:selectOneRadio>
 											</div>
 										</div>
 									</div>
@@ -53,7 +54,10 @@
 
 											<div class="box-footer text-center">
 
-												<input type="radio" name="delivery" value="delivery2" />
+												<h:selectOneRadio value="delivery2">
+   			<f:selectItem itemValue="France" itemLabel="" />
+   		</h:selectOneRadio>
+												<f:ajax event="click"   render="@all" listener="#{mBeanCartManagement.callDelivery}"/>
 											</div>
 										</div>
 									</div>

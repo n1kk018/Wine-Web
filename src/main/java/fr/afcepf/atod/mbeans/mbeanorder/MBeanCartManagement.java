@@ -5,9 +5,36 @@
  */
 package fr.afcepf.atod.mbeans.mbeanorder;
 
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.ejb.LocalBean;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.xml.ws.BindingProvider;
+
+import org.apache.log4j.Logger;
+
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryQuantity;
+import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.Orchestrateur;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OrchestrateurPortType;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OrchestrateurRequest;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OrchestrateurResponse;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
+import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -20,16 +47,6 @@ import fr.afcepf.atod.wine.entity.OrderDetail;
 import fr.afcepf.atod.wine.entity.PaymentInfo;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ShippingMethod;
-import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import org.apache.log4j.Logger;
 
 @SessionScoped
 @ManagedBean(name = "mBeanCartManagement")
@@ -55,18 +72,15 @@ public class MBeanCartManagement implements Serializable {
 	private boolean validOrder;
 	private Customer customer = new Customer();
 	@ManagedProperty(value="#{mBeanMail}")
-	private MBeanMail mBeanMail;
-	
-	DecimalFormat df = new DecimalFormat ( ) ;
-	
+	private MBeanMail mBeanMail;	
 
 	public MBeanCartManagement() {
 		super();
 		errorAddProduct = "";
 		validOrder = false;
 	}
-
-	/**
+    
+    /**
 	 *
 	 * @param product
 	 * @return
@@ -221,10 +235,10 @@ public class MBeanCartManagement implements Serializable {
 	 */
 	public double caclulShippingFree() {
 		double shipping = 0.0;
-		//        if (calculerNumTotalQantity() != 0.0 & order.getShippingMethod().getId()==1) 
-		if (calculerNumTotalQantity() != 0.0) {
-			shipping = calculerNumTotalQantity() * 1.5;
+		if (calculerNumTotalQantity() != 0.0 & order.getShippingMethod().getId()==1) {
+		    return 1.5;
 		}
+		
 		return (double)Math.round(shipping*100d)/100d;
 	}
 
@@ -311,12 +325,12 @@ public class MBeanCartManagement implements Serializable {
 		if (mBeanConnexion.getUserConnected().getId() != null && order.getCreatedAt()!=null 
 				&& order.getShippingMethod()!=null && order.getOrdersDetail().size()!=0) {        	
 			try {
-				order.setPaidAt(new Date());
+			    order.setPaidAt(new Date());
 				order.setPaymentInfo(new PaymentInfo(1, "visa"));
 				buOrder.addNewOrder(order);
 				validOrder = true;
 				getLastOrder(customer);				
-				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
+				page = null;/*"/pages/checkout4confirmation.jsf?faces-redirect=true";*/
 			} catch (WineException e) {
 				e.printStackTrace();
 			}
@@ -430,5 +444,17 @@ public class MBeanCartManagement implements Serializable {
 	}
 	
 	
-
+	/*
+	 OrchestrateurPortType proxy = new Orchestrateur().getOrchestrateurPort();
+                BindingProvider bp = (BindingProvider)proxy;
+                bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.102.100:9090/ode/processes/orchestrateur");
+                OrchestrateurRequest request = new OrchestrateurRequest();
+                request.setCodePaysFacturation(codeCountry);
+                request.setCodePaysLivraison(country);
+                request.setCurrency("USD");
+                request.setMontantHT(calculSubTotal());
+                request.setQuantite(new BigInteger(tQ.toString()));
+                
+                OrchestrateurResponse response = proxy.process(request);
+	 */
 }
