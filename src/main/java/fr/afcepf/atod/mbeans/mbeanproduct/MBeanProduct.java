@@ -15,9 +15,9 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
 import fr.afcepf.atod.wine.entity.ProductVintage;
 import fr.afcepf.atod.wine.entity.ProductWine;
-import fr.afcepf.atod.onwine.ws.soap.CurrenciesWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.CurrencyConverterService;
-import fr.afcepf.atod.onwine.ws.soap.ICurrencyConverter;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrenciesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrencyConverterService;
+import fr.afcepf.atod.onwine.ws.soap.currency.ICurrencyConverter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.LocalBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -49,7 +50,7 @@ public class MBeanProduct implements Serializable {
 	
 	private static final long serialVersionUID = -8118205383226441401L;
 	private Logger log = Logger.getLogger(MBeanConnexion.class);
-
+	 
 	@ManagedProperty(value = "#{buProduct}")
 	private IBuProduct buProduct;	
     private ProductAccessories accessory;
@@ -91,6 +92,8 @@ public class MBeanProduct implements Serializable {
         pageRange = 5;
         log.info("========================MBeanProduct=======================");
     }
+    
+    
     
 	@PostConstruct
 	public void initIndex() {

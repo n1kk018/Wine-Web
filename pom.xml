@@ -128,15 +128,11 @@
                 <configuration>
                     <!-- using wsdl from an url -->
                     <wsdlUrls>
+                       
                         <wsdlUrl>
-                            http://localhost:8080/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
+                            http://192.168.102.95:8080/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl
                         </wsdlUrl>
-                        <wsdlUrl>
-                            http://localhost:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl
-                        </wsdlUrl>
-                        <wsdlUrl>
-                            http://localhost:8280/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl
-                        </wsdlUrl>
+                        
                     </wsdlUrls>
                     <!-- or using wsdls file directory -->
                     <!-- <wsdlDirectory>src/wsdl</wsdlDirectory> -->
@@ -147,7 +143,7 @@
                     <!-- Keep generated files -->
                     <keep>true</keep>
                     <!-- Package name -->
-                    <packageName>fr.afcepf.atod.onwine.ws.soap</packageName>
+                    <packageName>fr.afcepf.atod.onwine.ws.soap.delivery</packageName>
                     <!-- generated source files destination -->
                     <sourceDestDir>target/generatedclasses</sourceDestDir>
                 </configuration>
