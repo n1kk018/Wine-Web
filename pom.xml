@@ -130,7 +130,8 @@
                     <wsdlUrls>
                        
                         <wsdlUrl>
-                            http://192.168.102.95:8080/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl
+                            <!-- http://localhost:8090/ode/processes/OnWineServices?wsdl -->
+                            http://localhost:8080/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
                         </wsdlUrl>
                         
                     </wsdlUrls>
@@ -143,7 +144,10 @@
                     <!-- Keep generated files -->
                     <keep>true</keep>
                     <!-- Package name -->
-                    <packageName>fr.afcepf.atod.onwine.ws.soap.delivery</packageName>
+                    <packageName>
+                    <!-- fr.afcepf.atod.onwine.ws.soap.orchestre-->
+                    fr.afcepf.atod.onwine.ws.soap.currency
+                     </packageName>
                     <!-- generated source files destination -->
                     <sourceDestDir>target/generatedclasses</sourceDestDir>
                 </configuration>

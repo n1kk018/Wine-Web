@@ -24,17 +24,10 @@ import org.apache.log4j.Logger;
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
-import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
-import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryQuantity;
-import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.Orchestrateur;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OrchestrateurPortType;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OrchestrateurRequest;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OrchestrateurResponse;
-import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
-import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
-import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServices;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesPortType;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesRequest;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesResponse;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -235,7 +228,7 @@ public class MBeanCartManagement implements Serializable {
 	 */
 	public double caclulShippingFree() {
 		double shipping = 0.0;
-		if (calculerNumTotalQantity() != 0.0 & order.getShippingMethod().getId()==1) {
+		if (calculerNumTotalQantity() != 0.0 /*& order.getShippingMethod().getId()==1*/) {
 		    return 1.5;
 		}
 		
@@ -444,17 +437,17 @@ public class MBeanCartManagement implements Serializable {
 	}
 	
 	
-	/*
-	 OrchestrateurPortType proxy = new Orchestrateur().getOrchestrateurPort();
+	
+	 /*OnWineServicesPortType proxy = new OnWineServices().getOnWineServicesPort();
                 BindingProvider bp = (BindingProvider)proxy;
-                bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.102.100:9090/ode/processes/orchestrateur");
-                OrchestrateurRequest request = new OrchestrateurRequest();
+                bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8090/ode/processes/OnWineServices");
+                OnWineServicesRequest request = new OnWineServicesRequest();
                 request.setCodePaysFacturation(codeCountry);
                 request.setCodePaysLivraison(country);
                 request.setCurrency("USD");
                 request.setMontantHT(calculSubTotal());
-                request.setQuantite(new BigInteger(tQ.toString()));
+                request.setQuantity(new BigInteger(tQ.toString()));
                 
-                OrchestrateurResponse response = proxy.process(request);
-	 */
+                OnWineServicesResponse response = proxy.process(request);*/
+	 
 }

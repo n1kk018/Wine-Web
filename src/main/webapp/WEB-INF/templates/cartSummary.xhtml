@@ -23,16 +23,16 @@
 					<tr>
 						<td>#{lang['frais_de_transport']}</td>
 						<th style="text-align: right;"><h:outputText id="shipping" class="itemPrice"
-								value="#{mBeanCartManagement.deliveryFee}">
+								value="#{mBeanCartManagement.caclulShippingFree()}">
 								<f:convertNumber minFractionDigits="2" />
 							</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></th>
 					</tr>
 					<tr>
 						<td>#{lang['tax']}</td>
-						<th style="text-align: right;"><h:outputText id="taxes" class="itemPrice"
-								value="#{mBeanCartManagement.taxes}">
+						<th style="text-align: right;">0.00€<!-- <h:outputText id="taxes" class="itemPrice"
+								value="">
 								<f:convertNumber pattern=" #0.00" />
-							</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></th>
+							</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span>--></th>
 					</tr>
 					<tr class="total">
 						<td>#{lang['total']}</td>

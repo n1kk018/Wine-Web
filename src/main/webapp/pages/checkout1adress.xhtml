@@ -206,7 +206,7 @@
 											<div class="form-group">
 												<label for="number">#{lang['numero']} </label>
 												<h:inputText
-													value="1"
+													value=""
 													class="form-control" id="number" />
 											</div>
 										</div>
@@ -214,7 +214,7 @@
 											<div class="form-group">
 												<label for="street">#{lang['rue']}</label>
 												<h:inputText
-													value="a"
+													value=""
 													class="form-control" id="street" />
 											</div>
 										</div>
@@ -227,7 +227,7 @@
 											<div class="form-group">
 												<label for="Code postal">#{lang['cp']}</label>
 												<h:inputText
-													value="1"
+													value=""
 													class="form-control" />
 											</div>
 										</div>
@@ -235,7 +235,7 @@
 											<div class="form-group">
 												<label for="city">#{lang['ville']}</label>
 												<h:inputText
-													value="a"
+													value=""
 													class="form-control" id="city" />
 											</div>
 										</div>
@@ -243,9 +243,7 @@
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="country">#{lang['pays']}</label>
-												<h:inputText value="#{mBeanCartManagement.country}" class="form-control" id="country" >
-												
-												<f:ajax event="dblclick"   render="@all" listener="#{mBeanCartManagement.initCountry}"/>
+												<h:inputText value="" class="form-control" id="country" >
 												</h:inputText>
 											</div>
 										</div>
