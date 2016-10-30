@@ -5,6 +5,7 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/common.xhtml">
+	<ui:param name="page" value="payment" />
 	<ui:define name="breadcrumb">
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
@@ -20,22 +21,12 @@
 						<li>#{lang['mode_de_paiement']}</li>
 					</ul>
 				</div>
-
 				<div class="col-md-9" id="checkout">
-
 					<div class="box">
 						<form jsf="h:form" id="Form">
 							<h1>#{lang['mode_de_livraison']}</h1>
-							<ul class="nav nav-pills nav-justified">
-								<li class="disabled"><a href=""><i
-										class="fa fa-map-marker"></i><br />#{lang['adresse']}</a></li>
-								<li class="disabled"><a href=""><i class="fa fa-truck"></i><br />#{lang['mode_de_livraison']}</a></li>
-								<li class="active"><a href=""><i class="fa fa-money"></i><br />#{lang['mode_de_paiement']}</a></li>
-								<li class="disabled"><a href=""><i class="fa fa-eye"></i><br />#{lang['confirmation']}</a></li>
-							</ul>
-
+							<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
 							<div class="content">
-
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="box payment-method">

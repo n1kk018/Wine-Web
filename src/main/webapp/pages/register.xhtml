@@ -32,6 +32,7 @@
 					<p class="lead">#{lang['message_demande_compte']}</p>
 					<p class="text-muted">#{lang['message_demande_connexion']}</p>
 					<hr />
+					<p style="color:red">#{mBeanConnexion.errors.values()}</p>
 					<form jsf:id="form2">
 						<div class="form-group">
 							<label for="email">#{lang['email']}</label>

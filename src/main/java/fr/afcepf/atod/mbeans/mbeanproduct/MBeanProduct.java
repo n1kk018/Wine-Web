@@ -7,8 +7,11 @@ package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
+import fr.afcepf.atod.util.SingletonSessionOrderTemp;
+import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
+import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.Product;
 import fr.afcepf.atod.wine.entity.ProductAccessories;
 import fr.afcepf.atod.wine.entity.ProductType;
@@ -143,46 +146,54 @@ public class MBeanProduct implements Serializable {
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         String currency = (String) sessionMap.get("currency");
 	    log.info(currency);
-        
-	        if (promotedWinesList != null ) {
-	            prepareConversionField(promotedWinesList);
-	            for (Product product : promotedWinesList) {
-	                if(currency!=null) {
-	                    convertCurrencyInObj(product,currency);
-	                }
-                } 
-	        }
-	        if(expensiveProducts != null) {
-	            prepareConversionField(expensiveProducts);
-	            if(currency!=null) {
-    	            for (Product product : expensiveProducts) {
-    	                convertCurrencyInObj(product,currency);
-                    }
-	            }
-	        }
-	        if(threeSimilarProductsList != null) {
-	            prepareConversionField(threeSimilarProductsList);
-	            if(currency!=null) {
-    	            for (Product product : threeSimilarProductsList) {
-                        convertCurrencyInObj(product,currency);
-                    }
-	            }
-	        }
-	        if(winesList != null) {
-	            prepareConversionField(winesList);
+	    Order basket = SingletonSessionOrderTemp.getInstance().getOrder();
+	    if(basket!=null) {
+	        List<Product> basketProducts = UtilConverter.retrieveListAsSet(basket.getOrdersDetail());
+	        prepareConversionField(basketProducts);
+            for (Product product : basketProducts) {
                 if(currency!=null) {
-                    for (Product product : winesList) {
-                        convertCurrencyInObj(product,currency);
-                    }
+                    convertCurrencyInObj(product,currency);
                 }
-	        }
-	        if(currentProd != null) {
-	            currentProd.setConvertedPrice(currentProd.getPrice());
-	            if(currency!=null) {
-	                convertCurrencyInObj(currentProd,currency);
-	            }
-	        }
-
+            } 
+	    }
+        if (promotedWinesList != null ) {
+            prepareConversionField(promotedWinesList);
+            for (Product product : promotedWinesList) {
+                if(currency!=null) {
+                    convertCurrencyInObj(product,currency);
+                }
+            } 
+        }
+        if(expensiveProducts != null) {
+            prepareConversionField(expensiveProducts);
+            if(currency!=null) {
+	            for (Product product : expensiveProducts) {
+	                convertCurrencyInObj(product,currency);
+                }
+            }
+        }
+        if(threeSimilarProductsList != null) {
+            prepareConversionField(threeSimilarProductsList);
+            if(currency!=null) {
+	            for (Product product : threeSimilarProductsList) {
+                    convertCurrencyInObj(product,currency);
+                }
+            }
+        }
+        if(winesList != null) {
+            prepareConversionField(winesList);
+            if(currency!=null) {
+                for (Product product : winesList) {
+                    convertCurrencyInObj(product,currency);
+                }
+            }
+        }
+        if(currentProd != null) {
+            currentProd.setConvertedPrice(currentProd.getPrice());
+            if(currency!=null) {
+                convertCurrencyInObj(currentProd,currency);
+            }
+        }
 	}
 	
 	private void convertCurrencyInObj(Product prod, String currency) {

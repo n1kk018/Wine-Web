@@ -5,6 +5,7 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/common.xhtml">
+	<ui:param name="page" value="confirm" />
 	<ui:define name="breadcrumb">
     	<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
@@ -18,12 +19,7 @@
 					<div class="box">
 						<h:form>
 							<h1>#{lang['confirmation']}</h1>
-							<ul class="nav nav-pills nav-justified">
-								<li class="disabled"><a><i class="fa fa-map-marker"></i><br />#{lang['adresse']}</a></li>
-								<li class="disabled"><a><i class="fa fa-truck"></i><br />#{lang['mode_de_livraison']}</a></li>
-								<li class="disabled"><a><i class="fa fa-money"></i><br />#{lang['mode_de_paiement']}</a></li>
-								<li class="active"><a><i class="fa fa-eye"></i><br />#{lang['confirmation']}</a></li>
-							</ul>
+							<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
 							<p>#{lang['message_de_confirmation']}</p>
 							<h3>
 								#{lang['numero_de_commande']} : CMD
