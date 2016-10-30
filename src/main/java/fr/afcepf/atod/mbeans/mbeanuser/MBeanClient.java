@@ -2,7 +2,10 @@ package fr.afcepf.atod.mbeans.mbeanuser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -17,10 +20,8 @@ import javax.faces.model.SelectItem;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
-import fr.afcepf.atod.business.product.api.IBuCity;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Adress;
-import fr.afcepf.atod.wine.entity.City;
 import fr.afcepf.atod.wine.entity.Civility;
 import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.User;
@@ -34,33 +35,25 @@ public class MBeanClient implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{buCity}")
-	private IBuCity buCity;
 	@ManagedProperty(value = "#{buCustomer}")
 	private IBuCustomer buCustomer;
 	@ManagedProperty(value = "#{buAdress}")
 	private IBuAdress buAdress;
 
 	private Adress adress;
-//	private Customer customer;
 	private User user;
 	private Civility[] civilities;
-	private List<City> maListe;
-	private List<SelectItem> cities;
-	private List<City> villeListe;
 
 	@PostConstruct
 	public void initInscription() {
-//		customer = new Customer();
 		user = new User();
 		adress = new Adress();
-//		adress.setCity(cities.get(index));
-		user.setAdress(adress);
+		user.addAdress(adress);
 	}
 
 	public void addCustomer() {
 		try {
-			buAdress.addNewAdress(adress);
+			buAdress.addNewAdress(new Adress());
 			buCustomer.addNewCustomer((Customer) user);
 		} catch (WineException e) {
 			// TODO Auto-generated catch block
@@ -132,17 +125,6 @@ public class MBeanClient implements Serializable {
 
 	// ----------- Getters && Setters ----------------//
 
-	public IBuCity getBuCity() {
-		return buCity;
-	}
-
-	public Adress getAdress() {
-		return adress;
-	}
-
-	public void setAdress(Adress adress) {
-		this.adress = adress;
-	}
 
 	public IBuAdress getBuAdress() {
 		return buAdress;
@@ -158,10 +140,6 @@ public class MBeanClient implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void setBuCity(IBuCity buCity) {
-		this.buCity = buCity;
 	}
 
 	public IBuCustomer getBuCustomer() {
@@ -186,42 +164,5 @@ public class MBeanClient implements Serializable {
 
 	public void setCivilities(Civility[] civilities) {
 		this.civilities = civilities;
-	}
-
-	public List<City> getMaListe() {
-		return maListe;
-	}
-
-	public void setMaListe(List<City> maListe) {
-		this.maListe = maListe;
-	}
-
-	public List<City> getVilleListe() {
-		return villeListe;
-	}
-
-	public void setVilleListe(List<City> villeListe) {
-		this.villeListe = villeListe;
-	}
-
-	public List<SelectItem> getCities() {
-		if (cities == null) {
-			cities = new ArrayList<SelectItem>();
-			try {
-				List<City> listVille = buCity.findAllCities();
-				for (City obj : buCity.findAllCities()) {
-					cities.add(new SelectItem(obj.getId(), obj.getName()));
-					System.out.println("ff");
-				}
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return cities;
-	}
-
-	public void setCities(List<SelectItem> cities) {
-		this.cities = cities;
 	}
 }

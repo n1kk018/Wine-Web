@@ -286,7 +286,7 @@ public class MBeanCartManagement implements Serializable {
 	 * */
 	public String validerAdresse(){
 		String page = null;
-		if(order.getCustomer().getAdress()!= null 
+		if(order.getCustomer().getAdresses()!= null 
 				&& order.getOrdersDetail().size()!=0){
 			//order.getCustomer().setAdress(adress);
 			page ="/pages/checkout2livraison.jsf?faces-redirect=true";
