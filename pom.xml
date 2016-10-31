@@ -131,12 +131,12 @@
                         <wsdlUrl>
                             http://localhost:8080/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
                         </wsdlUrl>
-                        <wsdlUrl>
-                            http://localhost:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl
-                        </wsdlUrl>
-                        <wsdlUrl>
-                            http://localhost:8280/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl
-                        </wsdlUrl>
+<!--                         <wsdlUrl> -->
+<!--                             http://localhost:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl -->
+<!--                         </wsdlUrl> -->
+<!--                         <wsdlUrl> -->
+<!--                             http://localhost:8280/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl -->
+<!--                         </wsdlUrl> -->
                     </wsdlUrls>
                     <!-- or using wsdls file directory -->
                     <!-- <wsdlDirectory>src/wsdl</wsdlDirectory> -->

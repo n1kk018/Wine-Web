@@ -3,127 +3,176 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/common.xhtml">
 	<ui:define name="body">
-			<div class="container">
-				<div class="col-md-6">
-					<div class="box">
+		<div class="container">
+			<h:form>
+				<div class="col-md-4" >
+					<div class="box" id="newAccountZozo">
 						<div class="text-center">
 							<p class="lead">#{lang['identification']}</p>
 						</div>
 						<hr />
 
-						<h:form>
-							<div class="form-group">
-								<label>#{lang['civilite']}</label>
-								<div class="btn-group">
-									<h:selectOneMenu class="form-control"
-										value="#{mBeanClient.user.civility}" required="true">
-										<f:selectItems value="#{mBeanClient.civilities}" />
-									</h:selectOneMenu>
-								</div>
-							</div>
-							<div class="form-group">
-								<label>#{lang['nom']} *</label>
-								<h:inputText class="form-control"
-									value="#{mBeanClient.user.lastname}" required="true" />
-							</div>
-							<div class="form-group">
-								<label>#{lang['prenom']} *</label>
-								<h:inputText value="#{mBeanClient.user.firstname}"
-									class="form-control" required="true" />
-							</div>
-							<div class="form-group">
-								<label>#{lang['date_de_naissance']}</label>
-								<h:inputText value="#{mBeanClient.user.birthdate}"
-									class="form-control" required="true" />
-							</div>
 
-							<f:event listener="#{mBeanClient.validateMail}"
-								type="postValidate" />
-							<div class="form-group">
-								<label for="mail1">#{lang['email']} *</label>
-								<h:inputSecret id="mail1" value="#{mBeanClient.user.mail}"
-									required="true" requiredMessage="#{lang['enter_mail']}"
-									class="form-control" />
-								<h:message for="mail1" style="color: red;" />
-							</div>
+						<div class="form-group">
+							<label>#{lang['civilite']} *</label>
+							<h:selectOneMenu class="form-control"
+								value="#{mBeanClient.customer.civility}" required="true">
+								<f:selectItems value="#{mBeanClient.civilities}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="form-group">
+							<label>#{lang['nom']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.lastname}" required="true" />
+						</div>
+						<div class="form-group">
+							<label>#{lang['prenom']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.firstname}" required="true" />
+						</div>
+						<div class="form-group ">
+							<label>#{lang['date_de_naissance']} *</label>
+							<!-- 							<h:inputText class="form-control" -->
+							<!-- 								value="#{mBeanClient.customer.birthdate}" required="true"> -->
+							<!-- 								<f:convertDateTime timeZone="Europe/Paris" pattern="dd/MM/yyyy" /> -->
+							<!-- 							</h:inputText> -->
 
-							<div class="form-group">
-								<label for="confirmedMail">#{lang['confirmer_email']} *</label>
-								<h:inputSecret id="confirmedMail" required="true"
-									requiredMessage="#{lang['reenter_mail']}"
-									class="form-control" />
-								<h:message for="confirmedMail" style="color: red;" />
+							<!-- 							<div class='input-group date' id='datetimepicker1'> -->
+							<!-- 								<input type='text' class="form-control" -->
+							<!-- 									value="#{mBeanClient.customer.birthdate}" /> <span -->
+							<!-- 									class="input-group-addon"> <span -->
+							<!-- 									class="glyphicon glyphicon-calendar"></span> -->
+							<!-- 								</span> -->
+							<!-- 							</div> -->
+							<div class="input-append date" id="datetimepicker1"
+								data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+								<input class="form-control" type="text"
+									value="#{mBeanClient.customer.birthdate}" /> <span
+									class="add-on"><i class="icon-th"></i></span>
 							</div>
-
-							<f:event listener="#{mBeanClient.validatePassword}"
-								type="postValidate" />
-							<div class="form-group">
-								<label for="pwd">#{lang['mot_de_passe']} *</label>
-								<h:inputSecret id="pwd" value="#{mBeanClient.user.password}"
-									required="true" requiredMessage="#{lang['enter_mdp']}"
-									class="form-control" />
-								<h:message for="pwd" style="color: red;" />
-							</div>
-							<div class="form-group">
-								<label for="confirmedPwd">#{lang['confirmer_mot_de_passe']} *</label>
-								<h:inputSecret id="confirmedPwd" required="true"
-									requiredMessage="#{lang['reenter_mdp']}"
-									class="form-control" />
-								<h:message for="confirmedPwd" style="color: red;" />
-							</div>
-						</h:form>
+						</div>
+						<p class="text-muted">#{lang['message_contact_tel']}</p>
+						<div class="form-group">
+							<label>#{lang['numero_de_telephone']} *</label>
+							<h:inputText value="#{mBeanClient.customer.phonenumber}"
+								class="form-control" required="true" />
+						</div>
 					</div>
 				</div>
 				<!-- 				fin col-6 -->
-				<div class="col-md-6">
-					<div class="box">
+				<div class="col-md-4" >
+					<div class="box" id="newAccountZozo">
 						<div class="text-center">
 							<p class="lead">#{lang['coordonnee']}</p>
 						</div>
 						<hr />
-							<h:form>
-								<div class="form-group">
-									<label>#{lang['numero']} *</label>
-									<h:inputText class="form-control"
-										value="#{mBeanClient.adress.number}" required="true" />
-								</div>
-								<div class="form-group">
-									<label>#{lang['rue']} *</label>
-									<h:inputText class="form-control"
-										value="#{mBeanClient.adress.street}" required="true" />
-								</div>
-								<div class="form-group">
-									<label>#{lang['complement_adresse']}</label>
-									<h:inputText class="form-control" required="false" />
-								</div>
-								<div class="form-group">
-									<label>#{lang['ville']} * </label>
-									<div class="btn-group">
-										<h:selectOneMenu class="form-control"
-											value="#{mBeanClient.user.adress.id}">
-											<f:selectItems value="#{mBeanClient.cities}" />
-										</h:selectOneMenu>
-									</div>
-								</div>
-								<p class="text-muted">#{lang['message_contact_tel']}</p>
-								<div class="form-group">
-									<label>#{lang['numero_de_telephone']} *</label>
-									<h:inputText value="#{mBeanClient.user.phonenumber}"
-										class="form-control" required="true" />
-								</div>
+						<div class="form-group">
+							<label>#{lang['numero']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.adress.number}" required="true" />
+						</div>
+						<div class="form-group">
+							<label>#{lang['rue']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.adress.street}" required="true" />
+						</div>
+						<!-- 						<div class="form-group"> -->
+						<!-- 							<label>#{lang['complement_adresse']}</label> -->
+						<!-- 							<h:inputText class="form-control" required="false" /> -->
+						<!-- 						</div> -->
+						<div class="form-group">
+							<label>#{lang['ville']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.adress.city.name}" required="true" />
+						</div>
+						<div class="form-group">
+							<label>#{lang['cp']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.adress.city.zipcode}"
+								required="true" />
+						</div>
+						<div class="form-group">
+							<label>#{lang['etat']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.adress.city.region.name}"
+								required="true" />
+						</div>
+						<div class="form-group">
+							<label>#{lang['pays']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.adress.city.region.country.name}"
+								required="true" />
+							<!-- 							<h:selectOneMenu class="form-control" var="country" -->
+<!-- 								value="#{mBeanClient.customer.adress.city.region.country.id}" -->
+<!-- 								required="true"> -->
+<!-- 								value="#{mBeanClient.customer.adress.city.region.country.name}" required="true"> -->
 
-								<div class="text-center">
-									<h:commandButton action="#{mBeanClient.addCustomer()}"
-										value="#{lang['creation_compte_1']}" class="btn btn-primary"></h:commandButton>
-								</div>
-							</h:form>
+<!-- 								<f:selectItems value="#{mBeanClient.mesCountry}" var="country" -->
+<!-- 									itemValue="#{country.id}" itemLabel="#{country.name}" /> -->
+<!-- 							</h:selectOneMenu> -->
+
+						</div>
 					</div>
 				</div>
-				<!-- 				fin col-6 -->
-			</div>
-			<!-- /.container -->
+				<div class="col-md-4" >
+					<div class="box" id="newAccountZozo">
+						<div class="text-center">
+							<p class="lead">#{lang['connect']}</p>
+						</div>
+						<hr />
+						<f:event listener="#{mBeanClient.validateMail}"
+							type="postValidate" />
+						<div class="form-group">
+							<label for="mail1">#{lang['email']} *</label>
+							<h:inputText id="mail1" value="#{mBeanClient.customer.mail}"
+								required="true" requiredMessage="#{lang['enter_mail']}"
+								class="form-control" />
+							<h:message for="mail1" style="color: red;" />
+						</div>
+
+						<div class="form-group">
+							<label for="confirmedMail">#{lang['confirmer_email']} *</label>
+							<h:inputText id="confirmedMail" required="true"
+								requiredMessage="#{lang['reenter_mail']}" class="form-control" />
+							<h:message for="confirmedMail" style="color: red;" />
+						</div>
+
+						<f:event listener="#{mBeanClient.validatePassword}"
+							type="postValidate" />
+						<div class="form-group">
+							<label for="pwd">#{lang['mot_de_passe']} *</label>
+							<h:inputSecret id="pwd" value="#{mBeanClient.customer.password}"
+								required="true" requiredMessage="#{lang['enter_mdp']}"
+								class="form-control"
+								a:placeholder="#{lang['8car']}" />
+							<h:message for="pwd" style="color: red;" />
+						</div>
+						<div class="form-group">
+							<label for="confirmedPwd">#{lang['confirmer_mot_de_passe']}
+								*</label>
+							<h:inputSecret id="confirmedPwd" required="true"
+								requiredMessage="#{lang['reenter_mdp']}" class="form-control" />
+							<h:message for="confirmedPwd" style="color: red;" />
+						</div>
+						<div class="form-group">
+							<label>#{lang['login']} *</label>
+							<h:inputText class="form-control"
+								value="#{mBeanClient.customer.login}" required="true" />
+						</div>
+						<div class="text-center">
+							<h:commandButton action="#{mBeanClient.addCustomer()}"
+								value="#{lang['creation_compte_1']}" class="btn btn-primary"></h:commandButton>
+						</div>
+						<br /> <a class="text-muted">* #{lang['oblig']}</a>
+					</div>
+				</div>
+			</h:form>
+		</div>
+		<!-- /.container -->
 
 	</ui:define>
 </ui:composition>

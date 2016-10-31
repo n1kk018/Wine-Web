@@ -1,8 +1,7 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,57 +12,64 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-import javax.faces.model.SelectItem;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
 import fr.afcepf.atod.business.product.api.IBuCity;
+import fr.afcepf.atod.business.product.api.IBuCountry;
+import fr.afcepf.atod.business.product.api.IBuRegion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Adress;
 import fr.afcepf.atod.wine.entity.City;
 import fr.afcepf.atod.wine.entity.Civility;
+import fr.afcepf.atod.wine.entity.Country;
 import fr.afcepf.atod.wine.entity.Customer;
+import fr.afcepf.atod.wine.entity.Region;
 import fr.afcepf.atod.wine.entity.User;
 
 @ManagedBean(name = "mBeanClient")
 @SessionScoped
 public class MBeanClient implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{buCity}")
-	private IBuCity buCity;
-	@ManagedProperty(value = "#{buCustomer}")
+    @ManagedProperty(value = "#{buCustomer}")
 	private IBuCustomer buCustomer;
-	@ManagedProperty(value = "#{buAdress}")
-	private IBuAdress buAdress;
+    @ManagedProperty(value = "#{buAdress}")
+    private IBuAdress buAdress;
+    @ManagedProperty(value = "#{buCity}")
+    private IBuCity buCity;
+    @ManagedProperty(value = "#{buRegion}")
+    private IBuRegion buRegion;
+    @ManagedProperty(value = "#{buCountry}")
+    private IBuCountry buCountry;
 
 	private Adress adress;
-//	private Customer customer;
+	private Customer customer;
 	private User user;
-	private Civility[] civilities;
-	private List<City> maListe;
-	private List<SelectItem> cities;
-	private List<City> villeListe;
-
-	@PostConstruct
+	@SuppressWarnings("unused")
+    private Civility[] civilities;
+	private City city;
+	private Region region;
+	private Country country;
+	
+	
+    @PostConstruct
 	public void initInscription() {
-//		customer = new Customer();
-		user = new User();
+		customer = new Customer();
 		adress = new Adress();
-//		adress.setCity(cities.get(index));
-		user.setAdress(adress);
+		city =new City();
+		region = new Region();
+		country = new Country();
 	}
 
 	public void addCustomer() {
 		try {
-			buAdress.addNewAdress(adress);
-			buCustomer.addNewCustomer((Customer) user);
+			customer.setActivated(true);
+			customer.setCreatedAt(new Date());
+			customer.setUpdatedAt(new Date());
+			customer = buCustomer.addNewCustomer(customer);
 		} catch (WineException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -132,24 +138,67 @@ public class MBeanClient implements Serializable {
 
 	// ----------- Getters && Setters ----------------//
 
-	public IBuCity getBuCity() {
-		return buCity;
-	}
+    public IBuAdress getBuAdress() {
+        return buAdress;
+    }
 
+    public void setBuAdress(IBuAdress buAdress) {
+        this.buAdress = buAdress;
+    }
+
+    public IBuCity getBuCity() {
+        return buCity;
+    }
+
+    public void setBuCity(IBuCity buCity) {
+        this.buCity = buCity;
+    }
+
+    public IBuRegion getBuRegion() {
+        return buRegion;
+    }
+
+    public void setBuRegion(IBuRegion buRegion) {
+        this.buRegion = buRegion;
+    }
+
+    public IBuCountry getBuCountry() {
+        return buCountry;
+    }
+
+    public void setBuCountry(IBuCountry buCountry) {
+        this.buCountry = buCountry;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 	public Adress getAdress() {
 		return adress;
 	}
 
 	public void setAdress(Adress adress) {
 		this.adress = adress;
-	}
-
-	public IBuAdress getBuAdress() {
-		return buAdress;
-	}
-
-	public void setBuAdress(IBuAdress buAdress) {
-		this.buAdress = buAdress;
 	}
 
 	public User getUser() {
@@ -160,10 +209,6 @@ public class MBeanClient implements Serializable {
 		this.user = user;
 	}
 
-	public void setBuCity(IBuCity buCity) {
-		this.buCity = buCity;
-	}
-
 	public IBuCustomer getBuCustomer() {
 		return buCustomer;
 	}
@@ -172,13 +217,13 @@ public class MBeanClient implements Serializable {
 		this.buCustomer = buCustomer;
 	}
 
-//	public User getCustomer() {
-//		return customer;
-//	}
-//
-//	public void setCustomer(Customer user) {
-//		this.customer = user;
-//	}
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	public Civility[] getCivilities() {
 		return Civility.values();
@@ -187,41 +232,6 @@ public class MBeanClient implements Serializable {
 	public void setCivilities(Civility[] civilities) {
 		this.civilities = civilities;
 	}
+	
 
-	public List<City> getMaListe() {
-		return maListe;
-	}
-
-	public void setMaListe(List<City> maListe) {
-		this.maListe = maListe;
-	}
-
-	public List<City> getVilleListe() {
-		return villeListe;
-	}
-
-	public void setVilleListe(List<City> villeListe) {
-		this.villeListe = villeListe;
-	}
-
-	public List<SelectItem> getCities() {
-		if (cities == null) {
-			cities = new ArrayList<SelectItem>();
-			try {
-				List<City> listVille = buCity.findAllCities();
-				for (City obj : buCity.findAllCities()) {
-					cities.add(new SelectItem(obj.getId(), obj.getName()));
-					System.out.println("ff");
-				}
-			} catch (WineException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return cities;
-	}
-
-	public void setCities(List<SelectItem> cities) {
-		this.cities = cities;
-	}
 }
