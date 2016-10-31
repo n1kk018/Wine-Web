@@ -206,7 +206,7 @@
 											<div class="form-group">
 												<label for="number">#{lang['numero']} </label>
 												<h:inputText
-													value="#{mBeanConnexion.userConnected.adress.number}"
+													value=""
 													class="form-control" id="number" />
 											</div>
 										</div>
@@ -214,7 +214,7 @@
 											<div class="form-group">
 												<label for="street">#{lang['rue']}</label>
 												<h:inputText
-													value="#{mBeanConnexion.userConnected.adress.street}"
+													value=""
 													class="form-control" id="street" />
 											</div>
 										</div>
@@ -227,7 +227,7 @@
 											<div class="form-group">
 												<label for="Code postal">#{lang['cp']}</label>
 												<h:inputText
-													value="#{mBeanConnexion.userConnected.adress.city.zipcode}"
+													value=""
 													class="form-control" />
 											</div>
 										</div>
@@ -235,7 +235,7 @@
 											<div class="form-group">
 												<label for="city">#{lang['ville']}</label>
 												<h:inputText
-													value="#{mBeanConnexion.userConnected.adress.city.name}"
+													value=""
 													class="form-control" id="city" />
 											</div>
 										</div>
@@ -243,7 +243,8 @@
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="country">#{lang['pays']}</label>
-												<h:inputText value="France" class="form-control" id="county" />
+												<h:inputText value="" class="form-control" id="country" >
+												</h:inputText>
 											</div>
 										</div>
 									</div>
@@ -257,8 +258,9 @@
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
-												<label for="email">#{lang['email']}</label> <input type="text"
+												<label for="email">#{lang['email']}</label> <input jsf:type="text"
 													class="form-control" id="email" />
+													
 											</div>
 										</div>
 									</div>
