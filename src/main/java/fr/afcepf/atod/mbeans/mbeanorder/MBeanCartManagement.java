@@ -24,10 +24,6 @@ import org.apache.log4j.Logger;
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServices;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesPortType;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesRequest;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesResponse;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -285,7 +281,7 @@ public class MBeanCartManagement implements Serializable {
 	 * */
 	public String validerAdresse(){
 		String page = null;
-		if(order.getCustomer().getAdress()!= null 
+		if(!order.getCustomer().getAdresses().isEmpty() 
 				&& order.getOrdersDetail().size()!=0){
 			//order.getCustomer().setAdress(adress);
 			page ="/pages/checkout2livraison.jsf?faces-redirect=true";
