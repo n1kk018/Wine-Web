@@ -115,7 +115,6 @@ public class MBeanCartManagement implements Serializable {
                 the constructor of a request scoped bean associated with the view). This is also known
                 as the POST-Redirect-GET pattern.With JSF 2.0, you can achieve this by simply adding
                 faces-redirect=true parameter to the bean action's outcome.
-
                 N.B:1)If you're still using old fashioned <navigation-case>s in faces-config.xml,
                 then the same effect can be achieved by adding <redirect/> to the case
                     2) In JSF 2.0+ you could instead use the flash scope for this or to just let
