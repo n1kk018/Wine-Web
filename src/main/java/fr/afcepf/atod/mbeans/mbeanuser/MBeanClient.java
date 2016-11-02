@@ -15,16 +15,11 @@ import javax.faces.event.ComponentSystemEvent;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
-import fr.afcepf.atod.business.product.api.IBuCity;
-import fr.afcepf.atod.business.product.api.IBuCountry;
-import fr.afcepf.atod.business.product.api.IBuRegion;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Adress;
-import fr.afcepf.atod.wine.entity.City;
 import fr.afcepf.atod.wine.entity.Civility;
 import fr.afcepf.atod.wine.entity.Country;
 import fr.afcepf.atod.wine.entity.Customer;
-import fr.afcepf.atod.wine.entity.Region;
 import fr.afcepf.atod.wine.entity.User;
 
 @ManagedBean(name = "mBeanClient")
@@ -37,20 +32,12 @@ public class MBeanClient implements Serializable {
 	private IBuCustomer buCustomer;
     @ManagedProperty(value = "#{buAdress}")
     private IBuAdress buAdress;
-    @ManagedProperty(value = "#{buCity}")
-    private IBuCity buCity;
-    @ManagedProperty(value = "#{buRegion}")
-    private IBuRegion buRegion;
-    @ManagedProperty(value = "#{buCountry}")
-    private IBuCountry buCountry;
 
 	private Adress adress;
 	private Customer customer;
 	private User user;
 	@SuppressWarnings("unused")
     private Civility[] civilities;
-	private City city;
-	private Region region;
 	private Country country;
 	
 	
@@ -58,8 +45,6 @@ public class MBeanClient implements Serializable {
 	public void initInscription() {
 		customer = new Customer();
 		adress = new Adress();
-		city =new City();
-		region = new Region();
 		country = new Country();
 	}
 
@@ -69,6 +54,8 @@ public class MBeanClient implements Serializable {
 			customer.setCreatedAt(new Date());
 			customer.setUpdatedAt(new Date());
 			customer = buCustomer.addNewCustomer(customer);
+			adress.setUser(customer);
+			adress = buAdress.addNewAdress(adress);
 		} catch (WineException e) {
 			e.printStackTrace();
 		}
@@ -144,46 +131,6 @@ public class MBeanClient implements Serializable {
 
     public void setBuAdress(IBuAdress buAdress) {
         this.buAdress = buAdress;
-    }
-
-    public IBuCity getBuCity() {
-        return buCity;
-    }
-
-    public void setBuCity(IBuCity buCity) {
-        this.buCity = buCity;
-    }
-
-    public IBuRegion getBuRegion() {
-        return buRegion;
-    }
-
-    public void setBuRegion(IBuRegion buRegion) {
-        this.buRegion = buRegion;
-    }
-
-    public IBuCountry getBuCountry() {
-        return buCountry;
-    }
-
-    public void setBuCountry(IBuCountry buCountry) {
-        this.buCountry = buCountry;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
     }
 
     public Country getCountry() {
