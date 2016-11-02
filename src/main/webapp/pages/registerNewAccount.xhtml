@@ -10,7 +10,7 @@
 		<div class="container">
 			<h:form>
 				<div class="col-md-4" >
-					<div class="box" id="newAccountZozo">
+					<div class="newAccount" id="newAccountZozo">
 						<div class="text-center">
 							<p class="lead">#{lang['identification']}</p>
 						</div>
@@ -50,9 +50,8 @@
 							<!-- 							</div> -->
 							<div class="input-append date" id="datetimepicker1"
 								data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-								<input class="form-control" type="text"
-									value="#{mBeanClient.customer.birthdate}" /> <span
-									class="add-on"><i class="icon-th"></i></span>
+								<h:inputText class="form-control" value="#{mBeanClient.customer.birthdate}" />
+								<span class="add-on"><i class="icon-th"></i></span>
 							</div>
 						</div>
 						<p class="text-muted">#{lang['message_contact_tel']}</p>
@@ -65,7 +64,7 @@
 				</div>
 				<!-- 				fin col-6 -->
 				<div class="col-md-4" >
-					<div class="box" id="newAccountZozo">
+					<div class="newAccount" id="newAccountZozo">
 						<div class="text-center">
 							<p class="lead">#{lang['coordonnee']}</p>
 						</div>
@@ -73,12 +72,12 @@
 						<div class="form-group">
 							<label>#{lang['numero']} *</label>
 							<h:inputText class="form-control"
-								value="#{mBeanClient.customer.adress.number}" required="true" />
+								value="#{mBeanClient.adress.number}" required="true" />
 						</div>
 						<div class="form-group">
 							<label>#{lang['rue']} *</label>
 							<h:inputText class="form-control"
-								value="#{mBeanClient.customer.adress.street}" required="true" />
+								value="#{mBeanClient.adress.street}" required="true" />
 						</div>
 						<!-- 						<div class="form-group"> -->
 						<!-- 							<label>#{lang['complement_adresse']}</label> -->
@@ -87,24 +86,18 @@
 						<div class="form-group">
 							<label>#{lang['ville']} *</label>
 							<h:inputText class="form-control"
-								value="#{mBeanClient.customer.adress.city.name}" required="true" />
+								value="#{mBeanClient.adress.city}" required="true" />
 						</div>
 						<div class="form-group">
 							<label>#{lang['cp']} *</label>
 							<h:inputText class="form-control"
-								value="#{mBeanClient.customer.adress.city.zipcode}"
-								required="true" />
-						</div>
-						<div class="form-group">
-							<label>#{lang['etat']} *</label>
-							<h:inputText class="form-control"
-								value="#{mBeanClient.customer.adress.city.region.name}"
+								value="#{mBeanClient.adress.zipcode}"
 								required="true" />
 						</div>
 						<div class="form-group">
 							<label>#{lang['pays']} *</label>
 							<h:inputText class="form-control"
-								value="#{mBeanClient.customer.adress.city.region.country.name}"
+								value="#{mBeanClient.adress.country.name}"
 								required="true" />
 							<!-- 							<h:selectOneMenu class="form-control" var="country" -->
 <!-- 								value="#{mBeanClient.customer.adress.city.region.country.id}" -->
@@ -119,7 +112,7 @@
 					</div>
 				</div>
 				<div class="col-md-4" >
-					<div class="box" id="newAccountZozo">
+					<div class="newAccount" id="newAccountZozo">
 						<div class="text-center">
 							<p class="lead">#{lang['connect']}</p>
 						</div>
@@ -128,7 +121,7 @@
 							type="postValidate" />
 						<div class="form-group">
 							<label for="mail1">#{lang['email']} *</label>
-							<h:inputText id="mail1" value="#{mBeanClient.customer.mail}"
+							<input type="text" id="mail1" value="#{mBeanClient.customer.mail}"
 								required="true" requiredMessage="#{lang['enter_mail']}"
 								class="form-control" />
 							<h:message for="mail1" style="color: red;" />
