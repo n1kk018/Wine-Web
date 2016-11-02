@@ -131,7 +131,7 @@
                        
                         <wsdlUrl>
                             <!-- http://localhost:8090/ode/processes/OnWineServices?wsdl -->
-                            http://localhost:8080/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
+                            http://localhost:8180/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
                         </wsdlUrl>
                         
                     </wsdlUrls>

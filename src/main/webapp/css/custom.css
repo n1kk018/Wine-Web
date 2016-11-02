@@ -39,3 +39,19 @@
 	height: 34px;
 	margin-right: 13px;
 }
+
+.box-header, #cartZozo {
+	text-align: center;
+}
+.newAccount, #newAccountZozo {
+	  background: #fff;
+  margin: 0 0 30px;
+  border: solid 1px #e6e6e6;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+	height:582px;
+}
