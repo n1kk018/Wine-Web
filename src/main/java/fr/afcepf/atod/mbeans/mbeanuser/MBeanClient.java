@@ -1,7 +1,8 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,41 +39,46 @@ public class MBeanClient implements Serializable {
     @ManagedProperty(value = "#{buCountry}")
     private IBuCountry buCountry;
     
-	private Adress adress;
-	private Customer customer;
+    private String sdate;
+    
+	private Adress adress = new Adress();
+	private Customer customer = new Customer();
 	private User user;
 	@SuppressWarnings("unused")
     private Civility[] civilities;
-	private Country country;
-	private List<Country> mesCountries = new ArrayList<>();
+	private Country country = new Country();
+	private List<Country> mesCountries ;
 
     @PostConstruct
     public void initInscription() {
-        customer = new Customer();
-        adress = new Adress();
-        country = new Country();
         try {
             mesCountries = buCountry.listAllCountries();
         } catch (WineException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public void addCustomer() {
-        try {
+    public void addCustomer(){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+            try {
+                Date date = sdf.parse(sdate);
+                customer.setBirthdate(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             adress.setCountry(country);
             adress.setUser(customer);
             customer.setActivated(true);
             customer.setCreatedAt(new Date());
             customer.setUpdatedAt(new Date());
-            System.out.println(customer.getCivility() + " " + customer.getFirstname() + " " + customer.getMail());
-            System.out.println(customer.getBirthdate() + " **************");
-            customer = buCustomer.addNewCustomer(customer);
+            try {
+                customer = buCustomer.addNewCustomer(customer);
+            } catch (WineException e) {
+                e.printStackTrace();
+            }
             adress = buAdress.addNewAdress(adress);
-        } catch (WineException e) {
-            e.printStackTrace();
-        }
+            adress.setBilling(true);
+            adress =buAdress.addNewAdress(adress);
     }
 
     public void validatePassword(ComponentSystemEvent event) {
@@ -82,8 +88,8 @@ public class MBeanClient implements Serializable {
         UIComponent components = event.getComponent();
 
         // get password
-        UIInput uiInputPassword = (UIInput) components.findComponent("password");
-        String password = uiInputPassword.getLocalValue() == null ? "" : uiInputPassword.getLocalValue().toString();
+        UIInput uiInputPassword = (UIInput) components.findComponent("passwordZOZO");
+        String passwordZOZO = uiInputPassword.getLocalValue() == null ? "" : uiInputPassword.getLocalValue().toString();
         String passwordId = uiInputPassword.getClientId();
 
         // get confirm password
@@ -92,11 +98,11 @@ public class MBeanClient implements Serializable {
                 : uiInputConfirmPassword.getLocalValue().toString();
 
         // Let required="true" do its job.
-        if (password.isEmpty() || confirmPassword.isEmpty()) {
+        if (passwordZOZO.isEmpty() || confirmPassword.isEmpty()) {
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
+        if (!passwordZOZO.equals(confirmPassword)) {
 
             FacesMessage msg = new FacesMessage("Password must match confirm password");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -106,37 +112,6 @@ public class MBeanClient implements Serializable {
         }
 
     }
-
-//	public void validateMail(ComponentSystemEvent event) {
-//
-//		FacesContext fc = FacesContext.getCurrentInstance();
-//
-//		UIComponent components = event.getComponent();
-//
-//		// get password
-//		UIInput uiInputPassword = (UIInput) components.findComponent("mail1");
-//		String mail1 = uiInputPassword.getLocalValue() == null ? "" : uiInputPassword.getLocalValue().toString();
-//		String passwordId = uiInputPassword.getClientId();
-//
-//		// get confirm password
-//		UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmedMail");
-//		String confirmedMail = uiInputConfirmPassword.getLocalValue() == null ? ""
-//				: uiInputConfirmPassword.getLocalValue().toString();
-//
-//		// Let required="true" do its job.
-//		if (mail1.isEmpty() || confirmedMail.isEmpty()) {
-//			return;
-//		}
-//
-//		if (!mail1.equals(confirmedMail)) {
-//
-//			FacesMessage msg = new FacesMessage("Les mails doivent etre correspondre");
-//			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-//			fc.addMessage(passwordId, msg);
-//			fc.renderResponse();
-//
-//		}
-//	}
 
 	// ----------- Getters && Setters ----------------//
     
@@ -211,4 +186,13 @@ public class MBeanClient implements Serializable {
 	public void setCivilities(Civility[] civilities) {
 		this.civilities = civilities;
 	}
+
+    public String getSdate() {
+        return sdate;
+    }
+
+    public void setSdate(String sdate) {
+        this.sdate = sdate;
+    }
+	
 }
