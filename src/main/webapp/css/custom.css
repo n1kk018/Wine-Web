@@ -39,3 +39,10 @@
 	height: 34px;
 	margin-right: 13px;
 }
+
+.box-header, #cartZozo {
+	text-align: center;
+}
+.box, #newAccountZozo {
+	height:582px;
+}

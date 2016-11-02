@@ -15,7 +15,7 @@ $(function() {
 	$('#currency').on('change', function() {
 		convertPrices(this.value); 
 	});
-	//demo();
+	$('#datetimepicker1').datepicker();
 });
 
 
@@ -73,6 +73,7 @@ function convertPrices(trgtCurrency) {
         });
 	});
 }
+
 
 /* product detail gallery */
 
