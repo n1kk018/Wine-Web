@@ -6,18 +6,14 @@
 package fr.afcepf.atod.mbeans.mbeanorder;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.ejb.LocalBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.xml.ws.BindingProvider;
 
 import org.apache.log4j.Logger;
 
@@ -318,7 +314,7 @@ public class MBeanCartManagement implements Serializable {
 				buOrder.addNewOrder(order);
 				validOrder = true;
 				getLastOrder(customer);				
-				page = null;/*"/pages/checkout4confirmation.jsf?faces-redirect=true";*/
+				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";/*null;*/
 			} catch (WineException e) {
 				e.printStackTrace();
 			}

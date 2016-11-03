@@ -113,9 +113,15 @@ public class MBeanConnexion implements Serializable {
      * @return
      */
     public String disconnect() {
+//        System.out.println(userConnected);
+//        userConnected = null;
+//        System.out.println(userConnected);
+        log.info("\t ### zozozooz  ###");
+        log.info("----------- " +userConnected.getFirstname()+ " -----------------------------");
         String page = null;
-        ((HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(true)).invalidate();
+//        ((HttpSession) FacesContext.getCurrentInstance()
+//                .getExternalContext().getSession(true)).invalidate();
+        log.info("----------- " +page+ " -----------------------------");
         return page;
     }
     

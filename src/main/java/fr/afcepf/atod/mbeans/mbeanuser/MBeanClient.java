@@ -1,5 +1,6 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import javax.faces.event.ComponentSystemEvent;
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
 import fr.afcepf.atod.business.product.api.IBuCountry;
+import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Adress;
 import fr.afcepf.atod.wine.entity.Civility;
@@ -38,6 +40,8 @@ public class MBeanClient implements Serializable {
     private IBuAdress buAdress;
     @ManagedProperty(value = "#{buCountry}")
     private IBuCountry buCountry;
+    @ManagedProperty(value="#{mBeanMail}")
+    private MBeanMail mBeanMail;
     
     private String sdate;
     
@@ -71,15 +75,24 @@ public class MBeanClient implements Serializable {
             customer.setActivated(true);
             customer.setCreatedAt(new Date());
             customer.setUpdatedAt(new Date());
-            try {
-                customer = buCustomer.addNewCustomer(customer);
-            } catch (WineException e) {
-                e.printStackTrace();
-            }
+                try {
+                    if(buCustomer.findUserbyMail(customer.getMail()) == null){
+                    customer = buCustomer.addNewCustomer(customer);
+                    }
+                } catch (WineException e1) {
+                    e1.printStackTrace();
+                }
             adress = buAdress.addNewAdress(adress);
             adress.setBilling(true);
             adress =buAdress.addNewAdress(adress);
+            mBeanMail.sendWelcomeMail(customer);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(UtilFindPath.findURLPath("register.jsf"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
+    
 
     public void validatePassword(ComponentSystemEvent event) {
 
@@ -194,5 +207,14 @@ public class MBeanClient implements Serializable {
     public void setSdate(String sdate) {
         this.sdate = sdate;
     }
+
+    public MBeanMail getmBeanMail() {
+        return mBeanMail;
+    }
+
+    public void setmBeanMail(MBeanMail mBeanMail) {
+        this.mBeanMail = mBeanMail;
+    }
+    
 	
 }
