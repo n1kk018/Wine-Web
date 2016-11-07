@@ -11,7 +11,6 @@
         <plugin.compiler.maven>3.1</plugin.compiler.maven>
         <jsf.version>2.2.10</jsf.version>
         <spring.version>4.0.1.RELEASE</spring.version>
-        <org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>
         <project.version>1.0</project.version>
     </properties>
 	<repositories>
@@ -131,7 +130,7 @@
                        
                         <wsdlUrl>
                             <!-- http://localhost:8090/ode/processes/OnWineServices?wsdl -->
-                            http://localhost:8080/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
+                            http://localhost:8380/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
                         </wsdlUrl>
                         
                     </wsdlUrls>

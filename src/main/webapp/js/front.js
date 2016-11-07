@@ -43,7 +43,6 @@ function switchCurrencyClass() {
 	        "LTL" : "flaticon-lithuania-litas-currency-symbol",
 	        "PLN" : "flaticon-poland-zloty-currency-symbol",
 	        "CZK" : "flaticon-czech-republic-koruna-currency-symbol",
-	        "SKK" : "flaticon-denmark-krone-currency-symbol",
 	        "SEK" : "flaticon-sweden-krona-currency-symbol"
 	};
 	$("span.currency-symbol").removeClass().addClass("currency-symbol "+tableau[lastCurrency]);
