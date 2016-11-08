@@ -1,6 +1,5 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +19,6 @@ import javax.faces.event.ComponentSystemEvent;
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
 import fr.afcepf.atod.business.product.api.IBuCountry;
-import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Adress;
 import fr.afcepf.atod.wine.entity.Civility;
@@ -40,29 +38,55 @@ public class MBeanClient implements Serializable {
     private IBuAdress buAdress;
     @ManagedProperty(value = "#{buCountry}")
     private IBuCountry buCountry;
-    @ManagedProperty(value="#{mBeanMail}")
-    private MBeanMail mBeanMail;
-    
+    @ManagedProperty(value = "#{mBeanConnexion}")
+	private MBeanConnexion mBeanConnexion;
+  
     private String sdate;
     
 	private Adress adress = new Adress();
+	private Adress adresseLivraison = new Adress();
+	private Adress adresseFacturation = new Adress();
 	private Customer customer = new Customer();
 	private User user;
+
 	@SuppressWarnings("unused")
     private Civility[] civilities;
+
+	private UIComponent success;
+	
 	private Country country = new Country();
 	private List<Country> mesCountries ;
-
+	List<Adress> userAddress;
+	
     @PostConstruct
     public void initInscription() {
         try {
             mesCountries = buCountry.listAllCountries();
+            userAddress = mBeanConnexion.getUserConnected().getAdresses();
+            for (Adress a : userAddress) {
+				if (a.isBilling()) {
+					adresseFacturation = a;
+				} else {
+					adresseLivraison = a;
+				}
+			}
         } catch (WineException e) {
             e.printStackTrace();
         }
     }
 
-    public void addCustomer(){
+	public void saveAddressLiv() throws WineException {
+		Boolean isSaved = buAdress.updateNewAddress(adresseLivraison);
+		List<Adress> changedAddress = mBeanConnexion.getUserConnected().getAdresses();
+		userAddress = changedAddress;
+	}
+	
+	public void saveAddressFact() throws WineException {
+		Boolean isSaved = buAdress.updateNewAddress(adresseFacturation);
+		//userAddress = mBeanConnexion.getUserConnected().getAdresses();
+	}
+
+	public void addCustomer(){
             SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
             try {
                 Date date = sdf.parse(sdate);
@@ -75,24 +99,16 @@ public class MBeanClient implements Serializable {
             customer.setActivated(true);
             customer.setCreatedAt(new Date());
             customer.setUpdatedAt(new Date());
-                try {
-                    if(buCustomer.findUserbyMail(customer.getMail()) == null){
-                    customer = buCustomer.addNewCustomer(customer);
-                    }
-                } catch (WineException e1) {
-                    e1.printStackTrace();
-                }
-            adress = buAdress.addNewAdress(adress);
-            adress.setBilling(true);
-            adress =buAdress.addNewAdress(adress);
-            mBeanMail.sendWelcomeMail(customer);
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect(UtilFindPath.findURLPath("register.jsf"));
-            } catch (IOException e) {
+                customer = buCustomer.addNewCustomer(customer);
+            } catch (WineException e) {
                 e.printStackTrace();
             }
+            adress = buAdress.addNewAdress(adress);
+            adress.setBilling(true);
+            adress = buAdress.addNewAdress(adress);
     }
-    
+
 
     public void validatePassword(ComponentSystemEvent event) {
 
@@ -127,8 +143,32 @@ public class MBeanClient implements Serializable {
     }
 
 	// ----------- Getters && Setters ----------------//
-    
-    
+
+
+    public MBeanConnexion getmBeanConnexion() {
+		return mBeanConnexion;
+	}
+
+	public void setmBeanConnexion(MBeanConnexion mBeanConnexion) {
+		this.mBeanConnexion = mBeanConnexion;
+	}
+	
+	public List<Adress> getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(List<Adress> userAddress) {
+		this.userAddress = userAddress;
+	}
+	
+    public UIComponent getSuccess() {
+		return success;
+    }
+
+	public void setSuccess(UIComponent success) {
+		this.success = success;
+	}
+	
     public IBuAdress getBuAdress() {
         return buAdress;
     }
@@ -149,7 +189,7 @@ public class MBeanClient implements Serializable {
         this.mesCountries = mesCountries;
     }
 
-    public void setBuAdress(IBuAdress buAdress) {
+	public void setBuAdress(IBuAdress buAdress) {
         this.buAdress = buAdress;
     }
 
@@ -208,13 +248,20 @@ public class MBeanClient implements Serializable {
         this.sdate = sdate;
     }
 
-    public MBeanMail getmBeanMail() {
-        return mBeanMail;
-    }
+	public Adress getAdresseLivraison() {
+		return adresseLivraison;
+	}
 
-    public void setmBeanMail(MBeanMail mBeanMail) {
-        this.mBeanMail = mBeanMail;
-    }
-    
+	public void setAdresseLivraison(Adress adresseLivraison) {
+		this.adresseLivraison = adresseLivraison;
+	}
+
+	public Adress getAdresseFacturation() {
+		return adresseFacturation;
+	}
+
+	public void setAdresseFacturation(Adress adresseFacturation) {
+		this.adresseFacturation = adresseFacturation;
+	}
 	
 }
