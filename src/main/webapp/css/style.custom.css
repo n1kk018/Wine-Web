@@ -12,7 +12,8 @@ button i.fa {
   cursor: pointer;
 }
 p.lead {
-  font-weight: 300;
+  font-weight: bold;
+    color: rgb(188,54,4);
 }
 h1 {
   font-weight: 700;
@@ -250,7 +251,7 @@ h1 {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 .box {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.75);
   margin: 0 0 30px;
   border: solid 1px #e6e6e6;
   -webkit-box-sizing: border-box;
@@ -259,9 +260,11 @@ h1 {
   padding: 20px;
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 10px;
 }
 .box .box-header {
-  background: #f7f7f7;
+  background: rgba(247, 247, 247, 0.47);
   margin: -20px -20px 20px;
   padding: 20px;
   border-bottom: solid 1px #eeeeee;
@@ -433,7 +436,7 @@ h1 {
   background-color: #eeeeee;
 }
 #content .info-bar {
-  line-height: 32px;
+  line-height: 20px;
   vertical-align: middle;
 }
 @media (max-width: 991px) {
@@ -467,6 +470,8 @@ h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+      border-radius: 10px;
+      margin-top: 10px;
   /* entire container, keeps perspective */
   /* flip speed goes here */
   /* hide back of pane during swap */
@@ -555,7 +560,7 @@ h1 {
   padding: 10px 10px 0;
 }
 #content .product .text h3 {
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   height: 39.6px;
   text-align: center;
@@ -693,11 +698,11 @@ h1 {
   margin-top: 20px;
 }
 #content #order-summary table td {
-  color: #999999;
+  color: #000000;
 }
 #content #order-summary table tr.total td,
 #content #order-summary table tr.total th {
-  font-size: 18px;
+  font-size: 13px;
   color: #555555;
   font-weight: 700;
 }
@@ -1020,7 +1025,7 @@ h1 {
 }
 .nav > li.disabled > a:hover,
 .nav > li.disabled > a:focus {
-  color: #999999;
+  color: #000000;
 }
 .nav .open > a,
 .nav .open > a:hover,
@@ -1243,7 +1248,7 @@ h1 {
   }
 }
 .navbar-default {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.06);
   border-bottom-color: #e6e6e6;
 }
 .navbar-default .navbar-brand {
@@ -1327,10 +1332,12 @@ h1 {
 /* scaffolding */
 body {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: #f0f0f0;
+  background-image: url(http://st.gde-fon.com/wallpapers_original/405972_butylki_bochonok_bokaly_vino_beloe_krasnoe_loza._1680x1050_www.Gde-Fon.com.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 a {
   color: rgb(188,54,4);
@@ -1570,7 +1577,7 @@ h6,
   font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
-  color: inherit;
+  color: rgb(188, 4, 4);
 }
 h1,
 .h1,
@@ -1673,3 +1680,4 @@ IMG.displayed {
     display: block;
     margin-left: auto;
     margin-right: auto }
+
