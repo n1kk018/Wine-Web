@@ -23,7 +23,7 @@
 					<tr>
 						<td>#{lang['frais_de_transport']}</td>
 						<th style="text-align: right;"><h:outputText id="shipping" class="itemPrice"
-								value="#{mBeanCartManagement.caclulShippingFree()}">
+								value="#{mBeanCartManagement.callDelivery()}">
 								<f:convertNumber minFractionDigits="2" />
 							</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></th>
 					</tr>
