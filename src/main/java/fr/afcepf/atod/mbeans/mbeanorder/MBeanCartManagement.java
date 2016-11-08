@@ -20,12 +20,16 @@ import org.apache.log4j.Logger;
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
+import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
+import fr.afcepf.atod.wine.entity.Adress;
 import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
@@ -224,6 +228,20 @@ public class MBeanCartManagement implements Serializable {
 		}
 		
 		return (double)Math.round(shipping*100d)/100d;
+	}
+	
+	public double calculTaxPays() throws TaxWSException_Exception {
+		double taxPays = 0.0;
+		if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
+			ServiceTax client =  (new ServiceTaxBeanService()).getServiceTaxBeanPort();
+			List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+			for (Adress adress : ads) {
+				if (adress.isBilling()) {
+					taxPays = client.calculTax(calculSubTotal(), adress.getCountry().getCode());
+				}
+			}
+		}
+		return taxPays;
 	}
 
 	/**
