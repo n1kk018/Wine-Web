@@ -260,6 +260,8 @@ h1 {
   padding: 20px;
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 10px;
 }
 .box .box-header {
   background: rgba(247, 247, 247, 0.47);
@@ -468,6 +470,8 @@ h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+      border-radius: 10px;
+      margin-top: 10px;
   /* entire container, keeps perspective */
   /* flip speed goes here */
   /* hide back of pane during swap */
@@ -556,7 +560,7 @@ h1 {
   padding: 10px 10px 0;
 }
 #content .product .text h3 {
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   height: 39.6px;
   text-align: center;
@@ -698,7 +702,7 @@ h1 {
 }
 #content #order-summary table tr.total td,
 #content #order-summary table tr.total th {
-  font-size: 18px;
+  font-size: 13px;
   color: #555555;
   font-weight: 700;
 }
@@ -1328,7 +1332,7 @@ h1 {
 /* scaffolding */
 body {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
   background-image: url(http://st.gde-fon.com/wallpapers_original/405972_butylki_bochonok_bokaly_vino_beloe_krasnoe_loza._1680x1050_www.Gde-Fon.com.jpg);
