@@ -10,7 +10,7 @@
 
 .bcWrapper{
 	margin-bottom: 10px;
-	background-color: rgb(240,240,240);
+	background-color: rgba(240, 240, 240, 0.06);
 }
 
 .ui-breadcrumb ul li a.ui-icon-home, .ui-breadcrumb-chevron {
@@ -44,7 +44,7 @@
 	text-align: center;
 }
 .newAccount, #newAccountZozo {
-	  background: #fff;
+	  background: rgba(255, 255, 255, 0.45);
   margin: 0 0 30px;
   border: solid 1px #e6e6e6;
   -webkit-box-sizing: border-box;
