@@ -1,157 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.afcepf.atod</groupId>
-    <artifactId>Wine-Web</artifactId>
-    <version>1.0</version>
-    <packaging>war</packaging>
-    <name>Wine-Web</name>
-    <properties>
-        <java.version>1.8</java.version>
-        <plugin.compiler.maven>3.1</plugin.compiler.maven>
-        <jsf.version>2.2.10</jsf.version>
-        <spring.version>4.0.1.RELEASE</spring.version>
-        <org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>
-        <project.version>1.0</project.version>
-    </properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.afcepf.atod</groupId>
+	<artifactId>Wine-Web</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+	<name>Wine-Web</name>
+	<properties>
+		<java.version>1.8</java.version>
+		<plugin.compiler.maven>3.1</plugin.compiler.maven>
+		<jsf.version>2.2.10</jsf.version>
+		<spring.version>4.0.1.RELEASE</spring.version>
+		<org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>
+		<project.version>1.0</project.version>
+	</properties>
 	<repositories>
-	    <repository>
-	        <id>prime-repo</id>
-	        <name>PrimeFaces Maven Repository</name>
-	        <url>http://repository.primefaces.org</url>
-	        <layout>default</layout>
-	    </repository>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
 	</repositories>
-    <dependencies>
-        <dependency>
-            <groupId>fr.afcepf.atod</groupId>
-            <artifactId>Wine-Business-Order</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.afcepf.atod</groupId>
-            <artifactId>Wine-Business-Product</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.afcepf.atod</groupId>
-            <artifactId>Wine-Business-Customer</artifactId>
-            <version>${project.version}</version>            
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope> <!-- deja fourni par tomcat mais pas encore dans projet maven/eclipse -->
-        </dependency>
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <scope>runtime</scope>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>${jsf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>${jsf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency> 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency> 
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>6.0</version>
-        </dependency>
-        <dependency>  
-	        <groupId>org.primefaces.themes</groupId>  
-	        <artifactId>all-themes</artifactId>  
-	        <version>1.0.10</version>  
-	    </dependency>  
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${plugin.compiler.maven}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>                    
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <version>1.12</version>
-                <executions>
-                    <execution>
-                        <id>wsimport-from-jdk</id>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- using wsdl from an url -->
-                    <wsdlUrls>
-                       
-                        <wsdlUrl>
-                            <!-- http://localhost:8090/ode/processes/OnWineServices?wsdl -->
-                            http://localhost:8180/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl
-                        </wsdlUrl>
-                        
-                    </wsdlUrls>
-                    <!-- or using wsdls file directory -->
-                    <!-- <wsdlDirectory>src/wsdl</wsdlDirectory> -->
-                    <!-- which wsdl file -->
-                    <!-- <wsdlFiles> -->
-                    <!-- <wsdlFile>myWSDL.wsdl</wsdlFile> -->
-                    <!--</wsdlFiles> -->
-                    <!-- Keep generated files -->
-                    <keep>true</keep>
-                    <!-- Package name -->
-                    <packageName>
-                    <!-- fr.afcepf.atod.onwine.ws.soap.orchestre-->
-                    fr.afcepf.atod.onwine.ws.soap.currency
-                     </packageName>
-                    <!-- generated source files destination -->
-                    <sourceDestDir>target/generatedclasses</sourceDestDir>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<dependencies>
+		<dependency>
+			<groupId>fr.afcepf.atod</groupId>
+			<artifactId>Wine-Business-Order</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.afcepf.atod</groupId>
+			<artifactId>Wine-Business-Product</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.afcepf.atod</groupId>
+			<artifactId>Wine-Business-Customer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope> <!-- deja fourni par tomcat mais pas encore dans projet maven/eclipse -->
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<scope>runtime</scope>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${plugin.compiler.maven}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>1.12</version>
+				<executions>
+					<execution>
+						<id>wsimport-from-jdk</id>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- using wsdl from an url -->
+					<wsdlUrls>
+
+						<wsdlUrl>
+							<!-- http://localhost:8090/ode/processes/OnWineServices?wsdl -->
+							<!-- http://localhost:8180/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl -->
+							http://localhost:8280/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl
+						</wsdlUrl>
+
+					</wsdlUrls>
+					<!-- or using wsdls file directory -->
+					<!-- <wsdlDirectory>src/wsdl</wsdlDirectory> -->
+					<!-- which wsdl file -->
+					<!-- <wsdlFiles> -->
+					<!-- <wsdlFile>myWSDL.wsdl</wsdlFile> -->
+					<!--</wsdlFiles> -->
+					<!-- Keep generated files -->
+					<keep>true</keep>
+					<!-- Package name -->
+					<packageName>
+						<!-- fr.afcepf.atod.onwine.ws.soap.orchestre -->
+<!-- 						fr.afcepf.atod.onwine.ws.soap.currency -->
+						fr.afcepf.atod.onwine.ws.soap.delivery
+					</packageName>
+					<!-- generated source files destination -->
+					<sourceDestDir>target/generatedclasses</sourceDestDir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

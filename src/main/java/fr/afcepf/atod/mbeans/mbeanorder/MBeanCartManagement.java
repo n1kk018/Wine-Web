@@ -23,6 +23,9 @@ import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
 import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
 import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
 import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
+import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -214,22 +217,47 @@ public class MBeanCartManagement implements Serializable {
 		}
 		return numTotalQuantity;
 	}
+	
+	
+	public double callDelivery() throws DeliveriesWSException_Exception {
+	    double delivery = 0.0;
+	    if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
+	        IDeliveryCalculator client = (new DeliveryCalculatorService()).getDeliveryCalculatorPort();
+	        List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+	        for (Adress adress : ads) {
+	            if (!adress.isBilling()) {
+	                delivery = client.getRateDeliveryTotal(adress.getCountry().getCode(), calculerNumTotalQantity());
+	                System.out.println("---------------------"+delivery+"---------------------------");
+	            }
+	        }
+//            ServiceTax client =  (new ServiceTaxBeanService()).getServiceTaxBeanPort();
+//            List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+//            for (Adress adress : ads) {
+//                if (adress.isBilling()) {
+//                    taxPays = client.calculTax(calculSubTotal(), adress.getCountry().getCode());
+//                }
+//            }
+        }
+        return delivery;
+        
+    }
 
 	/**
 	 * Calculer frais transport mode livaison colissomo
-	 *
+ 
 	 * @param orderDetail
 	 * @return
 	 */
 	public double caclulShippingFree() {
 		double shipping = 0.0;
-		if (calculerNumTotalQantity() != 0.0 /*& order.getShippingMethod().getId()==1*/) {
-		    return 1.5;
-		}
+//		if (calculerNumTotalQantity() != 0.0 /*& order.getShippingMethod().getId()==1*/) {
+//		    return 1.5;
+//		}
 		
 		return (double)Math.round(shipping*100d)/100d;
 	}
 	
+		
 	public double calculTaxPays() throws TaxWSException_Exception {
 		double taxPays = 0.0;
 		if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
