@@ -54,7 +54,7 @@ public class MBeanClient implements Serializable {
 
 	private UIComponent success;
 	
-	private Country country = new Country();
+	private Country country, countryLiv, countryFac = new Country();
 	private List<Country> mesCountries ;
 	List<Adress> userAddress;
 	
@@ -66,8 +66,10 @@ public class MBeanClient implements Serializable {
             for (Adress a : userAddress) {
 				if (a.isBilling()) {
 					adresseFacturation = a;
+					countryFac = adresseFacturation.getCountry();
 				} else {
 					adresseLivraison = a;
+					countryLiv = adresseLivraison.getCountry();
 				}
 			}
         } catch (WineException e) {
@@ -77,13 +79,18 @@ public class MBeanClient implements Serializable {
 
 	public void saveAddressLiv() throws WineException {
 		Boolean isSaved = buAdress.updateNewAddress(adresseLivraison);
-		List<Adress> changedAddress = mBeanConnexion.getUserConnected().getAdresses();
-		userAddress = changedAddress;
+		for (Country country : mesCountries) {
+			if (adresseLivraison.getCountry().getId() == country.getId())
+	        countryLiv = country;
+		}
 	}
 	
 	public void saveAddressFact() throws WineException {
 		Boolean isSaved = buAdress.updateNewAddress(adresseFacturation);
-		//userAddress = mBeanConnexion.getUserConnected().getAdresses();
+		for (Country country : mesCountries) {
+			if (adresseFacturation.getCountry().getId() == country.getId())
+	        countryFac = country;
+		}
 	}
 
 	public void addCustomer(){
@@ -263,5 +270,23 @@ public class MBeanClient implements Serializable {
 	public void setAdresseFacturation(Adress adresseFacturation) {
 		this.adresseFacturation = adresseFacturation;
 	}
+
+	public Country getCountryLiv() {
+		return countryLiv;
+	}
+
+	public void setCountryLiv(Country countryLiv) {
+		this.countryLiv = countryLiv;
+	}
+
+	public Country getCountryFac() {
+		return countryFac;
+	}
+
+	public void setCountryFac(Country countryFac) {
+		this.countryFac = countryFac;
+	}
+	
+	
 	
 }

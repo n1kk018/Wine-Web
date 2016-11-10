@@ -35,8 +35,7 @@
 							<!-- /.row -->
 							<div class="row">
 								<div id="recharge" class="col-sm-12">
-								   <ui:repeat var="adress" value="#{mBeanClient.userAddress}">
-                                           <div class="col-md-6">
+								     <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <p class="text-uppercase">
@@ -55,37 +54,77 @@
                                                 <div class="col-md-1">
                                                     <p class="text-justify">
                                                         <h:outputText
-                                                            value="#{adress.number}" />
+                                                            value="#{mBeanClient.adresseLivraison.number}" />
                                                     </p>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <p class="text-justify">
                                                         <h:outputText
-                                                            value="#{adress.street}" />
+                                                            value="#{mBeanClient.adresseLivraison.street}" />
                                                     </p>
                                                 </div>
                                             </div>
                                             <p class="text-justify">
                                                 <h:outputText
-                                                    value="#{adress.zipcode}" />
+                                                    value="#{mBeanClient.adresseLivraison.zipcode}" />
                                             </p>
                                             <p class="text-justify">
                                                 <h:outputText
-                                                    value="#{adress.city}" />
+                                                    value="#{mBeanClient.adresseLivraison.city}" />
                                             </p>
                                             <p class="text-justify">
-                                                <h:outputText value="#{adress.country.name}" />
+                                                <h:outputText value="#{mBeanClient.countryLiv.name}" />
                                             </p>
                                             <button data-target="#modiflivraison" data-toggle="collapse"
-                                                class="btn btn-primary" jsf:type="button" jsf:rendered="#{!adress.billing}">
+                                                class="btn btn-primary" jsf:type="button">
                                                 #{lang['modifier_adresse_livraison']}<i class="fa fa-chevron-bottom"></i>
                                             </button>
+                                       </div>
+								       <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="text-uppercase">
+                                                        <h:outputText
+                                                            value="#{mBeanConnexion.userConnected.lastname}"/>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p class="text-justify">
+                                                        <h:outputText
+                                                            value="#{mBeanConnexion.userConnected.firstname}" />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <p class="text-justify">
+                                                        <h:outputText
+                                                            value="#{mBeanClient.adresseFacturation.number}" />
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <p class="text-justify">
+                                                        <h:outputText
+                                                            value="#{mBeanClient.adresseFacturation.street}" />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p class="text-justify">
+                                                <h:outputText
+                                                    value="#{mBeanClient.adresseFacturation.zipcode}" />
+                                            </p>
+                                            <p class="text-justify">
+                                                <h:outputText
+                                                    value="#{mBeanClient.adresseFacturation.city}" />
+                                            </p>
+                                            <p class="text-justify">
+                                                <h:outputText value="#{mBeanClient.countryFac.name}" />
+                                            </p>
                                             <button data-target="#modiffacturation" data-toggle="collapse"
-                                                class="btn btn-primary" jsf:type="button" jsf:rendered="#{adress.billing}">
+                                                class="btn btn-primary" jsf:type="button">
                                                 #{lang['modifier_adresse_facturation']}<i class="fa fa-chevron-bottom"></i>
                                             </button>
-                                           </div>
-                                       </ui:repeat>
+                                       </div>                                       
 								</div>
 							</div>
 
