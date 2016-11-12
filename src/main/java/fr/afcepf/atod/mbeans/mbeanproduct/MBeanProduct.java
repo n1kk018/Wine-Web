@@ -6,6 +6,7 @@
 package fr.afcepf.atod.mbeans.mbeanproduct;
 
 import fr.afcepf.atod.business.product.api.IBuProduct;
+import fr.afcepf.atod.es.domain.Wine;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
@@ -22,6 +23,7 @@ import fr.afcepf.atod.onwine.ws.soap.currency.CurrenciesWSException_Exception;
 import fr.afcepf.atod.onwine.ws.soap.currency.CurrencyConverterService;
 import fr.afcepf.atod.onwine.ws.soap.currency.ICurrencyConverter;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -229,32 +232,53 @@ public class MBeanProduct implements Serializable {
     }
     
     public String article() throws WineException {
-    	String str = null;
     	FacesContext fc = FacesContext.getCurrentInstance();
 		Integer id = Integer.valueOf(getProductParam(fc));
-        if (id>0) {
-        	currentProd = buProduct.findById(id);
-        	if(winesList!=null && winesList.size()>3)
-        	{
-        		threeSimilarProductsList = new ArrayList<Product>();
-        		for (Product product : winesList) {
-        			if(threeSimilarProductsList.size() < 3 && product.getId()!=id){
-        				threeSimilarProductsList.add((ProductWine)product);
-        			}
-    			}
-        	} else {
-        		if(currentProdType!=null){
-	        		threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3, "price_desc");
-	    			Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
-	    			if(count < 3){
-	    				threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count, "price_desc"));
-	    			}
-        		}
-        	}
-        	str = UtilFindPath.findURLPath("article.jsf");
+        return getArticle(id);
+	}
+    
+    public void articleEvent(SelectEvent event) throws WineException {
+         getArticle(((Wine) event.getObject()).getId());
+         try {
+            FacesContext.getCurrentInstance()
+             .getExternalContext()
+             .redirect("pages/article.jsf");
+        } catch (IOException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
+    }
+    
+    private String getArticle(Integer id) {
+        String str = null;
+        try {
+            if (id>0) {
+                currentProd = buProduct.findById(id);
+                if(winesList!=null && winesList.size()>3)
+                {
+                    threeSimilarProductsList = new ArrayList<Product>();
+                    for (Product product : winesList) {
+                        if(threeSimilarProductsList.size() < 3 && product.getId()!=id){
+                            threeSimilarProductsList.add((ProductWine)product);
+                        }
+                    }
+                } else {
+                    if(currentProdType!=null){
+                        threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3, "price_desc");
+                        Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
+                        if(count < 3){
+                            threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count, "price_desc"));
+                        }
+                    }
+                }
+                str = UtilFindPath.findURLPath("article.jsf");
+            }
+        } catch (WineException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
         }
         return str;
-	}
+    }
     
     public String category(ProductType type){
         return initCategoryPage(type, null);
