@@ -40,10 +40,12 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -58,7 +60,9 @@ public class MBeanProduct implements Serializable {
 	private Logger log = Logger.getLogger(MBeanConnexion.class);
 	 
 	@ManagedProperty(value = "#{buProduct}")
-	private IBuProduct buProduct;	
+	private IBuProduct buProduct;
+	@ManagedProperty(value = "#{searchBean}")
+    private SearchBean searchBean;  
     private ProductAccessories accessory;
     private Product currentProd;
     private String nameProd;
@@ -72,6 +76,7 @@ public class MBeanProduct implements Serializable {
     private Map<ProductType, List<ProductVarietal>> varietals;
     private Map<ProductType, Map<Integer,Integer>> pricesRepartition;
     private List<Product> winesList;
+    private List<Integer> idzList;
 	private ProductType currentProdType;
     private Object currentSubCategory;
     private String subSelectionTypeLabel;
@@ -281,11 +286,31 @@ public class MBeanProduct implements Serializable {
     }
     
     public String category(ProductType type){
+        idzList = new ArrayList<Integer>();
         return initCategoryPage(type, null);
     }
     
     public String category(ProductType type, Object o){
+        idzList = new ArrayList<Integer>();
     	return initCategoryPage(type, o);	
+    }
+    
+    public void category(AjaxBehaviorEvent event) {
+        firstRow = 0;
+        currentSortStr = "price_asc";
+        idzList = new ArrayList<Integer>();
+        for (Wine eswine : searchBean.getFoundWines()) {
+            idzList.add(eswine.getId());
+        }
+        getWinesList();
+        try {
+            FacesContext.getCurrentInstance()
+             .getExternalContext()
+             .redirect("pages/category.jsf");
+        } catch (IOException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
     }
     
     private String initCategoryPage(ProductType type, Object o) {
@@ -301,9 +326,13 @@ public class MBeanProduct implements Serializable {
         
 	private void loadList() {
 		try {
-			winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow, rowsPerPage, currentSortStr);
-			totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
-
+		    if(idzList.isEmpty()) {
+		        winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow, rowsPerPage, currentSortStr);
+		        totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
+		    } else {
+		        winesList = buProduct.categoryAccordingToESSearchList(idzList, firstRow, rowsPerPage, currentSortStr);
+		        totalRows = idzList.size();
+		    }
 			// Set currentPage, totalPages and pages.
 			currentPage = (totalRows / rowsPerPage) - ((totalRows - firstRow) / rowsPerPage) + 1;
 			totalPages = (totalRows / rowsPerPage) + ((totalRows % rowsPerPage != 0) ? 1 : 0);
@@ -430,8 +459,22 @@ public class MBeanProduct implements Serializable {
 	public void setBuProduct(IBuProduct buProduct) {
 		this.buProduct = buProduct;
 	}
+	
+	
 
-	public List<Product> getPromotedWinesList() {
+	public SearchBean getSearchBean() {
+        return searchBean;
+    }
+
+
+
+    public void setSearchBean(SearchBean paramSearchBean) {
+        searchBean = paramSearchBean;
+    }
+
+
+
+    public List<Product> getPromotedWinesList() {
 		return promotedWinesList;
 	}
 

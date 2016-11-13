@@ -100,10 +100,11 @@
 		<div id="search" class="collapse clearfix">
 			<h:form class="navbar-form" role="search" id="searchForm">
 			     <p:autoComplete
-			            completeMethod="#{autoCompleteView.completeWine}" 
+			            completeMethod="#{searchBean.completeWine}" 
 			            size="50" minQueryLength="3" queryDelay="600" maxResults="5"
                         var="wine" itemValue="#{wine}" forceSelection="true"
-                        converter="#{wineConverter}">
+                        converter="#{searchBean}" 
+                        moreText="#{component.suggestions.size() - component.maxResults} #{lang['more']}...">
 			            <p:column>
 			                <img width="50" height="50" src="img/wine_pictures/#{wine.apiId}/#{wine.apiId}m.jpg"/>
 			            </p:column>
@@ -111,7 +112,7 @@
 			                <h:outputText value="#{wine.name}" />
 			            </p:column>
 			            <p:ajax event="itemSelect" listener="#{mBeanProduct.articleEvent}" />
-			            <p:ajax event="moreText" listener="#{autoCompleteView.onMoreText}"/>
+			            <p:ajax event="moreText" listener="#{mBeanProduct.category}" />
                 </p:autoComplete>
 			</h:form>
 		</div>
