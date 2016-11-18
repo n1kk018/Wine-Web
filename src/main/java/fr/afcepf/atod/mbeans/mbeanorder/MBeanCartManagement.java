@@ -6,34 +6,33 @@
 package fr.afcepf.atod.mbeans.mbeanorder;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.ejb.LocalBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.xml.ws.BindingProvider;
 
 import org.apache.log4j.Logger;
 
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServices;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesPortType;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesRequest;
-import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesResponse;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
+import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
+import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
 import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.business.order.api.IBuOrder;
+import fr.afcepf.atod.wine.entity.Adress;
 import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.Order;
 import fr.afcepf.atod.wine.entity.OrderDetail;
@@ -100,9 +99,27 @@ public class MBeanCartManagement implements Serializable {
 					order = new Order();
 					order.setCreatedAt(new Date());
 					order.setPaidAt(null);
+
 				}
 				order = buOrder.addItemCart(order, product);
-				listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());							
+				listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());
+
+				/*The symptoms indicate that the page was requested by a POST request and that
+                you're ignoring the webbrowser's warning that the data will be resent when refreshing
+                the request. Refreshing a POST request will of course result in it being re-executed.
+                This is not a JSF specific problem.The common solution to that is to send a redirect
+                to a GET request after executing the POST request. This way the client will end up
+                having the GET request in the browser view. Refreshing this will then only re-execute
+                the GET request which doesn't (shouldn't) modify anything (unless you're doing this in
+                the constructor of a request scoped bean associated with the view). This is also known
+                as the POST-Redirect-GET pattern.With JSF 2.0, you can achieve this by simply adding
+                faces-redirect=true parameter to the bean action's outcome.
+                N.B:1)If you're still using old fashioned <navigation-case>s in faces-config.xml,
+                then the same effect can be achieved by adding <redirect/> to the case
+                    2) In JSF 2.0+ you could instead use the flash scope for this or to just let
+                the POST take place by <f:ajax> submit instead of a normal submit.
+                    3) Another method
+				 */								
 				page = UtilFindPath.findURLPath("basket.jsf");
 				return page;
 			} catch (WineException ex) {
@@ -200,20 +217,59 @@ public class MBeanCartManagement implements Serializable {
 		}
 		return numTotalQuantity;
 	}
+	
+	
+	public double callDelivery() throws DeliveriesWSException_Exception {
+	    double delivery = 0.0;
+	    if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
+	        IDeliveryCalculator client = (new DeliveryCalculatorService()).getDeliveryCalculatorPort();
+	        List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+	        for (Adress adress : ads) {
+	            if (!adress.isBilling()) {
+	                delivery = client.getRateDeliveryTotal(adress.getCountry().getCode(), calculerNumTotalQantity());
+	                System.out.println("---------------------"+delivery+"---------------------------");
+	            }
+	        }
+//            ServiceTax client =  (new ServiceTaxBeanService()).getServiceTaxBeanPort();
+//            List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+//            for (Adress adress : ads) {
+//                if (adress.isBilling()) {
+//                    taxPays = client.calculTax(calculSubTotal(), adress.getCountry().getCode());
+//                }
+//            }
+        }
+        return delivery;
+        
+    }
 
 	/**
 	 * Calculer frais transport mode livaison colissomo
-	 *
+ 
 	 * @param orderDetail
 	 * @return
 	 */
 	public double caclulShippingFree() {
 		double shipping = 0.0;
-		if (calculerNumTotalQantity() != 0.0 /*& order.getShippingMethod().getId()==1*/) {
-		    return 1.5;
-		}
+//		if (calculerNumTotalQantity() != 0.0 /*& order.getShippingMethod().getId()==1*/) {
+//		    return 1.5;
+//		}
 		
 		return (double)Math.round(shipping*100d)/100d;
+	}
+	
+		
+	public double calculTaxPays() throws TaxWSException_Exception {
+		double taxPays = 0.0;
+		if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
+			ServiceTax client =  (new ServiceTaxBeanService()).getServiceTaxBeanPort();
+			List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+			for (Adress adress : ads) {
+				if (adress.isBilling()) {
+					taxPays = client.calculTax(calculSubTotal(), adress.getCountry().getCode());
+				}
+			}
+		}
+		return taxPays;
 	}
 
 	/**
@@ -267,7 +323,7 @@ public class MBeanCartManagement implements Serializable {
 	 * */
 	public String validerAdresse(){
 		String page = null;
-		if(order.getCustomer().getAdresses()!= null 
+		if(!order.getCustomer().getAdresses().isEmpty() 
 				&& order.getOrdersDetail().size()!=0){
 			//order.getCustomer().setAdress(adress);
 			page ="/pages/checkout2livraison.jsf?faces-redirect=true";
@@ -304,7 +360,7 @@ public class MBeanCartManagement implements Serializable {
 				buOrder.addNewOrder(order);
 				validOrder = true;
 				getLastOrder(customer);				
-				page = null;/*"/pages/checkout4confirmation.jsf?faces-redirect=true";*/
+				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";/*null;*/
 			} catch (WineException e) {
 				e.printStackTrace();
 			}

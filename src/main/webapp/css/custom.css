@@ -10,7 +10,7 @@
 
 .bcWrapper{
 	margin-bottom: 10px;
-	background-color: rgb(240,240,240);
+	background-color: rgba(240, 240, 240, 0.06);
 }
 
 .ui-breadcrumb ul li a.ui-icon-home, .ui-breadcrumb-chevron {
@@ -43,6 +43,16 @@
 .box-header, #cartZozo {
 	text-align: center;
 }
-.box, #newAccountZozo {
+.newAccount, #newAccountZozo {
+	  background: rgba(255, 255, 255, 0.45);
+  margin: 0 0 30px;
+  border: solid 1px #e6e6e6;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 	height:582px;
+  border-radius: 10px;
 }

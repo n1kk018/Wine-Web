@@ -61,7 +61,7 @@ function convertPrices(trgtCurrency) {
 		amount = amount.trim();
 		$.ajax({
 	        type:"GET",
-	        url : "http://localhost:8080/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
+	        url : "http://localhost:8180/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
 	        dataType: 'json',
 	        crossDomain: true,
 	        async: false,

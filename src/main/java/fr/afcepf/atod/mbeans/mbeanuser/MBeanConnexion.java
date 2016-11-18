@@ -6,8 +6,10 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
+import fr.afcepf.atod.util.UtilFindPath;
 import fr.afcepf.atod.wine.entity.User;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,11 +114,20 @@ public class MBeanConnexion implements Serializable {
      *
      * @return
      */
-    public String disconnect() {
-        String page = null;
-        ((HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(true)).invalidate();
-        return page;
+    public void disconnect() {
+        userConnected = null;
+        System.out.println("---------------------zozo---------------");
+//        ((HttpSession) FacesContext.getCurrentInstance()
+//                .getExternalContext().getSession(true)).invalidate();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        
+//        userConnected.setLastname(null);
+        System.out.println("---------------------"+ userConnected.getLastname()+"---------------");
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(UtilFindPath.findURLPath("index.jsf"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     
