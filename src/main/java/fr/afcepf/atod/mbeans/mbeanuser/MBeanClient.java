@@ -1,10 +1,15 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import java.io.Serializable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,10 +20,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.model.SelectItem;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
 import fr.afcepf.atod.business.product.api.IBuCountry;
+
 import fr.afcepf.atod.vin.data.exception.WineException;
 import fr.afcepf.atod.wine.entity.Adress;
 import fr.afcepf.atod.wine.entity.Civility;
@@ -30,7 +37,10 @@ import fr.afcepf.atod.wine.entity.User;
 @SessionScoped
 public class MBeanClient implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
     @ManagedProperty(value = "#{buCustomer}")
     private IBuCustomer buCustomer;
@@ -41,6 +51,9 @@ public class MBeanClient implements Serializable {
     @ManagedProperty(value = "#{mBeanConnexion}")
     private MBeanConnexion mBeanConnexion;
 
+    @SuppressWarnings("unused")
+    private Civility[] civilities;
+    
     private String sdate;
 
     private Adress adress = new Adress();
@@ -48,17 +61,13 @@ public class MBeanClient implements Serializable {
     private Adress adresseFacturation = new Adress();
     private Customer customer = new Customer();
     private User user;
-
-    @SuppressWarnings("unused")
-    private Civility[] civilities;
-
     private UIComponent success;
-
     private Country country = new Country();
     private Country countryLiv = new Country();
     private Country countryFac = new Country();
     private List<Country> mesCountries;
     List<Adress> userAddress;
+
 
     @PostConstruct
     public void initInscription() {

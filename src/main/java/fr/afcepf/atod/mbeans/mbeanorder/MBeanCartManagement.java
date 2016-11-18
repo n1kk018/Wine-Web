@@ -486,5 +486,4 @@ public class MBeanCartManagement implements Serializable {
                 request.setQuantity(new BigInteger(tQ.toString()));
                 
                 OnWineServicesResponse response = proxy.process(request);*/
-	 
 }
