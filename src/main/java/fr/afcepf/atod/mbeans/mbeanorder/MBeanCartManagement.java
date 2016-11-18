@@ -20,12 +20,12 @@ import org.apache.log4j.Logger;
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
-import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
-import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
-import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
 import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
 import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
 import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
+import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
+import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -486,5 +486,4 @@ public class MBeanCartManagement implements Serializable {
                 request.setQuantity(new BigInteger(tQ.toString()));
                 
                 OnWineServicesResponse response = proxy.process(request);*/
-	 
 }

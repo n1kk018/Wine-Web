@@ -18,9 +18,8 @@
 				<div class="col-md-9" id="checkout">
 					<div class="box">
 						<form jsf:id="form1">
-							<h1>#{lang['mode_de_livraison']}</h1>
-							
-
+							<h3>#{lang['mode_de_livraison']}</h3>
+							<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
 							<div class="content">
 								<div class="row">
 									<div class="col-sm-6">
@@ -29,12 +28,9 @@
 												<img class="media-object" src="img/logocolissimo.png" />
 											</div>
 											<p>#{lang['msg_delai_livraison_1']}</p>
-
 											<div class="box-footer text-center">
-
-												<h:selectOneRadio value="delivery">
-   			<f:selectItem itemValue="Red" itemLabel="" />
-   		</h:selectOneRadio>
+												<input type="radio" name="delivery" value="colissimo"
+													checked="checked" />
 											</div>
 										</div>
 									</div>
@@ -48,12 +44,8 @@
 											<p>#{lang['msg_delai_livraison_2']}</p>
 
 											<div class="box-footer text-center">
-
-												<h:selectOneRadio value="delivery2">
-   			<f:selectItem itemValue="France" itemLabel="" />
-   		</h:selectOneRadio>
-											<!-- <f:ajax event="click"   render="@all" listener="#{mBeanCartManagement.callDelivery}"/>-->
-										</div>
+												<input type="radio" name="delivery" value="chronopost" />
+											</div>
 										</div>
 									</div>
 								</div>
