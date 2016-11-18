@@ -1,31 +1,32 @@
-if ($.cookie("theme_csspath")) {
-	$('link#theme-stylesheet').attr("href", $.cookie("theme_csspath"));
+var j = jQuery.noConflict();
+if (j.cookie("theme_csspath")) {
+	j('link#theme-stylesheet').attr("href", j.cookie("theme_csspath"));
 }
 
-$(function() {
+j(function() {
 
 	animations();
 	productDetailGallery(4000);
 	carousels();
 	utils();
-	$('#currency option[value='+lastCurrency+']').prop('selected','selected');
+	j('#currency option[value='+lastCurrency+']').prop('selected','selected');
 	if(lastCurrency!="EUR") {
 		switchCurrencyClass();
 	}
-	$('#currency').on('change', function() {
+	j('#currency').on('change', function() {
 		convertPrices(this.value); 
 	});
-	$('#datetimepicker1').datepicker();
+	//demo();
 });
 
 
-$(window).load(function() {
-	$(this).alignElementsSameHeight();
+j(window).load(function() {
+	j(this).alignElementsSameHeight();
 });
 
-$(window).resize(function() {
+j(window).resize(function() {
 	setTimeout(function() {
-		$(this).alignElementsSameHeight();
+		j(this).alignElementsSameHeight();
 	}, 150);
 });
 
@@ -45,21 +46,21 @@ function switchCurrencyClass() {
 	        "CZK" : "flaticon-czech-republic-koruna-currency-symbol",
 	        "SEK" : "flaticon-sweden-krona-currency-symbol"
 	};
-	$("span.currency-symbol").removeClass().addClass("currency-symbol "+tableau[lastCurrency]);
+	j("span.currency-symbol").removeClass().addClass("currency-symbol "+tableau[lastCurrency]);
 }
 
 function convertPrices(trgtCurrency) {
 	srcCurrency = lastCurrency;
 	lastCurrency = trgtCurrency;
 	rc([{name:'trgt', value:trgtCurrency}]);
-	$.ajaxSetup({
+	j.ajaxSetup({
 		  contentType: "application/json; charset=utf-8"
 	});
-	$.each($('.itemPrice'), function(i, o) {
-		var element = $(this);
-		var amount = $(this).text();
+	j.each(j('.itemPrice'), function(i, o) {
+		var element = j(this);
+		var amount = j(this).text();
 		amount = amount.trim();
-		$.ajax({
+		j.ajax({
 	        type:"GET",
 	        url : "http://localhost:8180/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
 	        dataType: 'json',
@@ -74,40 +75,39 @@ function convertPrices(trgtCurrency) {
 	});
 }
 
-
 /* product detail gallery */
 
 function productDetailGallery(confDetailSwitch) {
-	$('.thumb:first').addClass('active');
+	j('.thumb:first').addClass('active');
 	timer = setInterval(autoSwitch, confDetailSwitch);
-	$(".thumb").click(function(e) {
+	j(".thumb").click(function(e) {
 
-		switchImage($(this));
+		switchImage(j(this));
 		clearInterval(timer);
 		timer = setInterval(autoSwitch, confDetailSwitch);
 		e.preventDefault();
 	}
 	);
-	$('#mainImage').hover(function() {
+	j('#mainImage').hover(function() {
 		clearInterval(timer);
 	}, function() {
 		timer = setInterval(autoSwitch, confDetailSwitch);
 	});
 
 	function autoSwitch() {
-		var nextThumb = $('.thumb.active').closest('div').next('div').find('.thumb');
+		var nextThumb = j('.thumb.active').closest('div').next('div').find('.thumb');
 		if (nextThumb.length == 0) {
-			nextThumb = $('.thumb:first');
+			nextThumb = j('.thumb:first');
 		}
 		switchImage(nextThumb);
 	}
 
 	function switchImage(thumb) {
 
-		$('.thumb').removeClass('active');
+		j('.thumb').removeClass('active');
 		var bigUrl = thumb.attr('href');
 		thumb.addClass('active');
-		$('#mainImage img').attr('src', bigUrl);
+		j('#mainImage img').attr('src', bigUrl);
 	}
 }
 
@@ -120,26 +120,26 @@ function utils() {
 
 	/* click on the box activates the radio */
 
-	$('#checkout').on('click', '.box.shipping-method, .box.payment-method', function(e) {
-		var radio = $(this).find(':radio');
+	j('#checkout').on('click', '.box.shipping-method, .box.payment-method', function(e) {
+		var radio = j(this).find(':radio');
 		radio.prop('checked', true);
 	});
 	/* click on the box activates the link in it */
 
-	$('.box.clickable').on('click', function(e) {
+	j('.box.clickable').on('click', function(e) {
 
-		window.location = $(this).find('a').attr('href');
+		window.location = j(this).find('a').attr('href');
 	});
 	/* external links in new window*/
 
-	$('.external').on('click', function(e) {
+	j('.external').on('click', function(e) {
 
 		e.preventDefault();
-		window.open($(this).attr("href"));
+		window.open(j(this).attr("href"));
 	});
 	/* animated scrolling */
 
-	$('.scroll-to, .scroll-to-top').click(function(event) {
+	j('.scroll-to, .scroll-to-top').click(function(event) {
 
 		var full_url = this.href;
 		var parts = full_url.split("#");
@@ -152,13 +152,13 @@ function utils() {
 	function scrollTo(full_url) {
 		var parts = full_url.split("#");
 		var trgt = parts[1];
-		var target_offset = $("#" + trgt).offset();
+		var target_offset = j("#" + trgt).offset();
 		var target_top = target_offset.top - 100;
 		if (target_top < 0) {
 			target_top = 0;
 		}
 
-		$('html, body').animate({
+		j('html, body').animate({
 			scrollTop: target_top
 		}, 1000);
 	}
@@ -168,7 +168,7 @@ function utils() {
 
 function carousels() {
 
-	$("#get-inspired").owlCarousel({
+	j("#get-inspired").owlCarousel({
 		navigation: true, // Show next and prev buttons
 		slideSpeed: 300,
 		paginationSpeed: 400,
@@ -178,16 +178,16 @@ function carousels() {
 		afterInit: ''
 	});
 
-	$('.product-slider').owlCarousel({
+	j('.product-slider').owlCarousel({
 		navigation: true, // Show next and prev buttons
 		slideSpeed: 300,
 		paginationSpeed: 400,
 		afterInit: function() {
-			$('.product-slider .item').css('visibility', 'visible');
+			j('.product-slider .item').css('visibility', 'visible');
 		}
 	});
 
-	$('#main-slider').owlCarousel({
+	j('#main-slider').owlCarousel({
 		navigation: true, // Show next and prev buttons
 		slideSpeed: 300,
 		paginationSpeed: 400,
@@ -203,16 +203,16 @@ function carousels() {
 
 function animations() {
 	delayTime = 0;
-	$('[data-animate]').css({opacity: '0'});
-	$('[data-animate]').waypoint(function(direction) {
+	j('[data-animate]').css({opacity: '0'});
+	j('[data-animate]').waypoint(function(direction) {
 		delayTime += 150;
-		$(this).delay(delayTime).queue(function(next) {
-			$(this).toggleClass('animated');
-			$(this).toggleClass($(this).data('animate'));
+		j(this).delay(delayTime).queue(function(next) {
+			j(this).toggleClass('animated');
+			j(this).toggleClass(j(this).data('animate'));
 			delayTime = 0;
 			next();
-			//$(this).removeClass('animated');
-			//$(this).toggleClass($(this).data('animate'));
+			//j(this).removeClass('animated');
+			//j(this).toggleClass(j(this).data('animate'));
 		});
 	},
 	{
@@ -220,31 +220,31 @@ function animations() {
 		triggerOnce: true
 	});
 
-	$('[data-animate-hover]').hover(function() {
-		$(this).css({opacity: 1});
-		$(this).addClass('animated');
-		$(this).removeClass($(this).data('animate'));
-		$(this).addClass($(this).data('animate-hover'));
+	j('[data-animate-hover]').hover(function() {
+		j(this).css({opacity: 1});
+		j(this).addClass('animated');
+		j(this).removeClass(j(this).data('animate'));
+		j(this).addClass(j(this).data('animate-hover'));
 	}, function() {
-		$(this).removeClass('animated');
-		$(this).removeClass($(this).data('animate-hover'));
+		j(this).removeClass('animated');
+		j(this).removeClass(j(this).data('animate-hover'));
 	});
 
 }
 
-$.fn.alignElementsSameHeight = function() {
-	$('.same-height-row').each(function() {
+j.fn.alignElementsSameHeight = function() {
+	j('.same-height-row').each(function() {
 
 		var maxHeight = 0;
 
-		var children = $(this).find('.same-height');
+		var children = j(this).find('.same-height');
 
 		children.height('auto');
 
-		if ($(document).width() > 768) {
+		if (j(document).width() > 768) {
 			children.each(function() {
-				if ($(this).innerHeight() > maxHeight) {
-					maxHeight = $(this).innerHeight();
+				if (j(this).innerHeight() > maxHeight) {
+					maxHeight = j(this).innerHeight();
 				}
 			});
 
@@ -252,13 +252,13 @@ $.fn.alignElementsSameHeight = function() {
 		}
 
 		maxHeight = 0;
-		children = $(this).find('.same-height-always');
+		children = j(this).find('.same-height-always');
 
 		children.height('auto');
 
 		children.each(function() {
-			if ($(this).innerHeight() > maxHeight) {
-				maxHeight = $(this).innerHeight();
+			if (j(this).innerHeight() > maxHeight) {
+				maxHeight = j(this).innerHeight();
 			}
 		});
 

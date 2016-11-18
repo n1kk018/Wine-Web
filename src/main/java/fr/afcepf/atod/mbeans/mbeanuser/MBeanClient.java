@@ -1,10 +1,15 @@
 package fr.afcepf.atod.mbeans.mbeanuser;
 
 import java.io.Serializable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.model.SelectItem;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
 import fr.afcepf.atod.business.product.api.IBuAdress;
@@ -31,9 +37,12 @@ import fr.afcepf.atod.wine.entity.User;
 @SessionScoped
 public class MBeanClient implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @ManagedProperty(value = "#{buCustomer}")
+	@ManagedProperty(value = "#{buCustomer}")
 	private IBuCustomer buCustomer;
     @ManagedProperty(value = "#{buAdress}")
     private IBuAdress buAdress;
@@ -41,6 +50,9 @@ public class MBeanClient implements Serializable {
     private IBuCountry buCountry;
     @ManagedProperty(value = "#{mBeanConnexion}")
 	private MBeanConnexion mBeanConnexion;
+    
+    @SuppressWarnings("unused")
+    private Civility[] civilities;
   
     private String sdate;
     
@@ -48,10 +60,8 @@ public class MBeanClient implements Serializable {
 	private Adress adresseLivraison = new Adress();
 	private Adress adresseFacturation = new Adress();
 	private Customer customer = new Customer();
-	private User user;
 
-	@SuppressWarnings("unused")
-    private Civility[] civilities;
+	private User user;
 
 	private UIComponent success;
 	
@@ -176,10 +186,6 @@ public class MBeanClient implements Serializable {
 		this.success = success;
 	}
 	
-    public IBuAdress getBuAdress() {
-        return buAdress;
-    }
-
     public IBuCountry getBuCountry() {
         return buCountry;
     }
@@ -195,23 +201,13 @@ public class MBeanClient implements Serializable {
         this.mesCountries = mesCountries;
     }
 
-	public void setBuAdress(IBuAdress buAdress) {
-        this.buAdress = buAdress;
-    }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-	public Adress getAdress() {
-		return adress;
+	public IBuAdress getBuAdress() {
+		return buAdress;
 	}
 
-	public void setAdress(Adress adress) {
-		this.adress = adress;
+	public void setBuAdress(IBuAdress buAdress) {
+		this.buAdress = buAdress;
 	}
 
 	public User getUser() {
@@ -230,13 +226,13 @@ public class MBeanClient implements Serializable {
 		this.buCustomer = buCustomer;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+//	public User getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(Customer user) {
+//		this.customer = user;
+//	}
 
 	public Civility[] getCivilities() {
 		return Civility.values();
