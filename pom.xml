@@ -11,8 +11,7 @@
 		<java.version>1.8</java.version>
 		<plugin.compiler.maven>3.1</plugin.compiler.maven>
 		<jsf.version>2.2.10</jsf.version>
-		<spring.version>4.0.1.RELEASE</spring.version>
-		<org.apache.myfaces.version>2.2.10</org.apache.myfaces.version>
+		<spring.version>4.2.8.RELEASE</spring.version>
 		<project.version>1.0</project.version>
 	</properties>
 	<repositories>
@@ -102,6 +101,11 @@
 			<version>7.0</version>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>fr.afcepf.atod</groupId>
+			<artifactId>OnWine-ES</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -161,4 +165,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
