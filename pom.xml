@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.afcepf.atod</groupId>
-    <artifactId>Wine-Web</artifactId>
-    <version>1.0</version>
-    <packaging>war</packaging>
-    <name>Wine-Web</name>
-    <properties>
-        <java.version>1.8</java.version>
-        <plugin.compiler.maven>3.1</plugin.compiler.maven>
-        <jsf.version>2.2.10</jsf.version>
-        <spring.version>4.2.8.RELEASE</spring.version>
-        <project.version>1.0</project.version>
-    </properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.afcepf.atod</groupId>
+	<artifactId>Wine-Web</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+	<name>Wine-Web</name>
+	<properties>
+		<java.version>1.8</java.version>
+		<plugin.compiler.maven>3.1</plugin.compiler.maven>
+		<jsf.version>2.2.10</jsf.version>
+		<spring.version>4.2.8.RELEASE</spring.version>
+		<project.version>1.0</project.version>
+	</properties>
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
@@ -135,10 +136,10 @@
                     <wsdlUrls>
                        
                         <wsdlUrl>
-                            <!-- http://localhost:8090/ode/processes/OnWineServices?wsdl -->
-                            <!--http://localhost:8380/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl-->                        
-						    http://localhost:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl
-						    <!-- http://localhost:8280/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl -->
+                            <!-- http://192.168.102.42:8090/ode/processes/OnWineServices?wsdl -->
+                            <!--http://192.168.102.42:8180/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl-->                        
+						    <!-- http://192.168.102.42:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl -->
+						    <!-- http://192.168.102.42:8180/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl -->
 						</wsdlUrl>
  
                         
@@ -155,7 +156,7 @@
                     <packageName>
                     <!-- fr.afcepf.atod.onwine.ws.soap.orchestre -->
                     <!-- fr.afcepf.atod.onwine.ws.soap.currency -->
-                    fr.afcepf.atod.onwine.ws.soap.delivery
+                    <!-- fr.afcepf.atod.onwine.ws.soap.delivery -->
                     <!-- fr.afcepf.atod.onwine.ws.soap.tax -->
                      </packageName>
                     <!-- generated source files destination -->
