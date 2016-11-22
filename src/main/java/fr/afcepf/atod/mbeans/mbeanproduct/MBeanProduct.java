@@ -246,6 +246,12 @@ public class MBeanProduct implements Serializable {
         }
     }
     
+    public String article() throws WineException {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Integer id = Integer.valueOf(getProductParam(fc));
+        return getArticle(id);
+    }
+    
     private String getArticle(Integer id) {
         String str = null;
         try {
