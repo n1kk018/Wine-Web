@@ -1335,8 +1335,12 @@ body {
   font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
+<<<<<<< HEAD
+  background-color: #ffffff;
+=======
   background-size: contain;
   background-repeat: no-repeat;
+>>>>>>> branch 'master' of https://github.com/n1kk018/Wine-Web
 }
 a {
   color: rgb(188,54,4);
