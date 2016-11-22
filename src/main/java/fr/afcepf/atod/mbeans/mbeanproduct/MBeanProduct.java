@@ -19,9 +19,9 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
 import fr.afcepf.atod.wine.entity.ProductVintage;
 import fr.afcepf.atod.wine.entity.ProductWine;
-import fr.afcepf.atod.onwine.ws.soap.CurrenciesWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.CurrencyConverterService;
-import fr.afcepf.atod.onwine.ws.soap.ICurrencyConverter;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrenciesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrencyConverterService;
+import fr.afcepf.atod.onwine.ws.soap.currency.ICurrencyConverter;
 
 import java.io.IOException;
 import java.io.Serializable;

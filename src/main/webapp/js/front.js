@@ -62,7 +62,7 @@ function convertPrices(trgtCurrency) {
 		amount = amount.trim();
 		j.ajax({
 	        type:"GET",
-	        url : "http://localhost:8380/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
+	        url : "http://192.168.102.42:8180/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
 	        dataType: 'json',
 	        crossDomain: true,
 	        async: false,
