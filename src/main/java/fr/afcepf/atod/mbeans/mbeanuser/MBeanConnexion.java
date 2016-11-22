@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import fr.afcepf.atod.business.customer.api.IBuCustomer;
+import fr.afcepf.atod.wine.entity.Customer;
 import fr.afcepf.atod.wine.entity.User;
 
 /**
@@ -40,7 +41,7 @@ public class MBeanConnexion implements Serializable {
     /**
      * user / customer
      */
-    private User userConnected;
+    private Customer userConnected;
     /**
      * map of errors
      */
@@ -56,7 +57,7 @@ public class MBeanConnexion implements Serializable {
 
     public MBeanConnexion() {
         super();
-        userConnected = new User();
+        userConnected = new Customer();
     }
 
     /**
@@ -97,7 +98,7 @@ public class MBeanConnexion implements Serializable {
     }
 
     public void disconnect() {
-        userConnected = new User();
+        userConnected = new Customer();
     }
 
     // ----------- Getters && Setters ----------------//
@@ -109,11 +110,11 @@ public class MBeanConnexion implements Serializable {
         this.invalidConnexion = invalidConnexion;
     }
 
-    public User getUserConnected() {
+    public Customer getUserConnected() {
         return userConnected;
     }
 
-    public void setUserConnected(User userConnected) {
+    public void setUserConnected(Customer userConnected) {
         this.userConnected = userConnected;
     }
 
