@@ -65,6 +65,7 @@ public class MBeanCartManagement implements Serializable {
 	private Customer customer = new Customer();
 	@ManagedProperty(value="#{mBeanMail}")
 	private MBeanMail mBeanMail;	
+	private String deliveryTransporter;
 
 	public MBeanCartManagement() {
 		super();
@@ -221,12 +222,17 @@ public class MBeanCartManagement implements Serializable {
 	
 	public double callDelivery() throws DeliveriesWSException_Exception {
 	    double delivery = 0.0;
+	    System.out.println("---------------------"+deliveryTransporter+"---------------------------");
 	    if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
 	        IDeliveryCalculator client = (new DeliveryCalculatorService()).getDeliveryCalculatorPort();
 	        List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
 	        for (Adress adress : ads) {
 	            if (!adress.isBilling()) {
-	                delivery = client.getRateDeliveryTotal(adress.getCountry().getCode(), calculerNumTotalQantity());
+	                if(deliveryTransporter!=null && deliveryTransporter.equals("chronopost")) {
+	                    delivery = client.getInternationalRateDelivery(adress.getCountry().getCode(), calculerNumTotalQantity());
+	                } else {
+	                    delivery = client.getRateDeliveryTotal(adress.getCountry().getCode(), calculerNumTotalQantity());
+	                }
 	                System.out.println("---------------------"+delivery+"---------------------------");
 	            }
 	        }
@@ -472,6 +478,14 @@ public class MBeanCartManagement implements Serializable {
 	public void setmBeanMail(MBeanMail mBeanMail) {
 		this.mBeanMail = mBeanMail;
 	}
+
+    public String getDeliveryTransporter() {
+        return deliveryTransporter;
+    }
+
+    public void setDeliveryTransporter(String paramDeliveryTransporter) {
+        deliveryTransporter = paramDeliveryTransporter;
+    }
 	
 	
 	
