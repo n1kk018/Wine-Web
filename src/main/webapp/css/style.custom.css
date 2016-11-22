@@ -1335,9 +1335,7 @@ body {
   font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
-  background-image: url(http://st.gde-fon.com/wallpapers_original/405972_butylki_bochonok_bokaly_vino_beloe_krasnoe_loza._1680x1050_www.Gde-Fon.com.jpg);
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-color: #ffffff;
 }
 a {
   color: rgb(188,54,4);
