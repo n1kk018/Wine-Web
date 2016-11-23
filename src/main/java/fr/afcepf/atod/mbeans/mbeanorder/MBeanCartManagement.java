@@ -559,11 +559,11 @@ public class MBeanCartManagement implements Serializable {
         currencyWill = paramCurrencyWill;
     }
 
-    public String getFinalAmount() {
+    public Double getFinalAmount() {
         return finalAmount;
     }
 
-    public void setFinalAmount(String paramFinalAmount) {
+    public void setFinalAmount(Double paramFinalAmount) {
         finalAmount = paramFinalAmount;
     }
     
