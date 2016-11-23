@@ -24,9 +24,8 @@
 				<div class="col-md-9" id="checkout">
 					<div class="box">
 						<form jsf="h:form" id="Form">
-							<h1>#{lang['mode_de_livraison']}</h1>
+							<h3>#{lang['mode_de_paiement']}</h3>
 							<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
-							<div class="content">
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="box payment-method">
@@ -76,9 +75,16 @@
 										</div>
 									</div>
 								</div>
-								<!-- /.row -->
-							</div>
-							<!-- /.content -->
+								<div jsf:class="row" jsf:rendered="#{localeBean.currency!='EUR'}">
+                                      <div class="col-sm-12">         
+                                               #{lang['currency_will']} 
+                                               <h:selectOneMenu id="currencyWill" value="#{mBeanCartManagement.currencyWill}">
+                                                   <f:selectItem itemValue="#{localeBean.currency}" itemLabel="#{localeBean.getCurrencyLabel(localeBean.currency)}" />
+                                                   <f:selectItem itemValue="EUR" itemLabel="Euro" />                                
+                                                </h:selectOneMenu> 
+                                                <span id="eu_amount" style="display:none;float:right;"></span>
+                                    </div>
+                               </div>
 						</form>
 
 						<h:panelGroup>

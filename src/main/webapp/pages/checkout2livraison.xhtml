@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -83,4 +84,91 @@
 			</div>
 			<!-- /.container -->
 	</ui:define>
+=======
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:param name="page" value="shipping" />
+	<ui:define name="breadcrumb">
+    	<p:breadCrumb>
+			<p:menuitem value="Index" url="index.jsf" />
+			<p:menuitem value="#{lang['basket']}" url="basket.jsf"/>
+			<p:menuitem value="#{lang['shipping']}" />
+		</p:breadCrumb>
+    </ui:define>
+	<ui:define name="body">
+	       <f:metadata>
+                <f:viewParam name="delivery" value="#{mBeanCartManagement.deliveryTransporter}"/>
+            </f:metadata>
+			<div class="container">
+				<div class="col-md-9" id="checkout">
+					<div class="box">
+						<form jsf:id="form1">
+							<h3>#{lang['mode_de_livraison']}</h3>
+							<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
+							<div class="content">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="box shipping-method">
+											<div class="media-left media-middle">
+												<img class="media-object" src="img/logocolissimo.png" />
+											</div>
+											<p>#{lang['msg_delai_livraison_1']}</p>
+											<div class="box-footer text-center">
+												<input jsf:id="shipping1" type="radio" pt:name="delivery" value="colissimo" checked="checked" />
+												<f:ajax event="click" render="shipping total" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="box shipping-method">
+
+											<div class="media-left media-middle">
+												<img class="media-object" src="img/logochronopost.png" />
+											</div>
+
+											<p>#{lang['msg_delai_livraison_2']}</p>
+
+											<div class="box-footer text-center">
+												<input jsf:id="shipping2" type="radio" pt:name="delivery" value="chronopost" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /.row -->
+
+							</div>
+							<!-- /.content -->
+						</form>
+						<h:form>
+							<div class="box-footer">
+								<div class="pull-left">
+									<a href="pages/checkout1adress.jsf" class="btn btn-default"><i
+										class="fa fa-chevron-left"></i>#{lang['rediriger']}</a>
+								</div>
+								<div class="pull-right">
+									<h:commandButton
+										action="#{mBeanCartManagement.validerLivraison()}"
+										value="#{lang['valider_payer']}"
+										class="btn btn-primary"></h:commandButton>
+								</div>
+							</div>
+						</h:form>
+					</div>
+					<!-- /.box -->
+
+
+				</div>
+				<!-- /.col-md-9 -->
+
+				<ui:include src="/WEB-INF/templates/cartSummary.xhtml" />
+			</div>
+			<!-- /.container -->
+	</ui:define>
+>>>>>>> refs/heads/master
 </ui:composition>
