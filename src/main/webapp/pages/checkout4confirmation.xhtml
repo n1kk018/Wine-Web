@@ -17,98 +17,22 @@
 			<div class="container">
 				<div class="col-md-12" id="checkout">
 					<div class="box">
-						<h:form>
-							<h3>#{lang['confirmation']}</h3>
-							<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
-							<p>#{lang['message_de_confirmation']}</p>
-							<h3>
-								#{lang['numero_de_commande']} : CMD
-								<h:outputLabel value="#{mBeanCartManagement.lastOrder.id}" />
-							</h3>
-							<div class="table-responsive">
-								<table class="table">
-									<thead>
-										<tr>
-											<th>#{lang['produit']}</th>
-											<th>#{lang['quantite']}</th>
-											<th>#{lang['prix_unitaire']}</th>
-											<th>#{lang['reduction']}</th>
-											<th colspan="2">#{lang['totale']}</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<h:panelGroup id="myPanel">
-											<ui:repeat id="uiRepeatCart"
-												value="#{mBeanCartManagement.listOrderDetails}"
-												var="orderDetail">
-												<tr>
-													<td><a href="pages/article.jsf"> <img
-															src="img/wine_pictures/#{orderDetail.productOrdered.apiId}/#{orderDetail.productOrdered.apiId}m.jpg"
-															alt="#{orderDetail.productOrdered.name}" />
-													</a></td>
-													<td><h:outputLabel id="quantityProduct"
-															value="#{orderDetail.quantite}">
-														</h:outputLabel></td>
-													<td><h:outputText
-															value="#{orderDetail.productOrdered.price}€">
-															 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText></td>
-													<td><h:outputText
-															value="#{mBeanCartManagement.calculDiscount(orderDetail)}€">
-															 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText></td>
-													<td><h:outputText id="totalLine"
-															value="#{mBeanCartManagement.calculTotalLine(orderDetail)}€">
-															 <f:convertNumber minFractionDigits="2" maxIntegerDigits="2" />
-														</h:outputText></td>
-												</tr>
-											</ui:repeat>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>#{lang['sous_total']}</td>
-												<th><h:outputText id="subTotal"
-														value="#{mBeanCartManagement.calculSubTotal()}€">
-														 <f:convertNumber minFractionDigits="2" />
-													</h:outputText></th>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>#{lang['frais_de_transport']}</td>
-												<th><h:outputText id="shipping"
-														value="#{mBeanCartManagement.order.ordersDetail.size()*1.5}€">
-														 <f:convertNumber minFractionDigits="2" />
-													</h:outputText></th>
-											</tr>
-											<tr class="total">
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>#{lang['totale']}</td>
-												<th><h:outputText id="total"
-														value="#{mBeanCartManagement.calculTotal() + mBeanCartManagement.order.ordersDetail.size()*1.5}€">
-													 <f:convertNumber minFractionDigits="2" />
-													</h:outputText></th>
-											</tr>
-										</h:panelGroup>
-									</tbody>
-								</table>
-
-							</div>
-							<!-- /.table-responsive -->
-
-						</h:form>
-
+						<h3>#{lang['confirmation']}</h3>
+						<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
+						<h3>
+							#{lang['numero_de_commande']} : CMD
+							<h:outputLabel value="#{mBeanCartManagement.lastOrder.id}" />
+						</h3>
+						<p style="font-size:17px;">
+						    #{lang['message_de_confirmation1']} 
+							<h:outputText value="#{mBeanCartManagement.finalAmount}" class="itemPrice">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
+                            <span class="flaticon-euro-currency-symbol currency-symbol"></span> 
+                            #{lang['message_de_confirmation2']}.
+                       </p>
 					</div>
-					<!-- /.box -->
-
 				</div>
-				<!-- /.col-md-12 -->
 			</div>
-			<!-- /.container -->
 	</ui:define>
 </ui:composition>

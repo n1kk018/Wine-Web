@@ -6,23 +6,34 @@
 package fr.afcepf.atod.mbeans.mbeanorder;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.xml.ws.BindingProvider;
 
 import org.apache.log4j.Logger;
 
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrenciesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrencyConverterService;
+import fr.afcepf.atod.onwine.ws.soap.currency.ICurrencyConverter;
 import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
 import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
 import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesOrchestrator;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesOrchestratorPortType;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesOrchestratorRequest;
+import fr.afcepf.atod.onwine.ws.soap.orchestre.OnWineServicesOrchestratorResponse;
 import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
 import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
 import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
@@ -66,6 +77,8 @@ public class MBeanCartManagement implements Serializable {
 	@ManagedProperty(value="#{mBeanMail}")
 	private MBeanMail mBeanMail;	
 	private String deliveryTransporter;
+	private String currencyWill;
+	private String finalAmount;
 
 	public MBeanCartManagement() {
 		super();
@@ -82,6 +95,9 @@ public class MBeanCartManagement implements Serializable {
 	public String addProductCart() {
 		String page = null;
 		validOrder = false;
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
+        String currency = (String) sessionMap.get("currency");
 		String id = UtilDefParam.getProductParam(FacesContext.getCurrentInstance());
 		Product product = null;
 		try {
@@ -91,6 +107,10 @@ public class MBeanCartManagement implements Serializable {
 			e.printStackTrace();
 		} catch (WineException e) {			
 			e.printStackTrace();
+		}
+		product.setConvertedPrice(product.getPrice());
+		if (currency != null) {
+		    convertCurrencyInObj(product, currency);
 		}
 		if (!product.getName().equalsIgnoreCase("")
 				&& product.getPrice() >= 0
@@ -104,23 +124,6 @@ public class MBeanCartManagement implements Serializable {
 				}
 				order = buOrder.addItemCart(order, product);
 				listOrderDetails = UtilConverter.retrieveListAsSet(order.getOrdersDetail());
-
-				/*The symptoms indicate that the page was requested by a POST request and that
-                you're ignoring the webbrowser's warning that the data will be resent when refreshing
-                the request. Refreshing a POST request will of course result in it being re-executed.
-                This is not a JSF specific problem.The common solution to that is to send a redirect
-                to a GET request after executing the POST request. This way the client will end up
-                having the GET request in the browser view. Refreshing this will then only re-execute
-                the GET request which doesn't (shouldn't) modify anything (unless you're doing this in
-                the constructor of a request scoped bean associated with the view). This is also known
-                as the POST-Redirect-GET pattern.With JSF 2.0, you can achieve this by simply adding
-                faces-redirect=true parameter to the bean action's outcome.
-                N.B:1)If you're still using old fashioned <navigation-case>s in faces-config.xml,
-                then the same effect can be achieved by adding <redirect/> to the case
-                    2) In JSF 2.0+ you could instead use the flash scope for this or to just let
-                the POST take place by <f:ajax> submit instead of a normal submit.
-                    3) Another method
-				 */								
 				page = UtilFindPath.findURLPath("basket.jsf");
 				return page;
 			} catch (WineException ex) {
@@ -134,6 +137,19 @@ public class MBeanCartManagement implements Serializable {
 		}
 		return page;
 	}
+	
+	private void convertCurrencyInObj(Product prod, String currency) {
+
+        ICurrencyConverter client = (ICurrencyConverter) (new CurrencyConverterService()).getCurrencyConverterPort();
+        try {
+            log.info("=============================Conversion=========================");
+            log.info(prod.getPrice());
+            prod.setConvertedPrice(client.convert(prod.getPrice(), "EUR", currency));
+            log.info(prod.getConvertedPrice());
+        } catch (CurrenciesWSException_Exception paramE) {
+            paramE.printStackTrace();
+        }
+    }
 
 
 	/**
@@ -165,7 +181,7 @@ public class MBeanCartManagement implements Serializable {
 				&& orderDetail.getProductOrdered()
 				.getSpeEvent()!= null) 
 		{
-			prix = orderDetail.getProductOrdered().getPrice();
+			prix = orderDetail.getProductOrdered().getConvertedPrice();
 			pourcentage = orderDetail.getProductOrdered()
 					.getSpeEvent().getPourcentage();
 			discount = (double)Math.round((prix/100.0 * pourcentage)*100d)/100d;
@@ -184,7 +200,7 @@ public class MBeanCartManagement implements Serializable {
 		double totalLine = 0.0;
 		if (orderDetail != null) {
 			totalLine = orderDetail.getQuantite()
-					* (orderDetail.getProductOrdered().getPrice() - calculDiscount(orderDetail));
+					* (orderDetail.getProductOrdered().getConvertedPrice() - calculDiscount(orderDetail));
 		}
 		return (double)Math.round(totalLine*100d)/100d;
 	}
@@ -286,10 +302,20 @@ public class MBeanCartManagement implements Serializable {
 	 */
 	public double calculTotal() {
 		double subtotal = 0.0;
+		double result = 0.0;
 		for (OrderDetail o : order.getOrdersDetail()) {
 			subtotal = subtotal + calculTotalLine(o);
 		}
-		return (double)Math.round((subtotal + caclulShippingFree())*100d)/100d;
+		try {
+            result=(double)Math.round((subtotal + callDelivery() + calculTaxPays())*100d)/100d;
+        } catch (DeliveriesWSException_Exception paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        } catch (TaxWSException_Exception paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
+		return result;
 	}
 
 
@@ -361,18 +387,56 @@ public class MBeanCartManagement implements Serializable {
 		if (mBeanConnexion.getUserConnected().getId() != null && order.getCreatedAt()!=null 
 				&& order.getShippingMethod()!=null && order.getOrdersDetail().size()!=0) {        	
 			try {
+			    invokeOrchestrator();
 			    order.setPaidAt(new Date());
 				order.setPaymentInfo(new PaymentInfo(1, "visa"));
 				buOrder.addNewOrder(order);
 				validOrder = true;
 				getLastOrder(customer);				
-				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";/*null;*/
+				page = "/pages/checkout4confirmation.jsf?faces-redirect=true";
 			} catch (WineException e) {
 				e.printStackTrace();
 			}
 		} 
 		return page;
 	}
+	
+	private String invokeOrchestrator() {
+	    finalAmount = "0";
+    	OnWineServicesOrchestratorPortType proxy = new OnWineServicesOrchestrator().getOnWineServicesOrchestratorPort();
+        BindingProvider bp = (BindingProvider)proxy;
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.102.42:9090/ode/processes/OnWineServicesOrchestrator");
+        OnWineServicesOrchestratorRequest request = new OnWineServicesOrchestratorRequest();
+           for (Adress adress : mBeanConnexion.getUserConnected().getAdresses()) {
+               if(adress.isBilling()) {
+                   request.setCountryCodeBilling(adress.getCountry().getCode());
+               } else {
+                   request.setCountryCodeShipping(adress.getCountry().getCode());
+               }
+            }
+        if (!order.getOrdersDetail().isEmpty()) {
+           double HT = 0.0;
+           Integer tQ = 0;
+           for (OrderDetail o : order.getOrdersDetail()) {
+               double prix = o.getQuantite() * ((double) Math.round(o.getProductOrdered().getPrice()*100d)/100d);
+               if(o.getProductOrdered().getSpeEvent()!=null) { 
+                   double discount = (double)Math.round((prix/100.0 * o.getProductOrdered().getSpeEvent().getPourcentage())*100d)/100d;
+                   HT = HT + (prix - discount);
+               } else {
+                   HT = HT + prix;
+               }
+               tQ += o.getQuantite();
+           }
+            request.setAmount(HT);
+            request.setSrcCurrency("EUR");
+            request.setTrgtCurrency(currencyWill);
+            request.setQuantity(new BigInteger(tQ.toString()));
+            request.setTransporterName(deliveryTransporter);
+            OnWineServicesOrchestratorResponse response = proxy.process(request);
+            finalAmount = response.getResult();
+        }
+        return finalAmount;
+    }
 
 	/**
 	 * recuperer le dernier commande de client qui viens de passer pour le recap confirmation
@@ -486,18 +550,22 @@ public class MBeanCartManagement implements Serializable {
     public void setDeliveryTransporter(String paramDeliveryTransporter) {
         deliveryTransporter = paramDeliveryTransporter;
     }
-	
-	
-	
-	 /*OnWineServicesPortType proxy = new OnWineServices().getOnWineServicesPort();
-                BindingProvider bp = (BindingProvider)proxy;
-                bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8090/ode/processes/OnWineServices");
-                OnWineServicesRequest request = new OnWineServicesRequest();
-                request.setCodePaysFacturation(codeCountry);
-                request.setCodePaysLivraison(country);
-                request.setCurrency("USD");
-                request.setMontantHT(calculSubTotal());
-                request.setQuantity(new BigInteger(tQ.toString()));
-                
-                OnWineServicesResponse response = proxy.process(request);*/
+
+    public String getCurrencyWill() {
+        return currencyWill;
+    }
+
+    public void setCurrencyWill(String paramCurrencyWill) {
+        currencyWill = paramCurrencyWill;
+    }
+
+    public String getFinalAmount() {
+        return finalAmount;
+    }
+
+    public void setFinalAmount(String paramFinalAmount) {
+        finalAmount = paramFinalAmount;
+    }
+    
+    
 }

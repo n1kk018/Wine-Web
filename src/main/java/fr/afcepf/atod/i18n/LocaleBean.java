@@ -2,6 +2,7 @@ package fr.afcepf.atod.i18n;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -110,6 +111,26 @@ public class LocaleBean implements Serializable{
 
     public void setmBeanProduct(MBeanProduct paramMBeanProduct) {
         mBeanProduct = paramMBeanProduct;
-    }    
+    } 
+    
+    public String getCurrencyLabel(String code)
+    {
+        HashMap<String, String> devises = new HashMap<String,String>();
+        devises.put("EUR","Euro");
+        devises.put("GBP","Livre Sterling");
+        devises.put("USD","Dollar U.S.");
+        devises.put("JPY","Yen japonais");
+        devises.put("BGN","Lev bulgare");
+        devises.put("DKK","Couronne danoise");
+        devises.put("EEK","Couronne estonienne");
+        devises.put("HUF","Forint hongrois");
+        devises.put("LVL","Lats letton");
+        devises.put("LTL","Litas lithuanien");
+        devises.put("PLN","Zloty polonais");
+        devises.put("CZK","Couronne tchèque");
+        devises.put("SEK","Couronne suédoise");
+        
+        return devises.get(code);
+    }
     
 }

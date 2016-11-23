@@ -56,10 +56,10 @@
 															</a></td>
 															<td><input jsf:id="quantityProduct" min="1" type="number"
 																jsf:value="#{orderDetail.quantite}" class="form-control">
-															<f:ajax event="change" execute="@form" render="@form" />
+															<p:ajax event="change" process="@form" update="@form" oncomplete="switchCurrencyClass()" />
 																</input></td>
 															<td style="text-align: center;"><h:outputText
-																	value="#{orderDetail.productOrdered.price}" class="itemPrice">
+																	value="#{orderDetail.productOrdered.convertedPrice}" class="itemPrice">
 																	  <f:convertNumber pattern="#0.00" />
 																</h:outputText><span class="flaticon-euro-currency-symbol currency-symbol"></span></td>
 															<td style="text-align: center;"><h:outputText

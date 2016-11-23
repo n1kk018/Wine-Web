@@ -16,6 +16,15 @@ j(function() {
 	j('#currency').on('change', function() {
 		convertPrices(this.value); 
 	});
+	j("#currencyWill").on('change',function() {
+		if(j("#currencyWill").val()=="EUR") {
+			j('#eu_amount').text('Montant en € : '+convert(j('#total').text(),lastCurrency,'EUR'));
+			j('#eu_amount').css('display','block');
+		} else {
+			j('#eu_amount').text("");
+			j('#eu_amount').css('display','inline');
+		}
+	});
 	//demo();
 });
 
@@ -62,7 +71,7 @@ function convertPrices(trgtCurrency) {
 		amount = amount.trim();
 		j.ajax({
 	        type:"GET",
-	        url : "http://192.168.102.42:8180/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
+	        url : "http://localhost:8380/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
 	        dataType: 'json',
 	        crossDomain: true,
 	        async: false,
@@ -73,6 +82,25 @@ function convertPrices(trgtCurrency) {
             element.next("span.currency-symbol").removeClass().addClass("currency-symbol "+response.currency_class);
         });
 	});
+}
+
+function convert(amount,srcCurrency,trgtCurrency) {
+	retour=0;
+	j.ajaxSetup({
+		  contentType: "application/json; charset=utf-8"
+	});
+	j.ajax({
+        type:"GET",
+        url : "http://localhost:8380/OnWine-CurrenciesWS-Web/rest/converter/convertAndFormat",
+        dataType: 'json',
+        crossDomain: true,
+        async: false,
+        data: {"amount":amount.replace(",","."),"src":srcCurrency,"trgt":trgtCurrency}
+        
+    }).success(function(response) {
+        retour = response.amount;
+    });
+	return retour;
 }
 
 /* product detail gallery */

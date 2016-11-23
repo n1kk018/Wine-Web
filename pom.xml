@@ -132,10 +132,9 @@
                 </executions>
                 <configuration>
                     <!-- using wsdl from an url -->
-                    <wsdlUrls>
-                       
+                    <wsdlUrls> 
                         <wsdlUrl>
-                            <!-- http://192.168.102.42:8090/ode/processes/OnWineServices?wsdl -->
+                            <!-- http://192.162.102.67:9090/ode/processes/OnWineServicesOrchestrator?wsdl -->
                             <!--http://192.168.102.42:8180/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl-->                        
 						    <!-- http://192.168.102.42:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl -->
 						    <!-- http://192.168.102.42:8180/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl -->
@@ -153,7 +152,7 @@
                     <keep>true</keep>
                     <!-- Package name -->
                     <packageName>
-                    <!-- fr.afcepf.atod.onwine.ws.soap.orchestre -->
+                    fr.afcepf.atod.onwine.ws.soap.orchestre
                     <!-- fr.afcepf.atod.onwine.ws.soap.currency -->
                     <!-- fr.afcepf.atod.onwine.ws.soap.delivery -->
                     <!-- fr.afcepf.atod.onwine.ws.soap.tax -->

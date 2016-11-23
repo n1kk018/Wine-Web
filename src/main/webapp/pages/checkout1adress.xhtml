@@ -173,17 +173,20 @@
 		                                       </div>
 		                                   </div>
 		                                   <div class="row">
-		                                       <a data-target="#modiflivraison" data-toggle="collapse"
-		                                           class="btn btn-default">#{lang['annuler']}</a>
-		                                   </div>
-		                                   <div class="row">
-		                                       <h:commandButton id="successLiv" value="Valider" type="submit"
-													action="#{mBeanClient.saveAddressLiv() }" >
-													
-											   </h:commandButton>
-												&#160;&#160;&#160;&#160;&#160;
-												<hr/>
-												<h:message for="successLiv" style="color:green"/>
+		                                      <div class="col-sm-6">
+                                                 <div class="form-group">
+                                                    <a data-target="#modiflivraison" data-toggle="collapse"
+                                                   class="btn btn-default">#{lang['annuler']}</a>
+                                                 </div>
+                                               </div> 
+		                                      <div class="col-sm-6">
+                                                 <div class="form-group pull-right">
+                                                    <h:commandButton id="successLiv" value="Valider" type="submit"
+                                                    action="#{mBeanClient.saveAddressLiv() }" >
+	                                               </h:commandButton>
+	                                                <h:message for="successLiv" style="color:green"/>
+                                                 </div>
+                                               </div> 
 										   </div>
 	                           </h:form>
                           </div>
@@ -232,16 +235,20 @@
 		                                       </div>
 		                                   </div>
 		                                   <div class="row">
-		                                       <a data-target="#modiffacturation" data-toggle="collapse"
-		                                           class="btn btn-default">#{lang['annuler']}</a>
-		                                   </div>
-		                                   <div class="row">
-		                                       <h:commandButton id="successFac" value="Valider" type="submit"
-													action="#{mBeanClient.saveAddressFact() }" />
-												<f:ajax execute="@form" render="recharge" event="click" ></f:ajax>
-												&#160;&#160;&#160;&#160;&#160;
-												<hr/>
-												<h:message for="successFac" style="color:green"/>
+		                                      <div class="col-sm-6">
+                                                 <div class="form-group">
+				                                       <a data-target="#modiffacturation" data-toggle="collapse"
+				                                           class="btn btn-default">#{lang['annuler']}</a>
+				                                 </div>
+				                              </div>
+                                              <div class="col-sm-6">
+                                                 <div class="form-group pull-right">
+			                                       <h:commandButton id="successFac" value="Valider" type="submit"
+														action="#{mBeanClient.saveAddressFact() }" />
+													<f:ajax execute="@form" render="recharge" event="click" ></f:ajax>
+													<h:message for="successFac" style="color:green"/>
+											     </div>
+											  </div>
 										   </div>
 	                           </h:form>
                           </div>
