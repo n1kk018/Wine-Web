@@ -78,7 +78,7 @@ public class MBeanCartManagement implements Serializable {
 	private MBeanMail mBeanMail;	
 	private String deliveryTransporter;
 	private String currencyWill;
-	private String finalAmount;
+	private Double finalAmount;
 
 	public MBeanCartManagement() {
 		super();
@@ -401,8 +401,8 @@ public class MBeanCartManagement implements Serializable {
 		return page;
 	}
 	
-	private String invokeOrchestrator() {
-	    finalAmount = "0";
+	private Double invokeOrchestrator() {
+	    finalAmount = 0D;
     	OnWineServicesOrchestratorPortType proxy = new OnWineServicesOrchestrator().getOnWineServicesOrchestratorPort();
         BindingProvider bp = (BindingProvider)proxy;
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.102.67:9090/ode/processes/OnWineServicesOrchestrator");
@@ -433,7 +433,7 @@ public class MBeanCartManagement implements Serializable {
             request.setQuantity(new BigInteger(tQ.toString()));
             request.setTransporterName(deliveryTransporter);
             OnWineServicesOrchestratorResponse response = proxy.process(request);
-            finalAmount = response.getResult();
+            finalAmount = Double.parseDouble(response.getResult());
         }
         return finalAmount;
     }
