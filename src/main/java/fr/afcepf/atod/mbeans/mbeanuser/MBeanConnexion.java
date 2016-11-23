@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -97,6 +98,9 @@ public class MBeanConnexion implements Serializable {
     }
 
     public void disconnect() {
+        
+        Cookie cookie = new Cookie ("JSESSIONID", "randomValue");
+        cookie.setMaxAge( 0 );
         userConnected = new User();
     }
 

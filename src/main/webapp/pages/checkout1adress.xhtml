@@ -2,269 +2,307 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/common.xhtml">
 	<ui:param name="page" value="adress" />
 	<ui:define name="breadcrumb">
-    	<p:breadCrumb>
+		<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
-			<p:menuitem value="#{lang['basket']}" url="basket.jsf"/>
+			<p:menuitem value="#{lang['basket']}" url="basket.jsf" />
 			<p:menuitem value="#{lang['billing_shipping']}" />
 		</p:breadCrumb>
-    </ui:define>
+	</ui:define>
 	<ui:define name="body">
-			<div class="container">
-				<div class="col-md-9" id="checkout">
-					<div class="box">
-						<h3>#{lang['billing_shipping']} :</h3>
-						<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
-						<div class="content">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<h3>#{lang['adresse_de_livraison']}</h3>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<h3>#{lang['adresse_de_facturation']}</h3>
-									</div>
+		<div class="container">
+			<div class="col-md-9" id="checkout">
+				<div class="box">
+					<h3>#{lang['billing_shipping']} :</h3>
+					<ui:include src="/WEB-INF/templates/basketNav.xhtml" />
+					<div class="content">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<h3>#{lang['adresse_de_livraison']}</h3>
 								</div>
 							</div>
-							<!-- /.row -->
-							<div class="row">
-								<div id="recharge" class="col-sm-12">
-								     <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="text-uppercase">
-                                                        <h:outputText
-                                                            value="#{mBeanConnexion.userConnected.lastname}"/>
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="text-justify">
-                                                        <h:outputText
-                                                            value="#{mBeanConnexion.userConnected.firstname}" />
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <p class="text-justify">
-                                                        <h:outputText
-                                                            value="#{mBeanClient.adresseLivraison.number}" />
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <p class="text-justify">
-                                                        <h:outputText
-                                                            value="#{mBeanClient.adresseLivraison.street}" />
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p class="text-justify">
-                                                <h:outputText
-                                                    value="#{mBeanClient.adresseLivraison.zipcode}" />
-                                            </p>
-                                            <p class="text-justify">
-                                                <h:outputText
-                                                    value="#{mBeanClient.adresseLivraison.city}" />
-                                            </p>
-                                            <p class="text-justify">
-                                                <h:outputText value="#{mBeanClient.countryLiv.name}" />
-                                            </p>
-                                            <button data-target="#modiflivraison" data-toggle="collapse"
-                                                class="btn btn-primary" jsf:type="button">
-                                                #{lang['modifier_adresse_livraison']}<i class="fa fa-chevron-bottom"></i>
-                                            </button>
-                                       </div>
-								       <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="text-uppercase">
-                                                        <h:outputText
-                                                            value="#{mBeanConnexion.userConnected.lastname}"/>
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="text-justify">
-                                                        <h:outputText
-                                                            value="#{mBeanConnexion.userConnected.firstname}" />
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <p class="text-justify">
-                                                        <h:outputText
-                                                            value="#{mBeanClient.adresseFacturation.number}" />
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <p class="text-justify">
-                                                        <h:outputText
-                                                            value="#{mBeanClient.adresseFacturation.street}" />
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p class="text-justify">
-                                                <h:outputText
-                                                    value="#{mBeanClient.adresseFacturation.zipcode}" />
-                                            </p>
-                                            <p class="text-justify">
-                                                <h:outputText
-                                                    value="#{mBeanClient.adresseFacturation.city}" />
-                                            </p>
-                                            <p class="text-justify">
-                                                <h:outputText value="#{mBeanClient.countryFac.name}" />
-                                            </p>
-                                            <button data-target="#modiffacturation" data-toggle="collapse"
-                                                class="btn btn-primary" jsf:type="button">
-                                                #{lang['modifier_adresse_facturation']}<i class="fa fa-chevron-bottom"></i>
-                                            </button>
-                                       </div>                                       
+							<div class="col-md-6">
+								<div class="form-group">
+									<h3>#{lang['adresse_de_facturation']}</h3>
 								</div>
 							</div>
-
-                            <div id="modiflivraison" class="collapse clearfix">
-                                       
-	                             <div class="row">
-	                                  <h3>#{lang['demande_adresse_livraison']}</h3>
-	                             </div>
-
-                                 <h:form id="formlivr" >
-		                                   <div class="row">
-		                                       <div class="col-sm-6">
-		                                           <div class="form-group">
-		                                               <label for="numberL">#{lang['numero']}</label> 
-		                                               <h:inputText class="form-control" id="numberL" value="#{mBeanClient.adresseLivraison.number}"/>
-		                                           </div>
-		                                       </div>
-		                                       <div class="col-sm-6">
-		                                           <div class="form-group">
-		                                               <label for="streetL">#{lang['rue']}</label>
-		                                               <h:inputText class="form-control" id="streetL" value="#{mBeanClient.adresseLivraison.street}"/>
-		                                           </div>
-		                                       </div>
-		                                   </div>
-		                                   <div class="row">
-		                                       <div class="col-sm-6 col-md-3">
-		                                           <div class="form-group">
-		                                               <label for="cityL">#{lang['ville']}</label>
-		                                               <h:inputText class="form-control" id="cityL" value="#{mBeanClient.adresseLivraison.city}"/>
-		                                           </div>
-		                                       </div>
-		                                       <div class="col-sm-6 col-md-3">
-		                                           <div class="form-group">
-		                                               <label for="cpostalL">#{lang['cp']}</label>
-		                                               <h:inputText class="form-control" id="cpostalL" value="#{mBeanClient.adresseLivraison.zipcode}" />
-		                                           </div>
-		                                       </div>
-		                                       <div class="col-sm-6 col-md-3">
-		                                         <div class="form-group">
-							                           <label for="paysL">#{lang['pays']}</label>
-							                           <h:selectOneMenu class="form-control" id="paysL" value="#{mBeanClient.adresseLivraison.country.id}" required="true">
-								                       <f:selectItems value="#{mBeanClient.mesCountries}" var="country"
-									                         itemValue="#{country.id}" itemLabel="#{country.name}" />
-							                           </h:selectOneMenu>
-						                         </div>
-		                                       </div>
-		                                   </div>
-		                                   <div class="row">
-		                                       <a data-target="#modiflivraison" data-toggle="collapse"
-		                                           class="btn btn-default">#{lang['annuler']}</a>
-		                                   </div>
-		                                   <div class="row">
-		                                       <h:commandButton id="successLiv" value="Valider" type="submit"
-													action="#{mBeanClient.saveAddressLiv() }" >
-													
-											   </h:commandButton>
-												&#160;&#160;&#160;&#160;&#160;
-												<hr/>
-												<h:message for="successLiv" style="color:green"/>
-										   </div>
-	                           </h:form>
-                          </div>
-                          <div id="modiffacturation" class="collapse clearfix">
-                                       
-	                             <div class="row">
-	                                  <h3>#{lang['demande_adresse_facturation']}</h3>
-	                             </div>
-
-                                 <h:form id="formfact" >
-		                                   <div class="row">
-		                                       <div class="col-sm-6">
-		                                           <div class="form-group">
-		                                               <label for="numberF">#{lang['numero']}</label>
-		                                               <h:inputText class="form-control" id="numberF" value="#{mBeanClient.adresseFacturation.number}"/>
-		                                           </div>
-		                                       </div>
-		                                       <div class="col-sm-6">
-		                                           <div class="form-group">
-		                                               <label for="streetF">#{lang['rue']}</label>
-		                                               <h:inputText class="form-control" id="streetF" value="#{mBeanClient.adresseFacturation.street}"/>
-		                                           </div>
-		                                       </div>
-		                                   </div>
-		                                   <div class="row">
-		                                       <div class="col-sm-6 col-md-3">
-		                                           <div class="form-group">
-		                                               <label for="cityF">#{lang['ville']}</label>
-		                                               <h:inputText class="form-control" id="cityF" value="#{mBeanClient.adresseFacturation.city}"/>
-		                                           </div>
-		                                       </div>
-		                                       <div class="col-sm-6 col-md-3">
-		                                           <div class="form-group">
-		                                               <label for="cPostalF">#{lang['cp']}</label>
-		                                               <h:inputText class="form-control" id="cPostalF" value="#{mBeanClient.adresseFacturation.zipcode}" />
-		                                           </div>
-		                                       </div>
-		                                       <div class="col-sm-6 col-md-3">
-		                                         <div class="form-group">
-							                           <label for="paysF">#{lang['pays']}</label>
-							                           <h:selectOneMenu id="paysF" class="form-control" value="#{mBeanClient.adresseFacturation.country.id}" required="true">
-								                       <f:selectItems value="#{mBeanClient.mesCountries}" var="country"
-									                         itemValue="#{country.id}" itemLabel="#{country.name}" />
-							                           </h:selectOneMenu>
-						                         </div>
-		                                       </div>
-		                                   </div>
-		                                   <div class="row">
-		                                       <a data-target="#modiffacturation" data-toggle="collapse"
-		                                           class="btn btn-default">#{lang['annuler']}</a>
-		                                   </div>
-		                                   <div class="row">
-		                                       <h:commandButton id="successFac" value="Valider" type="submit"
-													action="#{mBeanClient.saveAddressFact() }" />
-													<f:ajax execute="@form" render="recharge" event="click" ></f:ajax>
-												&#160;&#160;&#160;&#160;&#160;
-												<hr/>
-												<h:message for="successFac" style="color:green"/>
-										   </div>
-	                           </h:form>
-                          </div>
-
-
 						</div>
-						<form jsf:id="Form">
-							<div class="box-footer">
-								<div class="pull-left">
-									<a href="pages/basket.jsf" class="btn btn-default"><i
-										class="fa fa-chevron-left"></i>#{lang['retourner_panier']}</a>
+						<!-- /.row -->
+						<div class="row">
+							<div id="recharge" class="col-sm-12">
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-2">
+											<p class="text-uppercase">
+												<h:outputText
+													value="#{mBeanConnexion.userConnected.civility}" />
+											</p>
+										</div>
+										<div class="col-md-4">
+											<p class="text-uppercase">
+												<h:outputText
+													value="#{mBeanConnexion.userConnected.lastname}" />
+											</p>
+										</div>
+										<div class="col-md-4">
+											<p class="text-justify">
+												<h:outputText
+													value="#{mBeanConnexion.userConnected.firstname}" />
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<p class="text-justify">
+												<h:outputText value="#{mBeanClient.adresseLivraison.number}" />
+											</p>
+										</div>
+										<div class="col-md-8">
+											<p class="text-justify">
+												<h:outputText value="#{mBeanClient.adresseLivraison.street}" />
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<p class="text-justify">
+												<h:outputText
+													value="#{mBeanClient.adresseLivraison.zipcode}" />
+											</p>
+										</div>
+										<div class="col-md-5">
+											<p class="text-justify">
+												<h:outputText value="#{mBeanClient.adresseLivraison.city}" />
+											</p>
+										</div>
+										<div class="col-md-5">
+											<p class="text-justify">
+												<h:outputText value="#{mBeanClient.countryLiv.name}" />
+											</p>
+										</div>
+									</div>
+									<button data-target="#modiflivraison" data-toggle="collapse"
+										class="btn btn-primary" jsf:type="button">
+										#{lang['modifier_adresse_livraison']}<i
+											class="fa fa-chevron-bottom"></i>
+									</button>
 								</div>
-
-								<div class="pull-right">
-									<h:commandButton
-										action="#{mBeanCartManagement.validerAdresse()}"
-										value="Valider et aller à la page de livraison" class="btn btn-primary"></h:commandButton>
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-2">
+											<p class="text-uppercase">
+												<h:outputText
+													value="#{mBeanConnexion.userConnected.civility}" />
+											</p>
+										</div>
+										<div class="col-md-4">
+											<p class="text-uppercase">
+												<h:outputText
+													value="#{mBeanConnexion.userConnected.lastname}" />
+											</p>
+										</div>
+										<div class="col-md-4">
+											<p class="text-justify">
+												<h:outputText
+													value="#{mBeanConnexion.userConnected.firstname}" />
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<p class="text-justify">
+												<h:outputText
+													value="#{mBeanClient.adresseFacturation.number}" />
+											</p>
+										</div>
+										<div class="col-md-10">
+											<p class="text-justify">
+												<h:outputText
+													value="#{mBeanClient.adresseFacturation.street}" />
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<p class="text-justify">
+												<h:outputText
+													value="#{mBeanClient.adresseFacturation.zipcode}" />
+											</p>
+										</div>
+										<div class="col-md-5">
+											<p class="text-justify">
+												<h:outputText value="#{mBeanClient.adresseFacturation.city}" />
+											</p>
+										</div>
+										<div class="col-md-5">
+											<p class="text-justify">
+												<h:outputText value="#{mBeanClient.countryFac.name}" />
+											</p>
+										</div>
+									</div>
+									<button data-target="#modiffacturation" data-toggle="collapse"
+										class="btn btn-primary" jsf:type="button">
+										#{lang['modifier_adresse_facturation']}<i
+											class="fa fa-chevron-bottom"></i>
+									</button>
 								</div>
 							</div>
-						</form>
+						</div>
+
+						<div id="modiflivraison" class="collapse clearfix">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h3>#{lang['demande_adresse_livraison']}</h3>
+									</div>
+								</div>
+							</div>
+							<h:form id="formlivr">
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for="numberL">#{lang['numero']}</label>
+											<h:inputText class="form-control" id="numberL"
+												value="#{mBeanClient.adresseLivraison.number}" />
+										</div>
+									</div>
+									<div class="col-sm-10">
+										<div class="form-group">
+											<label for="streetL">#{lang['rue']}</label>
+											<h:inputText class="form-control" id="streetL"
+												value="#{mBeanClient.adresseLivraison.street}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="cityL">#{lang['ville']}</label>
+											<h:inputText class="form-control" id="cityL"
+												value="#{mBeanClient.adresseLivraison.city}" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="cpostalL">#{lang['cp']}</label>
+											<h:inputText class="form-control" id="cpostalL"
+												value="#{mBeanClient.adresseLivraison.zipcode}" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="paysL">#{lang['pays']}</label>
+											<h:selectOneMenu class="form-control" id="paysL"
+												value="#{mBeanClient.adresseLivraison.country.id}"
+												required="true">
+												<f:selectItems value="#{mBeanClient.mesCountries}"
+													var="country" itemValue="#{country.id}"
+													itemLabel="#{country.name}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="successLiv" ></label>
+											<h:commandButton id="successLiv" class="btnZZ"
+												value="Valider" type="submit"
+												action="#{mBeanClient.saveAddressLiv() }">
+											</h:commandButton>
+										</div>
+									</div>
+								</div>
+
+							</h:form>
+						</div>
+						<div id="modiffacturation" class="collapse clearfix">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h3>#{lang['demande_adresse_facturation']}</h3>
+									</div>
+								</div>
+							</div>
+							<h:form id="formfact">
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for="numberF">#{lang['numero']}</label>
+											<h:inputText class="form-control" id="numberF"
+												value="#{mBeanClient.adresseFacturation.number}" />
+										</div>
+									</div>
+									<div class="col-sm-10">
+										<div class="form-group">
+											<label for="streetF">#{lang['rue']}</label>
+											<h:inputText class="form-control" id="streetF"
+												value="#{mBeanClient.adresseFacturation.street}" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="cityF">#{lang['ville']}</label>
+											<h:inputText class="form-control" id="cityF"
+												value="#{mBeanClient.adresseFacturation.city}" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="cPostalF">#{lang['cp']}</label>
+											<h:inputText class="form-control" id="cPostalF"
+												value="#{mBeanClient.adresseFacturation.zipcode}" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group">
+											<label for="paysF">#{lang['pays']}</label>
+											<h:selectOneMenu id="paysF" class="form-control"
+												value="#{mBeanClient.adresseFacturation.country.id}"
+												required="true">
+												<f:selectItems value="#{mBeanClient.mesCountries}"
+													var="country" itemValue="#{country.id}"
+													itemLabel="#{country.name}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="form-group" id="zzz">
+											<label for="successFac"> </label>
+											<h:commandButton id="successFac" class="btnZZ"
+												value="Valider" type="submit"
+												action="#{mBeanClient.saveAddressFact() }">
+											</h:commandButton>
+										</div>
+									</div>
+								</div>
+							</h:form>
+						</div>
+
+
 					</div>
+					<form jsf:id="Form">
+						<div class="box-footer">
+							<div class="pull-left">
+								<a href="pages/basket.jsf" class="btn btn-default"><i
+									class="fa fa-chevron-left"></i>#{lang['retourner_panier']}</a>
+							</div>
+
+							<div class="pull-right">
+								<h:commandButton
+									action="#{mBeanCartManagement.validerAdresse()}"
+									value="Valider et aller à la page de livraison"
+									class="btn btn-primary"></h:commandButton>
+							</div>
+						</div>
+					</form>
 				</div>
-				<ui:include src="/WEB-INF/templates/cartSummary.xhtml" />
 			</div>
+			<ui:include src="/WEB-INF/templates/cartSummary.xhtml" />
+		</div>
 	</ui:define>
 </ui:composition>

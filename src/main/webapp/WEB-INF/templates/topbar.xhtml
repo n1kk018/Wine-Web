@@ -26,7 +26,7 @@
 						<h:panelGroup
 							rendered="#{mBeanConnexion.userConnected.lastname != null}">
 							<li><a href="#">#{lang['bonjour']} #{mBeanConnexion.userConnected.firstname}</a></li>
-							<li><a href="#" jsf:action="#{mBeanConnexion.disconnect()}">#{lang['signout']}</a></li>
+							<li><a href="index.jsf" jsf:action="#{mBeanConnexion.disconnect()}">#{lang['signout']}</a></li>
 						</h:panelGroup>
 						<li><h:selectOneMenu value="#{localeBean.language}">
 	                        <f:selectItem itemValue="fr_FR" itemLabel="Francais" />

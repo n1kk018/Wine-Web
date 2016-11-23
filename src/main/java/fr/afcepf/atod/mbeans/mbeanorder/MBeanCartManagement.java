@@ -20,12 +20,12 @@ import org.apache.log4j.Logger;
 import fr.afcepf.atod.mbeans.mbeanproduct.MBeanProduct;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanMail;
-import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTax;
-import fr.afcepf.atod.onwine.ws.soap.tax.ServiceTaxBeanService;
-import fr.afcepf.atod.onwine.ws.soap.tax.TaxWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveriesWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.delivery.DeliveryCalculatorService;
-import fr.afcepf.atod.onwine.ws.soap.delivery.IDeliveryCalculator;
+import fr.afcepf.atod.onwine.ws.soap.DeliveriesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.DeliveryCalculatorService;
+import fr.afcepf.atod.onwine.ws.soap.IDeliveryCalculator;
+import fr.afcepf.atod.onwine.ws.soap.ServiceTax;
+import fr.afcepf.atod.onwine.ws.soap.ServiceTaxBeanService;
+import fr.afcepf.atod.onwine.ws.soap.TaxWSException_Exception;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilDefParam;
@@ -64,7 +64,11 @@ public class MBeanCartManagement implements Serializable {
 	private boolean validOrder;
 	private Customer customer = new Customer();
 	@ManagedProperty(value="#{mBeanMail}")
-	private MBeanMail mBeanMail;	
+	private MBeanMail mBeanMail;
+	
+	
+	private double deliveryPrice;
+	private String deliveryTransporter;
 
 	public MBeanCartManagement() {
 		super();
@@ -220,25 +224,41 @@ public class MBeanCartManagement implements Serializable {
 	
 	
 	public double callDelivery() throws DeliveriesWSException_Exception {
-	    double delivery = 0.0;
+	    double deliveryRate = 0.0;
+	    deliveryTransporter ="colissimo";
 	    if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
 	        IDeliveryCalculator client = (new DeliveryCalculatorService()).getDeliveryCalculatorPort();
 	        List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
 	        for (Adress adress : ads) {
 	            if (!adress.isBilling()) {
-	                delivery = client.getRateDeliveryTotal(adress.getCountry().getCode(), calculerNumTotalQantity());
-	                System.out.println("---------------------"+delivery+"---------------------------");
+	                deliveryRate = client.getRateDeliveryTotal(adress.getCountry().getCode(), calculerNumTotalQantity());
+	                
+	                System.out.println("----------local Delivery-----------"+deliveryRate+"---------------------------");
 	            }
 	        }
-//            ServiceTax client =  (new ServiceTaxBeanService()).getServiceTaxBeanPort();
-//            List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
-//            for (Adress adress : ads) {
-//                if (adress.isBilling()) {
-//                    taxPays = client.calculTax(calculSubTotal(), adress.getCountry().getCode());
-//                }
-//            }
         }
-        return delivery;
+	    deliveryPrice = deliveryRate;
+        return deliveryRate;
+        
+    }
+	
+	public double callDeliveryInternational() throws DeliveriesWSException_Exception {
+        double deliveryRateInternational = 0.0;
+       deliveryTransporter = "chronopost";
+        if (mBeanConnexion.getUserConnected().getId() != null && order.getOrdersDetail().size()!=0) {
+            IDeliveryCalculator client = (new DeliveryCalculatorService()).getDeliveryCalculatorPort();
+            List<Adress> ads = mBeanConnexion.getUserConnected().getAdresses();
+            for (Adress adress : ads) {
+                if (!adress.isBilling()) {
+                    deliveryRateInternational = client.getInternationalRateDelivery(adress.getCountry().getCode(), calculerNumTotalQantity());
+                    
+                    System.out.println("----------international Delivery-----------"+deliveryRateInternational+"---------------------------");
+                }
+            }
+        }
+        deliveryPrice = deliveryRateInternational;
+        return deliveryRateInternational;
+        
         
     }
 
@@ -269,6 +289,7 @@ public class MBeanCartManagement implements Serializable {
 				}
 			}
 		}
+		System.out.println("*******************azertyuiop^ùml;,nbvcxcvbn$$$$$$$$$$$$$$$$$$$$$");
 		return taxPays;
 	}
 
@@ -472,6 +493,36 @@ public class MBeanCartManagement implements Serializable {
 	public void setmBeanMail(MBeanMail mBeanMail) {
 		this.mBeanMail = mBeanMail;
 	}
+
+    /**
+     * @return the deliveryPrice
+     */
+    public double getDeliveryPrice() {
+        return deliveryPrice;
+    }
+
+    /**
+     * @param deliveryPrice the deliveryPrice to set
+     */
+    public void setDeliveryPrice(double deliveryPrice) {
+        this.deliveryPrice = deliveryPrice;
+    }
+
+    /**
+     * @return the deliveryTransporter
+     */
+    public String getDeliveryTransporter() {
+        return deliveryTransporter;
+    }
+
+    /**
+     * @param deliveryTransporter the deliveryTransporter to set
+     */
+    public void setDeliveryTransporter(String deliveryTransporter) {
+        this.deliveryTransporter = deliveryTransporter;
+    }
+
+	
 	
 	
 	

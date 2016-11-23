@@ -1,38 +1,38 @@
 /** Your theme modifications here **/
-.hotlist-btn{
+.hotlist-btn {
 	margin-bottom: 5px;
 }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
+.col-centered {
+	float: none;
+	margin: 0 auto;
 }
 
-.bcWrapper{
+.bcWrapper {
 	margin-bottom: 10px;
 	background-color: rgba(240, 240, 240, 0.06);
 }
 
 .ui-breadcrumb ul li a.ui-icon-home, .ui-breadcrumb-chevron {
-	margin-top:3px;
+	margin-top: 3px;
 }
 
 .ui-breadcrumb ul li .ui-menuitem-link {
 	text-decoration: none;
-	margin-top:0;
-	color: rgb(188,54,4);
+	margin-top: 0;
+	color: rgb(188, 54, 4);
 }
 
 .itemPrice {
 	display: inline-block;
 }
 
-[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
-  font-family: Flaticon;
-  font-size: 13px;
-  font-style: normal;
-   margin-left: 5px;
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after,
+	[class*=" flaticon-"]:after {
+	font-family: Flaticon;
+	font-size: 13px;
+	font-style: normal;
+	margin-left: 5px;
 }
 
 .btn, .btn-default, .navbar-toggle, #zozo {
@@ -43,16 +43,54 @@
 .box-header, #cartZozo {
 	text-align: center;
 }
+
 .newAccount, #newAccountZozo {
-	  background: rgba(255, 255, 255, 0.45);
-  margin: 0 0 30px;
-  border: solid 1px #e6e6e6;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 20px;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-	height:582px;
-  border-radius: 10px;
+	background: rgba(255, 255, 255, 0.45);
+	margin: 0 0 30px;
+	border: solid 1px #e6e6e6;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 20px;
+	-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+	height: 582px;
+	border-radius: 10px;
+}
+
+.btnZZ {
+	width: 100%;
+	color: #ffffff;
+	background-color: rgb(220,54,4);
+	border-color: rgb(220,54,4);
+	height: 34px;
+	margin-right: 13px;
+	font-weight: normal;
+	font-family: "Roboto", Helvetica, Arial, sans-serif;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	border-radius: 3px;
+	display: inline-block;
+	margin-bottom: 0;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid transparent;
+	text-decoration: none;
+}
+
+
+#zzz .form-group {
+	padding-top: 5px;
+}
+
+
+#but1 {
+	margin-left: 150px;
+}
+
+#but2 {
+	margin-left: 150px;
 }

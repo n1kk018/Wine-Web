@@ -5,23 +5,6 @@
  */
 package fr.afcepf.atod.mbeans.mbeanproduct;
 
-import fr.afcepf.atod.business.product.api.IBuProduct;
-import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
-import fr.afcepf.atod.util.SingletonSessionOrderTemp;
-import fr.afcepf.atod.util.UtilConverter;
-import fr.afcepf.atod.util.UtilFindPath;
-import fr.afcepf.atod.vin.data.exception.WineException;
-import fr.afcepf.atod.wine.entity.Order;
-import fr.afcepf.atod.wine.entity.Product;
-import fr.afcepf.atod.wine.entity.ProductAccessories;
-import fr.afcepf.atod.wine.entity.ProductType;
-import fr.afcepf.atod.wine.entity.ProductVarietal;
-import fr.afcepf.atod.wine.entity.ProductVintage;
-import fr.afcepf.atod.wine.entity.ProductWine;
-import fr.afcepf.atod.onwine.ws.soap.currency.CurrenciesWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.currency.CurrencyConverterService;
-import fr.afcepf.atod.onwine.ws.soap.currency.ICurrencyConverter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +12,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.LocalBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -42,6 +24,23 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
+
+import fr.afcepf.atod.business.product.api.IBuProduct;
+import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
+import fr.afcepf.atod.onwine.ws.soap.CurrenciesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.CurrencyConverterService;
+import fr.afcepf.atod.onwine.ws.soap.ICurrencyConverter;
+import fr.afcepf.atod.util.SingletonSessionOrderTemp;
+import fr.afcepf.atod.util.UtilConverter;
+import fr.afcepf.atod.util.UtilFindPath;
+import fr.afcepf.atod.vin.data.exception.WineException;
+import fr.afcepf.atod.wine.entity.Order;
+import fr.afcepf.atod.wine.entity.Product;
+import fr.afcepf.atod.wine.entity.ProductAccessories;
+import fr.afcepf.atod.wine.entity.ProductType;
+import fr.afcepf.atod.wine.entity.ProductVarietal;
+import fr.afcepf.atod.wine.entity.ProductVintage;
+import fr.afcepf.atod.wine.entity.ProductWine;
 
 /**
  *
@@ -106,7 +105,6 @@ public class MBeanProduct implements Serializable {
             try {
                 promotedWinesList = buProduct.getPromotedProductsSelection();
             } catch (WineException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -131,7 +129,6 @@ public class MBeanProduct implements Serializable {
                 pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
                 appellations = buProduct.getAppellationsByType(wineTypes);
             } catch (WineException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -296,7 +293,6 @@ public class MBeanProduct implements Serializable {
                 pages[i] = ++firstPage;
             }
         } catch (WineException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
