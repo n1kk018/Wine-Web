@@ -7,6 +7,6 @@
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-    <import resource="classpath:springBuProduct.xml"/>
-    <import resource="classpath:springBuCustomer.xml"/>
+	<import resource="classpath:springBuProduct.xml"/>
+ <import resource="classpath:springBuCustomer.xml"/>
 </beans>

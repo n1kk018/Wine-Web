@@ -9,10 +9,11 @@
 	<name>Wine-Web</name>
 	<properties>
 		<java.version>1.8</java.version>
-		<plugin.compiler.maven>3.1</plugin.compiler.maven>
+		<plugin.compiler.maven>3.5.1</plugin.compiler.maven>
 		<jsf.version>2.2.10</jsf.version>
 		<spring.version>4.2.8.RELEASE</spring.version>
 		<project.version>1.0</project.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<repositories>
 		<repository>
@@ -99,9 +100,9 @@
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
-            <type>jar</type>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
+       <dependency>
             <groupId>fr.afcepf.atod</groupId>
             <artifactId>OnWine-ES</artifactId>
             <version>1.0</version>
@@ -118,49 +119,7 @@
                     <target>${java.version}</target>                    
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <version>1.12</version>
-                <executions>
-                    <execution>
-                        <id>wsimport-from-jdk</id>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- using wsdl from an url -->
-                    <wsdlUrls> 
-                        <wsdlUrl>
-                            <!-- http://192.162.102.67:9090/ode/processes/OnWineServicesOrchestrator?wsdl -->
-                            <!--http://192.168.102.42:8180/OnWine-CurrenciesWS-Biz/CurrencyConverter?wsdl-->                        
-						    <!-- http://192.168.102.42:8180/OnWine-DeliveryWS-Biz/DeliveryCalculator?wsdl -->
-						    <!-- http://192.168.102.42:8180/OnWine-TaxWS-Biz/ServiceTaxBean?wsdl -->
-						</wsdlUrl>
- 
-                        
-                    </wsdlUrls>
-                    <!-- or using wsdls file directory -->
-                    <!-- <wsdlDirectory>src/wsdl</wsdlDirectory> -->
-                    <!-- which wsdl file -->
-                    <!-- <wsdlFiles> -->
-                    <!-- <wsdlFile>myWSDL.wsdl</wsdlFile> -->
-                    <!--</wsdlFiles> -->
-                    <!-- Keep generated files -->
-                    <keep>true</keep>
-                    <!-- Package name -->
-                    <packageName>
-                    fr.afcepf.atod.onwine.ws.soap.orchestre
-                    <!-- fr.afcepf.atod.onwine.ws.soap.currency -->
-                    <!-- fr.afcepf.atod.onwine.ws.soap.delivery -->
-                    <!-- fr.afcepf.atod.onwine.ws.soap.tax -->
-                     </packageName>
-                    <!-- generated source files destination -->
-                    <sourceDestDir>target/generatedclasses</sourceDestDir>
-                </configuration>
-            </plugin>
+            
         </plugins>
     </build>
 </project>
