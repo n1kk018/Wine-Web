@@ -5,31 +5,9 @@
  */
 package fr.afcepf.atod.mbeans.mbeanproduct;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.component.UICommand;
-import javax.faces.component.html.HtmlSelectOneMenu;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.ValueChangeEvent;
-
-import org.apache.log4j.Logger;
-
 import fr.afcepf.atod.business.product.api.IBuProduct;
+import fr.afcepf.atod.es.domain.Wine;
 import fr.afcepf.atod.mbeans.mbeanuser.MBeanConnexion;
-import fr.afcepf.atod.onwine.ws.soap.CurrenciesWSException_Exception;
-import fr.afcepf.atod.onwine.ws.soap.CurrencyConverterService;
-import fr.afcepf.atod.onwine.ws.soap.ICurrencyConverter;
 import fr.afcepf.atod.util.SingletonSessionOrderTemp;
 import fr.afcepf.atod.util.UtilConverter;
 import fr.afcepf.atod.util.UtilFindPath;
@@ -41,6 +19,34 @@ import fr.afcepf.atod.wine.entity.ProductType;
 import fr.afcepf.atod.wine.entity.ProductVarietal;
 import fr.afcepf.atod.wine.entity.ProductVintage;
 import fr.afcepf.atod.wine.entity.ProductWine;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrenciesWSException_Exception;
+import fr.afcepf.atod.onwine.ws.soap.currency.CurrencyConverterService;
+import fr.afcepf.atod.onwine.ws.soap.currency.ICurrencyConverter;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.LocalBean;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import javax.faces.component.UICommand;
+import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ComponentSystemEvent;
+import javax.faces.event.ValueChangeEvent;
+
+import org.apache.log4j.Logger;
+import org.primefaces.component.autocomplete.AutoComplete;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -48,13 +54,14 @@ import fr.afcepf.atod.wine.entity.ProductWine;
  */
 @ManagedBean
 @SessionScoped
-public class MBeanProduct implements Serializable {
-
+public class MBeanProduct implements Serializable { 
     private static final long serialVersionUID = -8118205383226441401L;
     private Logger log = Logger.getLogger(MBeanConnexion.class);
-
+     
     @ManagedProperty(value = "#{buProduct}")
     private IBuProduct buProduct;
+    @ManagedProperty(value = "#{searchBean}")
+    private SearchBean searchBean;  
     private ProductAccessories accessory;
     private Product currentProd;
     private String nameProd;
@@ -68,6 +75,7 @@ public class MBeanProduct implements Serializable {
     private Map<ProductType, List<ProductVarietal>> varietals;
     private Map<ProductType, Map<Integer, Integer>> pricesRepartition;
     private List<Product> winesList;
+    private List<Integer> idzList;
     private ProductType currentProdType;
     private Object currentSubCategory;
     private String subSelectionTypeLabel;
@@ -105,6 +113,7 @@ public class MBeanProduct implements Serializable {
             try {
                 promotedWinesList = buProduct.getPromotedProductsSelection();
             } catch (WineException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -129,6 +138,7 @@ public class MBeanProduct implements Serializable {
                 pricesRepartition = buProduct.getPricesRepartitionByType(wineTypes);
                 appellations = buProduct.getAppellationsByType(wineTypes);
             } catch (WineException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -223,42 +233,82 @@ public class MBeanProduct implements Serializable {
         }
         return str;
     }
-
+    
+    public void articleEvent(SelectEvent event) throws WineException {
+         getArticle(((Wine) event.getObject()).getId());
+         try {
+            FacesContext.getCurrentInstance()
+             .getExternalContext()
+             .redirect("pages/article.jsf");
+        } catch (IOException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
+    }
+    
     public String article() throws WineException {
-        String str = null;
         FacesContext fc = FacesContext.getCurrentInstance();
         Integer id = Integer.valueOf(getProductParam(fc));
-        if (id > 0) {
-            currentProd = buProduct.findById(id);
-            if (winesList != null && winesList.size() > 3) {
-                threeSimilarProductsList = new ArrayList<Product>();
-                for (Product product : winesList) {
-                    if (threeSimilarProductsList.size() < 3 && product.getId() != id) {
-                        threeSimilarProductsList.add((ProductWine) product);
+        return getArticle(id);
+    }
+    
+    private String getArticle(Integer id) {
+        String str = null;
+        try {
+            if (id>0) {
+                currentProd = buProduct.findById(id);
+                if(winesList!=null && winesList.size()>3)
+                {
+                    threeSimilarProductsList = new ArrayList<Product>();
+                    for (Product product : winesList) {
+                        if(threeSimilarProductsList.size() < 3 && product.getId()!=id){
+                            threeSimilarProductsList.add((ProductWine)product);
+                        }
+                    }
+                } else {
+                    if(currentProdType!=null){
+                        threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, 0, 3, "price_desc");
+                        Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
+                        if(count < 3){
+                            threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null, 0, 3-count, "price_desc"));
+                        }
                     }
                 }
-            } else {
-                if (currentProdType != null) {
-                    threeSimilarProductsList = buProduct.categoryAccordingToObjectType(currentProdType,
-                            currentSubCategory, 0, 3, "price_desc");
-                    Integer count = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
-                    if (count < 3) {
-                        threeSimilarProductsList.addAll(buProduct.categoryAccordingToObjectType(currentProdType, null,
-                                0, 3 - count, "price_desc"));
-                    }
-                }
+                str = UtilFindPath.findURLPath("article.jsf");
             }
-            str = UtilFindPath.findURLPath("article.jsf");
+        } catch (WineException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
         }
         return str;
     }
-
-    public String category(ProductType type) {
+        
+    public String category(ProductType type){
+        idzList = new ArrayList<Integer>();
         return initCategoryPage(type, null);
     }
-
-    public String category(ProductType type, Object o) {
-        return initCategoryPage(type, o);
+    
+    public String category(ProductType type, Object o){
+        idzList = new ArrayList<Integer>();
+        return initCategoryPage(type, o);   
+    }
+    
+    public void category(AjaxBehaviorEvent event) {
+        firstRow = 0;
+        currentSortStr = "price_asc";
+        idzList = new ArrayList<Integer>();
+        for (Wine eswine : searchBean.getFoundWines()) {
+            idzList.add(eswine.getId());
+        }
+        getWinesList();
+        try {
+            FacesContext.getCurrentInstance()
+             .getExternalContext()
+             .redirect("pages/category.jsf");
+        } catch (IOException paramE) {
+            // TODO Auto-generated catch block
+            paramE.printStackTrace();
+        }
     }
 
     private String initCategoryPage(ProductType type, Object o) {
@@ -271,13 +321,16 @@ public class MBeanProduct implements Serializable {
         str = UtilFindPath.findURLPath("category.jsf");
         return str;
     }
-
+       
     private void loadList() {
         try {
-            winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow,
-                    rowsPerPage, currentSortStr);
-            totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
-
+            if(idzList.isEmpty()) {
+                winesList = buProduct.categoryAccordingToObjectType(currentProdType, currentSubCategory, firstRow, rowsPerPage, currentSortStr);
+                totalRows = buProduct.countCategoryAccordingToObjectType(currentProdType, currentSubCategory);
+            } else {
+                winesList = buProduct.categoryAccordingToESSearchList(idzList, firstRow, rowsPerPage, currentSortStr);
+                totalRows = idzList.size();
+            }
             // Set currentPage, totalPages and pages.
             currentPage = (totalRows / rowsPerPage) - ((totalRows - firstRow) / rowsPerPage) + 1;
             totalPages = (totalRows / rowsPerPage) + ((totalRows % rowsPerPage != 0) ? 1 : 0);
@@ -293,6 +346,7 @@ public class MBeanProduct implements Serializable {
                 pages[i] = ++firstPage;
             }
         } catch (WineException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -381,10 +435,23 @@ public class MBeanProduct implements Serializable {
                 subSelectionTypeLabel = subSelectionTypeLabel + " de 50 à 100 €";
             else
                 subSelectionTypeLabel = subSelectionTypeLabel + " de 100 €";
-
         } else {
             subSelectionTypeLabel = "";
         }
+    }
+    
+    public void setBuProduct(IBuProduct buProduct) {
+        this.buProduct = buProduct;
+    }
+    
+    public SearchBean getSearchBean() {
+        return searchBean;
+    }
+
+
+
+    public void setSearchBean(SearchBean paramSearchBean) {
+        searchBean = paramSearchBean;
     }
 
     public void setNameProd(String nameProd) {
@@ -394,11 +461,7 @@ public class MBeanProduct implements Serializable {
     public IBuProduct getBuProduct() {
         return buProduct;
     }
-
-    public void setBuProduct(IBuProduct buProduct) {
-        this.buProduct = buProduct;
-    }
-
+    
     public List<Product> getPromotedWinesList() {
         return promotedWinesList;
     }

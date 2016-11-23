@@ -2,13 +2,14 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/common.xhtml">
 	<ui:param name="page" value="adress" />
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="Index" url="index.jsf" />
-			<p:menuitem value="#{lang['basket']}" url="basket.jsf" />
+			<p:menuitem value="#{lang['basket']}" url="basket.jsf"/>
 			<p:menuitem value="#{lang['billing_shipping']}" />
 		</p:breadCrumb>
 	</ui:define>
