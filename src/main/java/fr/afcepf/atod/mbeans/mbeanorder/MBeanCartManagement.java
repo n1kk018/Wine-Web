@@ -405,7 +405,7 @@ public class MBeanCartManagement implements Serializable {
 	    finalAmount = "0";
     	OnWineServicesOrchestratorPortType proxy = new OnWineServicesOrchestrator().getOnWineServicesOrchestratorPort();
         BindingProvider bp = (BindingProvider)proxy;
-        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.102.42:9090/ode/processes/OnWineServicesOrchestrator");
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.102.67:9090/ode/processes/OnWineServicesOrchestrator");
         OnWineServicesOrchestratorRequest request = new OnWineServicesOrchestratorRequest();
            for (Adress adress : mBeanConnexion.getUserConnected().getAdresses()) {
                if(adress.isBilling()) {
